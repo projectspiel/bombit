@@ -35,7 +35,7 @@
                 for(var j = 0; j < numBlocksY; j++) {
                     y = STATUS_BAR_HEIGHT + TILE_HEIGHT + j * TILE_HEIGHT * 2;
                     var block = new Block(x, y);
-                    stage.addChild(block);
+                    stage.addChild(block.displayObject);
                 }
             }
         }
