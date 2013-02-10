@@ -14,7 +14,6 @@ function init() {
     gScreenHeight = canvas.height;
 
     loadResources();
-    //loadSources();
 
     /*contentManager = new ContentManager();
     contentManager.SetDownloadCompleted(startGame);
@@ -41,11 +40,7 @@ function loadResources() {
     };
 
     preloader.onComplete = function(event) {
-        world = new World(canvas);
-        world.initLevel();
-        world.initPlayers();
-        world.initMobs(10);
-        world.start();
+        loadSources();
     };
 
     preloader.onFileLoad = function(event) {
@@ -71,6 +66,26 @@ function loadSources() {
     ];
 
     var preloader = new createjs.PreloadJS(false);
+
+    preloader.onFileLoad = function(event) {
+        switch(event.type) {
+            case createjs.PreloadJS.JAVASCRIPT:
+                document.body.appendChild(event.result);
+                break;
+        }
+    };
+
+    preloader.onComplete = function(event) {
+        //@todo THIS IS BULLSHIT, we should have an 'allLoaded' global flag we check so that we dont depend on the order of the load calls
+        setTimeout(function() {
+            var world = new World(canvas);
+            world.initLevel();
+            world.initPlayers();
+            world.initMobs(10);
+            world.start();
+        }, 250);
+    };
+
     preloader.loadManifest(manifest);
 }
 

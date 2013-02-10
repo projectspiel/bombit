@@ -1,15 +1,15 @@
 (function (window) {
-    var mobs = [];
-    var stage = null;
+    function Player(x, y, spriteSheet) {
+        this.regX = this.frameWidth / 2 | 0;
+        this.regY = this.frameHeight / 2 | 0;
+        this.x = x;
+        this.y = y;
 
-    //@todo Singletonize!
-    function World(canvas) {
-        if(!this instanceof arguments.callee) throw new Error("Constructor called as a function");
-
-        stage = new createjs.Stage(canvas);
+        this.__proto__ = new createjs.Bitmap(spriteSheet);
     }
+    //Block.prototype = new createjs.Bitmap(resources['block']);
 
-    World.prototype = {
+    Player.prototype = {
         tick: function() {
             stage.update();
         },
@@ -41,5 +41,5 @@
         }
     }
 
-    window.World = World;
+    window.Player = Player;
 } (window));
