@@ -21,7 +21,7 @@ gBlock = null;
             createjs.Ticker.setFPS(60);
         },
         initPlayers: function() {
-            var player1 = player = new Player(0, 0, resources['player1']);
+            var player1 = player = new Player(TILE_WIDTH/2, TILE_HEIGHT/2, resources['player1']);
             stage.addChild(player1.displayObject);
         },
         initMobs: function(numMobs) {

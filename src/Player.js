@@ -1,11 +1,10 @@
 (function (window) {
     function Player(x, y, spriteImg) {
         this.displayObject = new createjs.BitmapAnimation();
-        this.displayObject.x = x;
-        this.displayObject.y = y;
-
-        console.log(this.displayObject.x);
-        console.log(this.displayObject.y);
+        this.displayObject.regX = TILE_WIDTH / 2 | 0;
+        this.displayObject.regY = TILE_HEIGHT / 2 | 0;
+        this.x = this.displayObject.x = x;
+        this.y = this.displayObject.y = y;
 
         this.init(spriteImg);
     }
