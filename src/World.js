@@ -31,9 +31,9 @@
                 numBlocksY = 6;
 
             for(var i = 0; i < numBlocksX; i++) {
-                x = TILE_WIDTH + i * TILE_WIDTH + TILE_WIDTH/2;
+                x = TILE_WIDTH + i * TILE_WIDTH * 2;
                 for(var j = 0; j < numBlocksY; j++) {
-                    y = TILE_WIDTH*2 + j * TILE_WIDTH + TILE_WIDTH/2;
+                    y = STATUS_BAR_HEIGHT + TILE_HEIGHT + j * TILE_HEIGHT * 2;
                     var block = new Block(x, y);
                     stage.addChild(block);
                 }

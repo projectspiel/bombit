@@ -1,9 +1,12 @@
 const TILE_WIDTH = 50;
 const TILE_HEIGHT = 50;
+const STATUS_BAR_HEIGHT = TILE_HEIGHT;
 
 var gScreenWidth;
 var gScreenHeight;
 var resources = {};
+
+window.onload = init;
 
 function init() {
     canvas = document.getElementById("dasCanvas");
