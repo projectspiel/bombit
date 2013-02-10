@@ -1,5 +1,4 @@
 player = null;
-gBlock = null;
 (function (window) {
     var mobs = [];
     var stage = null;
@@ -21,8 +20,17 @@ gBlock = null;
             createjs.Ticker.setFPS(60);
         },
         initPlayers: function() {
-            var player1 = player = new Player(TILE_WIDTH/2, TILE_HEIGHT/2, resources['player1']);
-            stage.addChild(player1.displayObject);
+            var keyMap = {
+                up: KEY_UP,
+                down: KEY_DOWN,
+                left: KEY_LEFT,
+                right: KEY_RIGHT
+            }
+
+            this.player1 = player = new Player(TILE_WIDTH/2, TILE_HEIGHT/2, resources['player1'], keyMap);
+            this.player2 = player = new Player(TILE_WIDTH/2 + 200, TILE_HEIGHT/2, resources['player1'], keyMap);
+
+            stage.addChild(this.player1.displayObject);
         },
         initMobs: function(numMobs) {
 
@@ -37,11 +45,24 @@ gBlock = null;
                 x = TILE_WIDTH * 1.5 + i * TILE_WIDTH * 2;
                 for(var j = 0; j < numBlocksY; j++) {
                     y = STATUS_BAR_HEIGHT + TILE_HEIGHT * 1.5 + j * TILE_HEIGHT * 2;
-                    var block = gBlock = new Block(x, y);
+                    var block = new Block(x, y);
                     stage.addChild(block.displayObject);
                 }
             }
+        },
+        registerKeyEvents: function() {
+            var that = this;
+            document.onkeydown = function(e) {
+                that.player1.handleKeyDown(e);
+                that.player2.handleKeyDown(e);
+            };
+
+            document.onkeyup = function(e) {
+                that.player1.handleKeyUp(e);
+                that.player2.handleKeyUp(e);
+            };
         }
+
     }
 
     window.World = World;

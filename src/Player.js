@@ -1,10 +1,12 @@
+
 (function (window) {
-    function Player(x, y, spriteImg) {
+    function Player(x, y, spriteImg, keyMap) {
         this.displayObject = new createjs.BitmapAnimation();
         this.displayObject.regX = TILE_WIDTH / 2 | 0;
         this.displayObject.regY = TILE_HEIGHT / 2 | 0;
         this.x = this.displayObject.x = x;
         this.y = this.displayObject.y = y;
+        this.keyMap = keyMap;
 
         this.init(spriteImg);
     }
@@ -30,6 +32,14 @@
 
         this.displayObject.gotoAndPlay("idle");
     }
+
+    Player.prototype.handleKeyDown = function(e) {
+      console.log(e);
+    }
+    Player.prototype.handleKeyUp = function(e) {
+      console.log(e);
+    }
+
 
     window.Player = Player;
 } (window));

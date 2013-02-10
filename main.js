@@ -2,6 +2,17 @@ const TILE_WIDTH = 50;
 const TILE_HEIGHT = 50;
 const STATUS_BAR_HEIGHT = TILE_HEIGHT;
 
+// KEY MAPS
+const KEY_UP = 38;
+const KEY_LEFT = 37;
+const KEY_RIGHT = 39;
+const KEY_DOWN = 40;
+const KEY_W = 87;
+const KEY_A = 65;
+const KEY_D = 68;
+const KEY_S = 83;
+const KEY_SPACE = 32;
+
 var gScreenWidth;
 var gScreenHeight;
 var resources = {};
@@ -75,9 +86,11 @@ function loadSources() {
         //@todo THIS IS BULLSHIT, we should have an 'allLoaded' global flag we check so that we dont depend on the order of the load calls
         setTimeout(function() {
             var world = new World(canvas);
+            //TODO: refactor, we should just call world.init({options}) 
             world.initLevel();
             world.initPlayers();
             world.initMobs(10);
+            world.registerKeyEvents();
             world.start();
         }, 250);
     };
