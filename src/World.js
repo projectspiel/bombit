@@ -25,22 +25,18 @@
 
         },
         initLevel: function() {
-            var imgTile = new Image();
-            imgTile.src = "res/img/BlockA0.png";
+            var x = 0,
+                y = 50,
+                numBlocksX = 9,
+                numBlocksY = 6;
 
-            var block = new Block(imgTile);
-            bmpSeqTile.regX = bmpSeqTile.frameWidth / 2 | 0;
-            bmpSeqTile.regY = bmpSeqTile.frameHeight / 2 | 0;
-
-            for (var i = 0; i < 20; i++) {
-                var bmpSeqTileCloned = bmpSeqTile.clone();
-
-                // set display properties:
-                bmpSeqTileCloned.x = 0 + (i * 40);
-                bmpSeqTileCloned.y = 32;
-
-                // add to the display list:
-                stage.addChild(bmpSeqTileCloned);
+            for(var i = 0; i < numBlocksX; i++) {
+                x = TILE_WIDTH + i * TILE_WIDTH + TILE_WIDTH/2;
+                for(var j = 0; j < numBlocksY; j++) {
+                    y = TILE_WIDTH*2 + j * TILE_WIDTH + TILE_WIDTH/2;
+                    var block = new Block(x, y);
+                    stage.addChild(block);
+                }
             }
         }
     }
