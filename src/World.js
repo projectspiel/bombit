@@ -19,7 +19,8 @@
             createjs.Ticker.setFPS(60);
         },
         initPlayers: function() {
-
+            var player1 = new Player(0, 0, resources['player1']);
+            stage.addChild(player1.displayObject);
         },
         initMobs: function(numMobs) {
 

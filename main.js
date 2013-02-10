@@ -14,15 +14,14 @@ function init() {
     gScreenHeight = canvas.height;
 
     loadResources();
-
-    /*contentManager = new ContentManager();
-    contentManager.SetDownloadCompleted(startGame);
-    contentManager.StartDownload();*/
+    loadSources();
 }
 
 function loadResources() {
     var manifest = [
-        {src:"res/img/solid_block.png", id:"block"}
+        {src:"res/img/solid_block.png", id:"block"},
+        {src:"res/img/player1.png", id:"player1"},
+        {src:"res/img/player2.png", id:"player2"}
     ];
 
     var preloader = new createjs.PreloadJS(false);
@@ -37,10 +36,6 @@ function loadResources() {
         ctx.beginPath();
         ctx.arc(gScreenWidth/2, gScreenHeight/2, 100, 0, angle, true);
         ctx.stroke();
-    };
-
-    preloader.onComplete = function(event) {
-        loadSources();
     };
 
     preloader.onFileLoad = function(event) {
@@ -62,7 +57,8 @@ function loadResources() {
 function loadSources() {
     var manifest = [
         {src:"src/World.js", id:"world"},
-        {src:"src/Block.js", id:"mob"},
+        {src:"src/Block.js", id:"block"},
+        {src:"src/Player.js", id:"player"}
     ];
 
     var preloader = new createjs.PreloadJS(false);
