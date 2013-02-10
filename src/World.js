@@ -1,3 +1,5 @@
+player = null;
+gBlock = null;
 (function (window) {
     var mobs = [];
     var stage = null;
@@ -19,7 +21,7 @@
             createjs.Ticker.setFPS(60);
         },
         initPlayers: function() {
-            var player1 = new Player(0, 0, resources['player1']);
+            var player1 = player = new Player(0, 0, resources['player1']);
             stage.addChild(player1.displayObject);
         },
         initMobs: function(numMobs) {
@@ -32,10 +34,10 @@
                 numBlocksY = 6;
 
             for(var i = 0; i < numBlocksX; i++) {
-                x = TILE_WIDTH + i * TILE_WIDTH * 2;
+                x = TILE_WIDTH * 1.5 + i * TILE_WIDTH * 2;
                 for(var j = 0; j < numBlocksY; j++) {
-                    y = STATUS_BAR_HEIGHT + TILE_HEIGHT + j * TILE_HEIGHT * 2;
-                    var block = new Block(x, y);
+                    y = STATUS_BAR_HEIGHT + TILE_HEIGHT * 1.5 + j * TILE_HEIGHT * 2;
+                    var block = gBlock = new Block(x, y);
                     stage.addChild(block.displayObject);
                 }
             }
