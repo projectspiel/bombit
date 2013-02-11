@@ -69,7 +69,8 @@ function loadSources() {
     var manifest = [
         {src:"src/World.js", id:"world"},
         {src:"src/Block.js", id:"block"},
-        {src:"src/Player.js", id:"player"}
+        {src:"src/Player.js", id:"player"},
+        {src:"src/Vector.js", id:"vector"}
     ];
 
     var preloader = new createjs.PreloadJS(false);
@@ -92,7 +93,7 @@ function loadSources() {
             world.initMobs(10);
             world.registerKeyEvents();
             world.start();
-        }, 250);
+        }, 1000);
     };
 
     preloader.loadManifest(manifest);
