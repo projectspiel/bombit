@@ -67,10 +67,10 @@ function loadResources() {
 
 function loadSources() {
     var manifest = [
+        {src:"src/Vector.js", id:"vector"},
         {src:"src/World.js", id:"world"},
         {src:"src/Block.js", id:"block"},
-        {src:"src/Player.js", id:"player"},
-        {src:"src/Vector.js", id:"vector"}
+        {src:"src/Player.js", id:"player"}
     ];
 
     var preloader = new createjs.PreloadJS(false);

@@ -11,7 +11,7 @@
 
     Block.prototype.init = function(spriteImg) {
         this.displayObject.initialize(spriteImg);
-    }
+    };
 
     window.Block = Block;
 } (window));

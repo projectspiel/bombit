@@ -15,7 +15,6 @@ const MOVEMENT_FORCE = 50;
         this.vel = new Vector(0, 0);
         this.force = new Vector(0, 0);
 
-        this.activeStateHandler = stateHandlers.idle;
         this.init(spriteImg);
     }
 
@@ -35,18 +34,18 @@ const MOVEMENT_FORCE = 50;
         });
 
         createjs.SpriteSheetUtils.addFlippedFrames(spriteSheet, true, false, false);
-
         this.displayObject.initialize(spriteSheet);
+        this.activeStateHandler = this.stateHandlers.idle;
 
-        this.displayObject.gotoAndPlay("idle");
-    }
+        this.activeStateHandler();
+    };
 
     Player.prototype.movementVectors = {
-      KEY_UP: new Vector(0, -MOVEMENT_FORCE),
-      KEY_DOWN: new Vector(0, MOVEMENT_FORCE),
-      KEY_LEFT: new Vector(MOVEMENT_FORCE, 0),
-      KEY_RIGHT: new Vector(-MOVEMENT_FORCE, 0)
-    }
+        KEY_UP: new Vector(0, -MOVEMENT_FORCE),
+        KEY_DOWN: new Vector(0, MOVEMENT_FORCE),
+        KEY_LEFT: new Vector(MOVEMENT_FORCE, 0),
+        KEY_RIGHT: new Vector(-MOVEMENT_FORCE, 0)
+    };
 
     Player.prototype.handleKeyDown = function(e) {
       if(vector = this.movementVectors[e.keyCode]) {
@@ -57,7 +56,7 @@ const MOVEMENT_FORCE = 50;
       console.log("y");
       console.log(this.movement.x);
 
-    }
+    };
 
     Player.prototype.handleKeyUp = function(e) {
       if(vector = this.movementVectors[e.keyCode]) {
@@ -67,14 +66,15 @@ const MOVEMENT_FORCE = 50;
       console.log(this.movement.x);
       console.log("y");
       console.log(this.movement.x);
-    }
+    };
 
     Player.prototype.stateHandlers = {
-      moving: function() {} ,
-      idle: function() {} ,
+      moving: function() {},
+      idle: function() {
+          this.displayObject.gotoAndPlay("idle");
+      },
       dying: function() {}
-    }
-
+    };
 
     window.Player = Player;
 } (window));
