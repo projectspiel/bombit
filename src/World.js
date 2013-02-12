@@ -1,4 +1,3 @@
-player = null;
 (function (window) {
     var mobs = [];
     var stage = null;
@@ -27,10 +26,11 @@ player = null;
                 right: KEY_RIGHT
             }
 
-            this.player1 = player = new Player(TILE_WIDTH/2, TILE_HEIGHT/2, resources['player1'], keyMap);
-            this.player2 = player = new Player(TILE_WIDTH/2 + 200, TILE_HEIGHT/2, resources['player1'], keyMap);
+            this.player1 = new Player(TILE_WIDTH/2, TILE_HEIGHT/2, resources['player1'], keyMap);
+            //this.player2 = new Player(TILE_WIDTH/2 + 200, TILE_HEIGHT/2, resources['player1'], keyMap);
 
             stage.addChild(this.player1.displayObject);
+            //stage.addChild(this.player2.displayObject);
         },
         initMobs: function(numMobs) {
 
@@ -54,12 +54,12 @@ player = null;
             var that = this;
             document.onkeydown = function(e) {
                 that.player1.handleKeyDown(e);
-                that.player2.handleKeyDown(e);
+                //that.player2.handleKeyDown(e);
             };
 
             document.onkeyup = function(e) {
                 that.player1.handleKeyUp(e);
-                that.player2.handleKeyUp(e);
+                //that.player2.handleKeyUp(e);
             };
         }
 
