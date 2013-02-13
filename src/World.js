@@ -10,23 +10,26 @@
     }
 
     World.prototype = {
-        tick: function() {
-            stage.update();
+        tick: function(dt) {
+            stage.update({
+                keyboardState: this.keyboardState,
+                dt: dt
+            });
         },
         start: function() {
             createjs.Ticker.addListener(this);
             createjs.Ticker.useRAF = true;
-            createjs.Ticker.setFPS(60);
+            createjs.Ticker.setFPS(30);
         },
         initPlayers: function() {
-            var keyMap = {
+            var p1keyMap = {
                 up: KEY_UP,
                 down: KEY_DOWN,
                 left: KEY_LEFT,
                 right: KEY_RIGHT
             }
 
-            this.player1 = new Player(TILE_WIDTH/2, TILE_HEIGHT/2, resources['player1'], keyMap);
+            this.player1 = new Player(TILE_WIDTH/2, TILE_HEIGHT/2, resources['player1'], p1keyMap);
             //this.player2 = new Player(TILE_WIDTH/2 + 200, TILE_HEIGHT/2, resources['player1'], keyMap);
 
             stage.addChild(this.player1.displayObject);
@@ -51,15 +54,14 @@
             }
         },
         registerKeyEvents: function() {
+            this.keyboardState = {};
             var that = this;
             document.onkeydown = function(e) {
-                that.player1.handleKeyDown(e);
-                //that.player2.handleKeyDown(e);
+                that.keyboardState[e.keyCode] = true;
             };
 
             document.onkeyup = function(e) {
-                that.player1.handleKeyUp(e);
-                //that.player2.handleKeyUp(e);
+                delete that.keyboardState[e.keyCode];
             };
         }
 

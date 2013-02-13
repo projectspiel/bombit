@@ -9,15 +9,20 @@ function Vector(x, y)
         this.y = x1;
     }
 
+    this.reset = function() {
+        this.set(0, 0);
+    }
+
     this.add = function(v) {
-        return new Vector(this.x + v.x, this.y + v.y);
+        this.x += v.x;
+        this.y += v.y;
+        return this;
     }
 
     this.substract = function(v) {
-        return new Vector(
-            this.x - v.x,
-            this.y - v.y
-        );
+        this.x -= v.x;
+        this.y -= v.y;
+        return this;
     }
 
     this.scalar = function(scalar) {

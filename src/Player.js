@@ -1,4 +1,4 @@
-const MOVEMENT_FORCE = 50;
+const MOVEMENT_FORCE = 5000;
 
 (function (window) {
     function Player(x, y, spriteImg, keyMap) {
@@ -6,7 +6,7 @@ const MOVEMENT_FORCE = 50;
         this.pos = new Vector(x, y);
         this.vel = new Vector(0, 0);
         this.force = new Vector(0, 0);
-        this.movement = new Vector(0, 0);
+        this.mass = 1;
 
         this.displayObject = new createjs.BitmapAnimation();
         this.displayObject.regX = TILE_WIDTH / 2 | 0;
@@ -14,27 +14,22 @@ const MOVEMENT_FORCE = 50;
 
         // The onTick hander has to be set here so that the closure has access to the Player instance
         var that = this;
-        this.displayObject.onTick = function() {
-            that.tick();
+        this.displayObject.onTick = function(data) {
+            that.checkInput(data.keyboardState);
+            that.tick(data.dt);
         };
 
         this.activeStateHandler = this.stateHandlers.idle;
         this.init(spriteImg);
     }
 
-    Player.prototype.tick = function (e) {
+    Player.prototype.impulseVectors = {
+        up: new Vector(0, -MOVEMENT_FORCE),
+        down: new Vector(0, MOVEMENT_FORCE),
+        left: new Vector(-MOVEMENT_FORCE, 0),
+        right: new Vector(MOVEMENT_FORCE, 0)
+    };
 
-
-        //@todo doThePhysics()
-        this.displayObject.x = this.pos.x;
-        this.displayObject.y = this.pos.y;
-    }
-
-    Player.prototype.movementVectors = {};
-    Player.prototype.movementVectors[KEY_UP] = new Vector(0, -MOVEMENT_FORCE);
-    Player.prototype.movementVectors[KEY_DOWN] = new Vector(0, MOVEMENT_FORCE);
-    Player.prototype.movementVectors[KEY_LEFT] = new Vector(MOVEMENT_FORCE, 0);
-    Player.prototype.movementVectors[KEY_RIGHT] = new Vector(-MOVEMENT_FORCE, 0);
 
     Player.prototype.stateHandlers = {
         moving : function () {
@@ -47,6 +42,42 @@ const MOVEMENT_FORCE = 50;
 
         }
     };
+
+    Player.prototype.checkInput = function (keyboardState) {
+        this.force.reset();
+        if(keyboardState[this.keyMap.up]) {
+            this.force.add(this.impulseVectors.up);
+        }
+
+        if(keyboardState[this.keyMap.down]) {
+            this.force.add(this.impulseVectors.down);
+        }
+
+        if(keyboardState[this.keyMap.left]) {
+            this.force.add(this.impulseVectors.left);
+        }
+
+        if(keyboardState[this.keyMap.right]) {
+            this.force.add(this.impulseVectors.right);
+        }
+    }
+
+    Player.prototype.tick = function (dt) {
+        var friction = this.vel.scalar(-20);
+        this.force.add(friction);
+
+        this.move(dt);
+    }
+
+    Player.prototype.move = function (dt) {
+        var halfDeltaVel = this.force.scalar(1/this.mass * dt/1000 * 0.5);
+        this.vel.add(halfDeltaVel);
+        this.pos.add(this.vel.scalar(dt/1000));
+        this.vel.add(halfDeltaVel);
+
+        this.displayObject.x = this.pos.x;
+        this.displayObject.y = this.pos.y;
+    }
 
     Player.prototype.init = function (spriteImg) {
         var spriteSheet = new createjs.SpriteSheet({
@@ -66,20 +97,6 @@ const MOVEMENT_FORCE = 50;
         this.displayObject.initialize(spriteSheet);
 
         this.activeStateHandler();
-    };
-
-    Player.prototype.handleKeyDown = function (e) {
-        if (vector = this.movementVectors[e.keyCode]) {
-            this.movement.add(vector);
-            this.pos.x += 10;
-        }
-    };
-
-    Player.prototype.handleKeyUp = function (e) {
-        if (vector = this.movementVectors[e.keyCode]) {
-            this.movement.substract(vector);
-            this.pos.y += 50;
-        }
     };
 
     window.Player = Player;

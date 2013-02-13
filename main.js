@@ -93,20 +93,8 @@ function loadSources() {
             world.initMobs(10);
             world.registerKeyEvents();
             world.start();
-        }, 1000);
+        }, 250);
     };
 
     preloader.loadManifest(manifest);
-}
-
-function handleProgress(event) {
-    ctx = canvas.getContext("2d");
-
-    canvas.width = canvas.width; // clear canvas
-
-    var angle = Math.PI * 2 * event.loaded;
-    ctx.strokeStyle = "white";
-    ctx.beginPath();
-    ctx.arc(gScreenWidth/2, gScreenHeight/2, 100, 0, angle, true);
-    ctx.stroke();
 }
