@@ -6,4 +6,4 @@
     }
 
     window.Entity = Entity;
-} (window));
+}(window));

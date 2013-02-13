@@ -12,11 +12,16 @@ const MOVEMENT_FORCE = 5000;
         this.displayObject.regX = TILE_WIDTH / 2 | 0;
         this.displayObject.regY = TILE_HEIGHT / 2 | 0;
 
-        // The onTick hander has to be set here so that the closure has access to the Player instance
+        // The onTick handler has to be set here and not in a protoype method (like init) so that the closure has access to the Player instance
         var that = this;
-        this.displayObject.onTick = function(data) {
+        this.displayObject.onTick = function (data) {
+            that.force.reset();
             that.checkInput(data.keyboardState);
-            that.tick(data.dt);
+
+            var friction = that.vel.clone().scalar(-20);
+            that.force.add(friction);
+
+            that.move(data.dt);
         };
 
         this.activeStateHandler = this.stateHandlers.idle;
@@ -30,49 +35,40 @@ const MOVEMENT_FORCE = 5000;
         right: new Vector(MOVEMENT_FORCE, 0)
     };
 
-
     Player.prototype.stateHandlers = {
-        moving : function () {
+        moving: function () {
 
         },
-        idle : function () {
+        idle: function () {
             this.displayObject.gotoAndPlay("idle");
         },
-        dying : function () {
+        dying: function () {
 
         }
     };
 
     Player.prototype.checkInput = function (keyboardState) {
-        this.force.reset();
-        if(keyboardState[this.keyMap.up]) {
+        if (keyboardState[this.keyMap.up]) {
             this.force.add(this.impulseVectors.up);
         }
 
-        if(keyboardState[this.keyMap.down]) {
+        if (keyboardState[this.keyMap.down]) {
             this.force.add(this.impulseVectors.down);
         }
 
-        if(keyboardState[this.keyMap.left]) {
+        if (keyboardState[this.keyMap.left]) {
             this.force.add(this.impulseVectors.left);
         }
 
-        if(keyboardState[this.keyMap.right]) {
+        if (keyboardState[this.keyMap.right]) {
             this.force.add(this.impulseVectors.right);
         }
     }
 
-    Player.prototype.tick = function (dt) {
-        var friction = this.vel.scalar(-20);
-        this.force.add(friction);
-
-        this.move(dt);
-    }
-
     Player.prototype.move = function (dt) {
-        var halfDeltaVel = this.force.scalar(1/this.mass * dt/1000 * 0.5);
+        var halfDeltaVel = this.force.clone().scalar(1 / this.mass * dt / 1000 * 0.5);
         this.vel.add(halfDeltaVel);
-        this.pos.add(this.vel.scalar(dt/1000));
+        this.pos.add(this.vel.clone().scalar(dt / 1000));
         this.vel.add(halfDeltaVel);
 
         this.displayObject.x = this.pos.x;
@@ -81,16 +77,16 @@ const MOVEMENT_FORCE = 5000;
 
     Player.prototype.init = function (spriteImg) {
         var spriteSheet = new createjs.SpriteSheet({
-            images : [spriteImg],
-            frames : {
-                count : 8,
-                width : TILE_WIDTH,
-                height : TILE_HEIGHT,
-                regX : 0,
-                regY : 0
+            images: [spriteImg],
+            frames: {
+                count: 8,
+                width: TILE_WIDTH,
+                height: TILE_HEIGHT,
+                regX: 0,
+                regY: 0
             },
-            animations : {
-                idle : [0, 7, true, 10]
+            animations: {
+                idle: [0, 7, true, 10]
             }
         });
         createjs.SpriteSheetUtils.addFlippedFrames(spriteSheet, true, false, false);

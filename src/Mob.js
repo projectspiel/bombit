@@ -2,6 +2,7 @@
     function Mob(mobName, imgMob, x_end) {
         this.initialize(mobName, imgMob, x_end);
     }
+
     Mob.prototype = new createjs.BitmapAnimation();
 
     // public properties:
@@ -95,14 +96,22 @@
 
     Mob.prototype.hitRadius = function (tX, tY, tHit) {
         //early returns speed it up
-        if (tX - tHit > this.x + this.hit) { return; }
-        if (tX + tHit < this.x - this.hit) { return; }
-        if (tY - tHit > this.y + this.hit) { return; }
-        if (tY + tHit < this.y - this.hit) { return; }
+        if (tX - tHit > this.x + this.hit) {
+            return;
+        }
+        if (tX + tHit < this.x - this.hit) {
+            return;
+        }
+        if (tY - tHit > this.y + this.hit) {
+            return;
+        }
+        if (tY + tHit < this.y - this.hit) {
+            return;
+        }
 
         //now do the circle distance test
         return this.hit + tHit > Math.sqrt(Math.pow(Math.abs(this.x - tX), 2) + Math.pow(Math.abs(this.y - tY), 2));
     }
 
     window.Mob = Mob;
-} (window));
+}(window));

@@ -9,9 +9,9 @@
         this.init(resources['block']);
     }
 
-    Block.prototype.init = function(spriteImg) {
+    Block.prototype.init = function (spriteImg) {
         this.displayObject.initialize(spriteImg);
     };
 
     window.Block = Block;
-} (window));
+}(window));

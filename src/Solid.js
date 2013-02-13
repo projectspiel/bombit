@@ -4,4 +4,4 @@
     }
 
     window.Solid = Solid;
-} (window));
+}(window));
