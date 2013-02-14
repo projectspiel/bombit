@@ -104,7 +104,7 @@ const MOVEMENT_FORCE = 5000;
         var spriteSheet = new createjs.SpriteSheet({
             images: [spriteImg],
             frames: {
-                count: 15,
+                count: 15   ,
                 width: TILE_WIDTH,
                 height: TILE_HEIGHT,
                 regX: 0,
