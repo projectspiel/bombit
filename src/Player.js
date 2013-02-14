@@ -22,7 +22,6 @@ const MOVEMENT_FORCE = 5000;
         this.displayObject.regX = TILE_WIDTH / 2 | 0;
         this.displayObject.regY = TILE_HEIGHT / 2 | 0;
 
-        // The onTick handler has to be set here and not in a protoype method (like init) so that the closure has access to the Player instance
         var that = this;
         this.displayObject.onTick = function (data) {
             that.prevState = that.currentState;
@@ -105,7 +104,7 @@ const MOVEMENT_FORCE = 5000;
         var spriteSheet = new createjs.SpriteSheet({
             images: [spriteImg],
             frames: {
-                count: 11,
+                count: 15,
                 width: TILE_WIDTH,
                 height: TILE_HEIGHT,
                 regX: 0,
@@ -114,9 +113,9 @@ const MOVEMENT_FORCE = 5000;
             animations: {
                 idle: [0, 2, true, 50],
                 moveUp: [3, 4, true, 10],
-                moveDown: [5, 6, true, 10],
-                moveLeft: [7, 8, true, 10],
-                moveRight: [9, 10, true, 10]
+                moveDown: [6, 7, true, 10],
+                moveLeft: [9, 10, true, 10],
+                moveRight: [12, 13, true, 10]
             }
         });
         createjs.SpriteSheetUtils.addFlippedFrames(spriteSheet, true, false, false);
