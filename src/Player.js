@@ -3,10 +3,12 @@ const MOVEMENT_FORCE = 5000;
 (function (window) {
     /*
     @todo Refactor all the state / animation logic. It's awful stuff.
-        Only executing the stateHandler when the state changed from the previous frame means we don't call gotoAndPlay
-        every frame (otherwise animation doesnt work), but then we cant do stuff on the stateHandlers that should be done on every frame
-
-        Also, it means that if we go from moving on one direction to another without going through state idle, the animation doenst switch
+        We only execute the stateHandlers when the state changed from the previous frame. This is so that we don't call gotoAndPlay
+        every tick (otherwise animation doesnt work, it rewinds on every tick),
+        BUT
+        it means that if we go from moving on one direction to another without going through state idle, the animation doesn't switch
+        to the correct direction (since state didnt change)
+        also, it means we cant do stuff on the stateHandlers that should be done on every frame
      */
 
     function Player(x, y, spriteImg, keyMap) {
