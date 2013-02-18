@@ -25,14 +25,15 @@ const MOVEMENT_FORCE = 5000;
         var that = this;
         this.displayObject.onTick = function (data) {
             that.prevState = that.currentState;
-
             that.force.reset();
+
             that.checkInput(data.keyboardState);
-
             var friction = that.vel.clone().scalar(-20);
-            that.force.add(friction);
 
+            that.force.add(friction);
             that.move(data.dt);
+
+            that.checkCollisions(data.stage);
 
             if (that.currentState != that.prevState) {
                 that.stateHandlers[that.currentState](that);
@@ -50,7 +51,7 @@ const MOVEMENT_FORCE = 5000;
     };
 
     Player.prototype.stateHandlers = {
-        moving: function (that) {
+        /*moving: function (that) {
             var animationName;
             if (Math.abs(that.vel.x) > Math.abs(that.vel.y)) {
                 animationName = that.vel.x > 0 ? 'moveRight' : 'moveLeft';
@@ -58,6 +59,18 @@ const MOVEMENT_FORCE = 5000;
                 animationName = that.vel.y > 0 ? 'moveDown' : 'moveUp';
             }
             that.displayObject.gotoAndPlay(animationName);
+        },*/
+        movingUp: function (that) {
+            that.displayObject.gotoAndPlay('moveUp');
+        },
+        movingDown: function (that) {
+            that.displayObject.gotoAndPlay('moveDown');
+        },
+        movingLeft: function (that) {
+            that.displayObject.gotoAndPlay('moveLeft');
+        },
+        movingRight: function (that) {
+            that.displayObject.gotoAndPlay('moveRight');
         },
         idle: function (that) {
             that.displayObject.gotoAndPlay("idle");
@@ -71,22 +84,22 @@ const MOVEMENT_FORCE = 5000;
         this.currentState = 'idle';
         if (keyboardState[this.keyMap.up]) {
             this.force.add(this.impulseVectors.up);
-            this.currentState = 'moving';
+            this.currentState = 'movingUp';
         }
 
         if (keyboardState[this.keyMap.down]) {
             this.force.add(this.impulseVectors.down);
-            this.currentState = 'moving';
+            this.currentState = 'movingDown';
         }
 
         if (keyboardState[this.keyMap.left]) {
             this.force.add(this.impulseVectors.left);
-            this.currentState = 'moving';
+            this.currentState = 'movingLeft';
         }
 
         if (keyboardState[this.keyMap.right]) {
             this.force.add(this.impulseVectors.right);
-            this.currentState = 'moving';
+            this.currentState = 'movingRight';
         }
     }
 
@@ -100,11 +113,32 @@ const MOVEMENT_FORCE = 5000;
         this.displayObject.y = this.pos.y;
     }
 
+    Player.prototype.checkCollisions = function (stage) {
+        for(var i = 0 ; i < stage.getNumChildren() ; i++) {
+            var entity = stage.getChildAt(i);
+            if (entity == this.displayObject) {
+                continue; // Don't check against self
+            }
+
+            var intersection = ndgmr.checkPixelCollision(this.displayObject, entity, 0, true);
+            //var intersection = ndgmr.checkRectCollision(this.displayObject, entity, 0, true);
+            if (intersection) {
+                if (intersection.width < intersection.height) {
+                    this.pos.x += (this.pos.x >= intersection.x)? intersection.width : -intersection.width;
+                } else {
+                    this.pos.y += (this.pos.y >= intersection.y)? intersection.height : -intersection.height;
+                }
+            }
+        }
+
+        this.displayObject.x = this.pos.x;
+        this.displayObject.y = this.pos.y;
+    }
+
     Player.prototype.init = function (spriteImg) {
         var spriteSheet = new createjs.SpriteSheet({
             images: [spriteImg],
             frames: {
-                count: 15   ,
                 width: TILE_WIDTH,
                 height: TILE_HEIGHT,
                 regX: 0,
@@ -112,14 +146,15 @@ const MOVEMENT_FORCE = 5000;
             },
             animations: {
                 idle: [0, 2, true, 50],
-                moveUp: [3, 4, true, 10],
-                moveDown: [6, 7, true, 10],
-                moveLeft: [9, 10, true, 10],
-                moveRight: [12, 13, true, 10]
+                moveUp: [3, 4, true, 5],
+                moveDown: [6, 7, true, 5],
+                moveLeft: [9, 10, true, 5],
+                moveRight: [12, 13, true, 5]
             }
         });
-        createjs.SpriteSheetUtils.addFlippedFrames(spriteSheet, true, false, false);
         this.displayObject.initialize(spriteSheet);
+
+        this.stateHandlers['idle'](this); //@todo FIX we need to play an animation on init, or the collision algorithm crashes on the first frame (it needs a valid spriteSheet.currentFrame to be set)
     };
 
     window.Player = Player;

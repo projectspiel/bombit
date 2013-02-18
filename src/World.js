@@ -13,7 +13,8 @@
         tick: function (dt) {
             stage.update({
                 keyboardState: this.keyboardState,
-                dt: dt
+                dt: dt,
+                stage: stage
             });
         },
         start: function () {
