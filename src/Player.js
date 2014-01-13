@@ -18,12 +18,31 @@ const MOVEMENT_FORCE = 5000;
         this.force = new Vector(0, 0);
         this.mass = 1;
 
-        this.displayObject = new createjs.BitmapAnimation();
+        var spriteSheet = new createjs.SpriteSheet({
+            images: [spriteImg],
+            frames: {
+                width: TILE_WIDTH,
+                height: TILE_HEIGHT,
+                regX: 0,
+                regY: 0
+            },
+            animations: {
+                idle: [0, 2, true, 50],
+                moveUp: [3, 4, true, 5],
+                moveDown: [6, 7, true, 5],
+                moveLeft: [9, 10, true, 5],
+                moveRight: [12, 13, true, 5]
+            }
+        });
+
+        this.displayObject = new createjs.Sprite(spriteSheet, "idle");
         this.displayObject.regX = TILE_WIDTH / 2 | 0;
         this.displayObject.regY = TILE_HEIGHT / 2 | 0;
 
         var that = this;
-        this.displayObject.onTick = function (data) {
+        this.displayObject.addEventListener("tick", function (event) {
+            var data = event.params[1];
+
             that.prevState = that.currentState;
             that.force.reset();
 
@@ -38,10 +57,14 @@ const MOVEMENT_FORCE = 5000;
             if (that.currentState != that.prevState) {
                 that.stateHandlers[that.currentState](that);
             }
-        };
+        });
 
         this.init(spriteImg);
     }
+
+    Player.prototype.init = function () {
+
+    };
 
     Player.prototype.impulseVectors = {
         up: new Vector(0, -MOVEMENT_FORCE),
@@ -134,28 +157,6 @@ const MOVEMENT_FORCE = 5000;
         this.displayObject.x = this.pos.x;
         this.displayObject.y = this.pos.y;
     }
-
-    Player.prototype.init = function (spriteImg) {
-        var spriteSheet = new createjs.SpriteSheet({
-            images: [spriteImg],
-            frames: {
-                width: TILE_WIDTH,
-                height: TILE_HEIGHT,
-                regX: 0,
-                regY: 0
-            },
-            animations: {
-                idle: [0, 2, true, 50],
-                moveUp: [3, 4, true, 5],
-                moveDown: [6, 7, true, 5],
-                moveLeft: [9, 10, true, 5],
-                moveRight: [12, 13, true, 5]
-            }
-        });
-        this.displayObject.initialize(spriteSheet);
-
-        this.stateHandlers['idle'](this); //@todo FIX we need to play an animation on init, or the collision algorithm crashes on the first frame (it needs a valid spriteSheet.currentFrame to be set)
-    };
 
     window.Player = Player;
 }(window));

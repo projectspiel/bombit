@@ -1,25 +1,25 @@
 (function (window) {
     var mobs = [];
     var stage = null;
+    var keyboardState = {};
 
     //@todo Singletonize!
     function World(canvas) {
         if (!this instanceof arguments.callee) throw new Error("Constructor called as a function");
-
         stage = new createjs.Stage(canvas);
+        stage.autoClear = true;
     }
 
     World.prototype = {
-        tick: function (dt) {
-            stage.update({
-                keyboardState: this.keyboardState,
-                dt: dt,
+        tick: function (event) {
+            stage.update(event, {
+                keyboardState: keyboardState,
+                dt: event.delta,
                 stage: stage
             });
         },
         start: function () {
-            createjs.Ticker.addListener(this);
-            createjs.Ticker.useRAF = true;
+            createjs.Ticker.addEventListener("tick", this.tick);
             createjs.Ticker.setFPS(30);
         },
         initPlayers: function () {
@@ -28,13 +28,11 @@
                 down: KEY_DOWN,
                 left: KEY_LEFT,
                 right: KEY_RIGHT
-            }
+            };
 
             this.player1 = new Player(TILE_WIDTH / 2, TILE_HEIGHT / 2, resources['player1'], p1keyMap);
-            //this.player2 = new Player(TILE_WIDTH/2 + 200, TILE_HEIGHT/2, resources['player1'], keyMap);
 
             stage.addChild(this.player1.displayObject);
-            //stage.addChild(this.player2.displayObject);
         },
         initMobs: function (numMobs) {
 
@@ -55,18 +53,16 @@
             }
         },
         registerKeyEvents: function () {
-            this.keyboardState = {};
-            var that = this;
             document.onkeydown = function (e) {
-                that.keyboardState[e.keyCode] = true;
+                keyboardState[e.keyCode] = true;
             };
 
             document.onkeyup = function (e) {
-                delete that.keyboardState[e.keyCode];
+                delete keyboardState[e.keyCode];
             };
         }
 
-    }
+    };
 
     window.World = World;
 }(window));

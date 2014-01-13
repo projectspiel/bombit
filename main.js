@@ -7,12 +7,8 @@ const KEY_UP = 38;
 const KEY_LEFT = 37;
 const KEY_RIGHT = 39;
 const KEY_DOWN = 40;
-const KEY_W = 87;
-const KEY_A = 65;
-const KEY_D = 68;
-const KEY_S = 83;
-const KEY_SPACE = 32;
 
+var canvas;
 var gScreenWidth;
 var gScreenHeight;
 var resources = {};
@@ -31,14 +27,13 @@ function init() {
 function loadResources() {
     var manifest = [
         {src:"res/img/solid_block.png", id:"block"},
-        {src:"res/img/player1.png", id:"player1"},
-        {src:"res/img/player2.png", id:"player2"}
+        {src:"res/img/player.png", id:"player1"}
     ];
 
-    var preloader = new createjs.PreloadJS(false);
+    var queue = new createjs.LoadQueue(false);
 
-    preloader.onProgress = function(event) {
-        ctx = canvas.getContext("2d");
+    queue.on("progress", function(event) {
+        var ctx = canvas.getContext("2d");
 
         canvas.width = canvas.width; // clear canvas
 
@@ -47,22 +42,23 @@ function loadResources() {
         ctx.beginPath();
         ctx.arc(gScreenWidth/2, gScreenHeight/2, 100, 0, angle, true);
         ctx.stroke();
-    };
+    });
 
-    preloader.onFileLoad = function(event) {
-        switch(event.type) {
-            case createjs.PreloadJS.IMAGE:
+    queue.on("fileload", function(event) {
+        var item = event.item;
+        switch(item.type) {
+            case createjs.LoadQueue.IMAGE:
                 var img = new Image();
-                img.src = event.src;
-                resources[event.id] = img;
+                img.src = item.src;
+                resources[item.id] = img;
                 break;
 
-            case createjs.PreloadJS.SOUND:
+            case createjs.LoadQueue.SOUND:
                 break;
         }
-    };
+    });
 
-    preloader.loadManifest(manifest);
+    queue.loadManifest(manifest);
 }
 
 function loadSources() {
@@ -73,7 +69,7 @@ function loadSources() {
         {src:"src/Player.js", id:"player"}
     ];
 
-    var preloader = new createjs.PreloadJS(false);
+    var preloader = new createjs.LoadQueue(false);
 
     preloader.onFileLoad = function(event) {
         switch(event.type) {
@@ -83,7 +79,7 @@ function loadSources() {
         }
     };
 
-    preloader.onComplete = function(event) {
+    preloader.on("complete", function() {
         //@todo THIS IS BULLSHIT, we should have an 'allLoaded' global flag we check so that we dont depend on the order of the load calls
         setTimeout(function() {
             var world = new World(canvas);
@@ -94,7 +90,7 @@ function loadSources() {
             world.registerKeyEvents();
             world.start();
         }, 250);
-    };
+    });
 
     preloader.loadManifest(manifest);
 }
