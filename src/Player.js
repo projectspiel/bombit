@@ -19,7 +19,7 @@ const MOVEMENT_FORCE = 5000;
         this.mass = 1;
 
         var spriteSheet = new createjs.SpriteSheet({
-            images: [spriteImg],
+            images: [spriteImg], //@TODO spritesheet can handle preloading now? simplify code
             frames: {
                 width: TILE_WIDTH,
                 height: TILE_HEIGHT,
@@ -27,15 +27,15 @@ const MOVEMENT_FORCE = 5000;
                 regY: 0
             },
             animations: {
-                idle: [0, 2, true, 50],
-                moveUp: [3, 4, true, 5],
-                moveDown: [6, 7, true, 5],
-                moveLeft: [9, 10, true, 5],
-                moveRight: [12, 13, true, 5]
+                idle: [0, 2, true, 0.02],
+                moveUp: [3, 4, true, 0.2],
+                moveDown: [6, 7, true, 0.2],
+                moveLeft: [9, 10, true, 0.2],
+                moveRight: [12, 13, true, 0.2]
             }
         });
 
-        this.displayObject = new createjs.Sprite(spriteSheet, "idle");
+        this.displayObject = new createjs.Sprite(spriteSheet);
         this.displayObject.regX = TILE_WIDTH / 2 | 0;
         this.displayObject.regY = TILE_HEIGHT / 2 | 0;
 
@@ -146,6 +146,7 @@ const MOVEMENT_FORCE = 5000;
             var intersection = ndgmr.checkPixelCollision(this.displayObject, entity, 0, true);
             //var intersection = ndgmr.checkRectCollision(this.displayObject, entity, 0, true);
             if (intersection) {
+                console.log("cuak");
                 if (intersection.width < intersection.height) {
                     this.pos.x += (this.pos.x >= intersection.x)? intersection.width : -intersection.width;
                 } else {

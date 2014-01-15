@@ -3,7 +3,7 @@
     var stage = null;
     var keyboardState = {};
 
-    //@todo Singletonize!
+    //@todo Singletonize?
     function World(canvas) {
         if (!this instanceof arguments.callee) throw new Error("Constructor called as a function");
         stage = new createjs.Stage(canvas);
