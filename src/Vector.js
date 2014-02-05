@@ -1,48 +1,41 @@
 function Vector(x, y) {
-
     this.x = x;
     this.y = y;
+}
 
-    this.set = function (x1, y1) {
+Vector.prototype = {
+    set: function (x1, y1) {
         this.x = y1;
         this.y = x1;
-    }
-
-    this.reset = function () {
+    },
+    reset: function () {
         this.set(0, 0);
-    }
-
-    this.clone = function () {
+    },
+    clone: function () {
         return new Vector(this.x, this.y);
-    }
-
-    this.add = function (v) {
+    },
+    add: function (v) {
         this.x += v.x;
         this.y += v.y;
         return this;
-    }
-
-    this.substract = function (v) {
+    },
+    substract: function (v) {
         this.x -= v.x;
         this.y -= v.y;
         return this;
-    }
-
-    this.scalar = function (scalar) {
+    },
+    scalar: function (scalar) {
         this.x *= scalar;
         this.y *= scalar;
         return this;
-    }
-
-    this.module = function () {
+    },
+    module: function () {
         return Math.sqrt(this.x * this.x + this.y * this.y);
-    }
-
-    this.distance = function (v) {
+    },
+    distance: function (v) {
         return Math.sqrt(Math.pow(this.x - v.x, 2) + Math.pow(this.y - v.y, 2));
-    }
-
-    this.normalize = function () {
+    },
+    normalize: function () {
         var aux = this.x * this.x + this.y * this.y;
         if (Math.abs(aux - 1.0) > 0.00001) {	// Don't normalize if it's not needed
             var magnitude = Math.sqrt(aux);
@@ -50,13 +43,11 @@ function Vector(x, y) {
             this.y /= magnitude;
         }
         return this;
-    }
-
-    this.vectorTo = function (v) {
+    },
+    vectorTo: function (v) {
         return v.substract(this).normalize();
-    }
-
-    this.draw = function (from, id, color) {
+    },
+    draw: function (from, id, color) {
         var container = $("#" + id);
         if (container.length == 0) {
             $("#console").append("<p id=" + id + "></p>");
@@ -77,5 +68,4 @@ function Vector(x, y) {
         ctx.fillText(id, from.x + this.x + 5, from.y + this.y + 5);
         ctx.restore();
     }
-
-}
+};
