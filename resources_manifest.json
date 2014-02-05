@@ -1,0 +1,7 @@
+{
+    "path": "res/",
+    "manifest": [
+        {"src":"img/solid_block.png", "id":"block"},
+        {"src":"img/player.png", "id":"player"}
+    ]
+}
