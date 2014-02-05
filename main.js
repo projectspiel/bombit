@@ -42,22 +42,13 @@ function loadResources() {
                 break;
 
             case createjs.LoadQueue.JAVASCRIPT:
-                // LoadQueue(false) auto-adds scripts to the DOM
+                // createjs.LoadQueue(false) auto-adds scripts to the DOM
                 break;
         }
     });
 
     preloader.on("complete", function() {
-        //@todo THIS IS BULLSHIT, we should have an 'allLoaded' global flag we check so that we dont depend on the order of the load calls
-        setTimeout(function() {
-            var world = new World(canvas);
-            //TODO: refactor, we should just call world.init({options})
-            world.initLevel();
-            world.initPlayer();
-            world.initMobs(10);
-            world.registerKeyEvents();
-            world.start();
-        }, 250);
+        setTimeout(function() {new World(canvas).start()}, 250);
     });
 
     preloader.loadManifest("sources_manifest.json");
