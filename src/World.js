@@ -1,4 +1,5 @@
-function World(canvas) {
+var World = function(canvas, resources) {
+    this.resources = resources;
     this.stage = new createjs.Stage(canvas);
     this.stage.autoClear = true;
 
@@ -30,7 +31,7 @@ World.prototype = {
             right: KEY_RIGHT
         };
 
-        var player = new Player(TILE_WIDTH / 2, TILE_HEIGHT / 2, resources['player'], keyMap);
+        var player = new Player(TILE_WIDTH / 2, TILE_HEIGHT / 2, this.resources.playerSprite, keyMap);
 
         this.stage.addChild(player.displayObject);
     },
@@ -49,7 +50,7 @@ World.prototype = {
             x = TILE_WIDTH * 1.5 + i * TILE_WIDTH * 2;
             for (var j = 0; j < numBlocksY; j++) {
                 y = STATUS_BAR_HEIGHT + TILE_HEIGHT * 1.5 + j * TILE_HEIGHT * 2;
-                var block = new entities.Block(x, y);
+                var block = new entities.Block(x, y, this.resources.blockSprite);
                 this.stage.addChild(block.displayObject);
             }
         }

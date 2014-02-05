@@ -1,23 +1,15 @@
 const TILE_WIDTH = 50;
 const TILE_HEIGHT = 50;
 const STATUS_BAR_HEIGHT = TILE_HEIGHT;
-
-// KEY MAPS
 const KEY_UP = 38;
 const KEY_LEFT = 37;
 const KEY_RIGHT = 39;
 const KEY_DOWN = 40;
 
-var canvas;
-var resources = {};
-
 window.onload = function() {
-    canvas = document.getElementById("dasCanvas");
-    loadResources();
-};
-
-function loadResources() {
-    var preloader = new createjs.LoadQueue(false);
+    var preloader = new createjs.LoadQueue(false),
+        resources = {},
+        canvas = window.document.getElementById("dasCanvas");
 
     preloader.on("progress", function(event) {
         var ctx = canvas.getContext("2d"),
@@ -48,7 +40,7 @@ function loadResources() {
     });
 
     preloader.on("complete", function() {
-        setTimeout(function() {new World(canvas).start()}, 250);
+        new World(canvas, resources).start();
     });
 
     preloader.loadManifest("sources_manifest.json");
