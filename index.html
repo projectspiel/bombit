@@ -6,10 +6,19 @@
     <script src="lib/easeljs-0.7.1.min.js"></script>
     <script src="lib/preloadjs-0.4.1.min.js"></script>
     <script src="lib/ndgmr.Collision.js"></script>
+    <script src="lib/advice.js"></script>
     <script src="main.js"></script>
     <style>
         canvas {
             background-color:#393;
+            float: left;
+        }
+
+        #logOutput {
+            width: 500px;
+            height: 600px;
+            border: solid;
+            float: right;
         }
     </style>
 </head>
@@ -20,5 +29,6 @@
         Your browser doesn't support canvas.
     </canvas>
 </div>
+<div id="logOutput"></div>
 </body>
 </html>

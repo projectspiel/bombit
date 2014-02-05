@@ -7,13 +7,13 @@ var World = function(canvas, resources) {
     this.initPlayer();
     this.initMobs(0);
     this.registerKeyEvents();
-}
+};
 
 World.prototype = {
     tick: function (event) {
         this.stage.update(event, {
             keyboardState: this.keyboardState,
-            dt: event.delta,
+            dt: event['delta'],
             stage: this.stage
         });
     },
@@ -31,7 +31,7 @@ World.prototype = {
             right: KEY_RIGHT
         };
 
-        var player = new Player(TILE_WIDTH / 2, TILE_HEIGHT / 2, this.resources.playerSprite, keyMap);
+        var player = new Player(TILE_WIDTH / 2, TILE_HEIGHT / 2, this.resources['playerSprite'], keyMap);
 
         this.stage.addChild(player.displayObject);
     },
@@ -50,7 +50,7 @@ World.prototype = {
             x = TILE_WIDTH * 1.5 + i * TILE_WIDTH * 2;
             for (var j = 0; j < numBlocksY; j++) {
                 y = STATUS_BAR_HEIGHT + TILE_HEIGHT * 1.5 + j * TILE_HEIGHT * 2;
-                var block = new entities.Block(x, y, this.resources.blockSprite);
+                var block = new entities.Block(x, y, this.resources['blockSprite']);
                 this.stage.addChild(block.displayObject);
             }
         }
