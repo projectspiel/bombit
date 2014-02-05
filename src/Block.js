@@ -1,17 +1,11 @@
-(function (window) {
-    function Block(x, y) {
-        this.displayObject = new createjs.Bitmap();
-        this.displayObject.regX = TILE_WIDTH / 2 | 0;
-        this.displayObject.regY = TILE_HEIGHT / 2 | 0;
-        this.x = this.displayObject.x = x;
-        this.y = this.displayObject.y = y;
+var entities = entities || {};
 
-        this.init(resources['block']);
-    }
+entities.Block = function(x, y) {
+    components.asPositionable.init.call(this, {x: x, y: y});
+    components.asRenderable.init.call(this, {sprite: resources['block'], width: TILE_WIDTH, height: TILE_HEIGHT});
 
-    Block.prototype.init = function (spriteImg) {
-        this.displayObject.initialize(spriteImg);
-    };
+    this.render();
+};
 
-    window.Block = Block;
-}(window));
+components.asPositionable.call(entities.Block.prototype);
+components.asRenderable.call(entities.Block.prototype);

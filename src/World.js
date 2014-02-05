@@ -1,3 +1,8 @@
+/*
+//this creates a singleton
+var myObject = new function MyObject() {};
+*/
+
 (function (window) {
     var mobs = [];
     var stage = null;
@@ -47,7 +52,7 @@
                 x = TILE_WIDTH * 1.5 + i * TILE_WIDTH * 2;
                 for (var j = 0; j < numBlocksY; j++) {
                     y = STATUS_BAR_HEIGHT + TILE_HEIGHT * 1.5 + j * TILE_HEIGHT * 2;
-                    var block = new Block(x, y);
+                    var block = new entities.Block(x, y);
                     stage.addChild(block.displayObject);
                 }
             }
