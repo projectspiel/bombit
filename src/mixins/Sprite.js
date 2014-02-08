@@ -1,9 +1,11 @@
 var mixins = mixins || {};
 
-mixins.Sprite = function() {
+mixins.Sprite = function(spriteSheetData) {
     if (!this.isPositionable) {
         throw "Entity needs to be Positionable";
     }
+
+    this._spriteSheet = new createjs.SpriteSheet(spriteSheetData);
 
     this.render = function() {
         this.displayObject.x = this.pos.x;
@@ -14,16 +16,9 @@ mixins.Sprite = function() {
         return this.displayObject;
     }
 
-    this.requires = function() {
-        //Positionable
-    };
-
     this.isSprite = true;
 };
 
-mixins.Sprite.init = function(params) {
-    this.displayObject = new createjs.Bitmap();
-    this.displayObject.regX = params.width / 2 | 0;
-    this.displayObject.regY = params.height / 2 | 0;
-    this.displayObject.initialize(params.sprite);
+mixins.Sprite.init = function() {
+    this.displayObject = new createjs.Sprite(this._spriteSheet);
 };

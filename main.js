@@ -6,9 +6,10 @@ const KEY_LEFT = 37;
 const KEY_RIGHT = 39;
 const KEY_DOWN = 40;
 
+resources = {};
+
 window.onload = function() {
     var preloader = new createjs.LoadQueue(false),
-        resources = {},
         canvas = window.document.getElementById("dasCanvas");
 
     preloader.on("progress", function(event) {
@@ -40,11 +41,11 @@ window.onload = function() {
     });
 
     preloader.on("complete", function() {
-        Object.build(World, canvas, resources).start();
+        Object.build(World, canvas).start();
     });
 
-    preloader.loadManifest("sources_manifest.json");
     preloader.loadManifest("resources_manifest.json");
+    preloader.loadManifest("sources_manifest.json");
 };
 
 Object.build = function(o) {
