@@ -33,7 +33,7 @@ World.prototype = {
 
         var player = new Player(TILE_WIDTH / 2, TILE_HEIGHT / 2, this.resources['playerSprite'], keyMap);
 
-        this.stage.addChild(player.displayObject);
+        this.stage.addChild(player.sprite);
     },
 
     initMobs: function (numMobs) {
@@ -51,7 +51,7 @@ World.prototype = {
             for (var j = 0; j < numBlocksY; j++) {
                 y = STATUS_BAR_HEIGHT + TILE_HEIGHT * 1.5 + j * TILE_HEIGHT * 2;
                 var block = Object.build(entities.Block, x, y, this.resources);
-                this.stage.addChild(block.getDisplayObject());
+                this.stage.addChild(block.getSprite());
             }
         }
     },

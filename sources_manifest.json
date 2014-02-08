@@ -2,7 +2,7 @@
     "path": "src/",
     "manifest": [
         {"src":"Vector.js", "id":"vector"},
-        {"src":"mixins/asRenderable.js", "id":"asRenderable"},
+        {"src":"mixins/asSprite.js", "id":"asRenderable"},
         {"src":"mixins/asUpdateable.js", "id":"asUpdateable"},
         {"src":"mixins/asPositionable.js", "id":"asPositionable"},
         {"src":"World.js", "id":"world"},
