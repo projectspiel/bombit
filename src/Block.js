@@ -1,8 +1,8 @@
 var entities = entities || {};
 
-entities.Block = function(x, y, sprite) {
+entities.Block = function(x, y, resources) {
     components.asPositionable.init.call(this, {x: x, y: y});
-    components.asRenderable.init.call(this, {sprite: sprite, width: TILE_WIDTH, height: TILE_HEIGHT});
+    components.asRenderable.init.call(this, {sprite: resources['blockSprite'], width: TILE_WIDTH, height: TILE_HEIGHT});
 
     this.render();
 };

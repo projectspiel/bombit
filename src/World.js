@@ -50,8 +50,8 @@ World.prototype = {
             x = TILE_WIDTH * 1.5 + i * TILE_WIDTH * 2;
             for (var j = 0; j < numBlocksY; j++) {
                 y = STATUS_BAR_HEIGHT + TILE_HEIGHT * 1.5 + j * TILE_HEIGHT * 2;
-                var block = new entities.Block(x, y, this.resources['blockSprite']);
-                this.stage.addChild(block.displayObject);
+                var block = Object.build(entities.Block, x, y, this.resources);
+                this.stage.addChild(block.getDisplayObject());
             }
         }
     },

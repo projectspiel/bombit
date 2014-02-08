@@ -40,9 +40,16 @@ window.onload = function() {
     });
 
     preloader.on("complete", function() {
-        new World(canvas, resources).start();
+        Object.build(World, canvas, resources).start();
     });
 
     preloader.loadManifest("sources_manifest.json");
     preloader.loadManifest("resources_manifest.json");
+};
+
+Object.build = function(o) {
+    var initArgs = Array.prototype.slice.call(arguments, 1);
+    var instance = Object.create(o.prototype);
+    o.apply(instance, initArgs);
+    return instance;
 }

@@ -6,6 +6,10 @@ components.asRenderable = function() {
         this.displayObject.y = this.pos.y;
     };
 
+    this.getDisplayObject = function() {
+        return this.displayObject;
+    }
+
     this.requires = function() {
         //Positionable
     };
