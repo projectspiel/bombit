@@ -2,9 +2,9 @@
     "path": "src/",
     "manifest": [
         {"src":"Vector.js", "id":"vector"},
-        {"src":"mixins/asSprite.js", "id":"asRenderable"},
-        {"src":"mixins/asUpdateable.js", "id":"asUpdateable"},
-        {"src":"mixins/asPositionable.js", "id":"asPositionable"},
+        {"src":"mixins/Sprite.js", "id":"Renderable"},
+        {"src":"mixins/Updateable.js", "id":"Updateable"},
+        {"src":"mixins/Positionable.js", "id":"Positionable"},
         {"src":"World.js", "id":"world"},
         {"src":"Block.js", "id":"block"},
         {"src":"Player.js", "id":"player"}
