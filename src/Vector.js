@@ -1,6 +1,6 @@
 function Vector(x, y) {
-    this.x = x;
-    this.y = y;
+    this.x = x || 0;
+    this.y = y || 0;
 }
 
 Vector.prototype = {
@@ -12,7 +12,7 @@ Vector.prototype = {
         this.set(0, 0);
     },
     clone: function () {
-        return new Vector(this.x, this.y);
+        return Object.build(Vector, this.x, this.y);
     },
     add: function (v) {
         this.x += v.x;

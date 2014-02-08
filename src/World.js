@@ -30,9 +30,9 @@ World.prototype = {
             right: KEY_RIGHT
         };
 
-        var player = new Player(TILE_WIDTH / 2, TILE_HEIGHT / 2, resources['playerImage'], keyMap);
+        var player = Object.build(entities.Player, TILE_WIDTH / 2, TILE_HEIGHT / 2, keyMap);
 
-        this.stage.addChild(player.displayObject);
+        this.stage.addChild(player.getDisplayObject());
     },
 
     initMobs: function (numMobs) {

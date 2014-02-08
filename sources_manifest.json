@@ -5,6 +5,7 @@
         {"src":"mixins/Sprite.js", "id":"Renderable"},
         {"src":"mixins/Updateable.js", "id":"Updateable"},
         {"src":"mixins/Positionable.js", "id":"Positionable"},
+        {"src":"mixins/Physical.js", "id":"Physical"},
         {"src":"World.js", "id":"world"},
         {"src":"Block.js", "id":"block"},
         {"src":"Player.js", "id":"player"}

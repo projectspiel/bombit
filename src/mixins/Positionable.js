@@ -8,6 +8,6 @@ mixins.Positionable = function() {
     this.isPositionable = true;
 };
 
-mixins.Positionable.init = function(params) {
-    this.pos = new Vector(params.x, params.y);
+mixins.Positionable.init = function(x, y) {
+    this.pos = new Vector(x, y);
 };
