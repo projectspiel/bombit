@@ -66,10 +66,10 @@ entities.Player.prototype = {
     },
     applyInput: function (keyboardState) {
         var impulseVectors = {
-            up: new Vector(0, -MOVEMENT_FORCE),
-            down: new Vector(0, MOVEMENT_FORCE),
-            left: new Vector(-MOVEMENT_FORCE, 0),
-            right: new Vector(MOVEMENT_FORCE, 0)
+            up: Object.build(Vector, 0, -MOVEMENT_FORCE),
+            down: Object.build(Vector, 0, MOVEMENT_FORCE),
+            left: Object.build(Vector, -MOVEMENT_FORCE, 0),
+            right: Object.build(Vector, MOVEMENT_FORCE, 0)
         };
 
         this.currentState = 'idle';
@@ -122,10 +122,6 @@ mixins.Collidable.apply(entities.Player.prototype, [function(intersection) {
 
 mixins.Updateable.apply(entities.Player.prototype, [function (data) {
     this.prevState = this.currentState;
-    this.force.reset();
-
-    var friction = this.vel.clone().scalar(-20);
-    this.force.add(friction);
 
     this.applyInput(data.keyboardState);
     this.stateHandlers[this.currentState](this);
@@ -133,7 +129,11 @@ mixins.Updateable.apply(entities.Player.prototype, [function (data) {
         this.stateChangeHandlers[this.currentState](this);
     }
 
+    var friction = this.vel.clone().scalar(-20);
+    this.force.add(friction);
     this.move(data.dt);
+    this.force.reset();
+
     this.checkCollisions(data.stage);
 
     this.render();

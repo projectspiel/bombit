@@ -9,5 +9,5 @@ mixins.Positionable = function() {
 };
 
 mixins.Positionable.init = function(x, y) {
-    this.pos = new Vector(x, y);
+    this.pos = Object.build(Vector, x, y);
 };
