@@ -1,35 +1,17 @@
 var entities = entities || {};
 
 const MOVEMENT_FORCE = 5000;
+const MASS = 1;
 
 entities.Player = function(x, y, keyMap) {
     mixins.Positionable.init.call(this, x, y);
-    mixins.Physical.init.call(this, 1);
     mixins.Sprite.init.call(this);
+    mixins.Updateable.init.call(this);
+    mixins.Physical.init.call(this, MASS);
     mixins.Collidable.init.call(this);
 
     this.currentState = 'idle';
     this.keyMap = keyMap;
-
-    this.getDisplayObject().addEventListener("tick", function (event) {
-        var data = event.params[1];
-        this.prevState = this.currentState;
-        this.force.reset();
-
-        var friction = this.vel.clone().scalar(-20);
-        this.force.add(friction);
-
-        this.applyInput(data.keyboardState);
-        this.stateHandlers[this.currentState](this);
-        if (this.currentState != this.prevState) {
-            this.stateChangeHandlers[this.currentState](this);
-        }
-
-        this.move(data.dt);
-        this.checkCollisions(data.stage);
-
-        this.render();
-    }.bind(this));
 };
 
 /*++++++++++++++++++++++++++++++++++++++++++++*/
@@ -88,7 +70,7 @@ entities.Player.prototype = {
             down: new Vector(0, MOVEMENT_FORCE),
             left: new Vector(-MOVEMENT_FORCE, 0),
             right: new Vector(MOVEMENT_FORCE, 0)
-        }
+        };
 
         this.currentState = 'idle';
         if (keyboardState[this.keyMap.up]) {
@@ -136,4 +118,23 @@ mixins.Collidable.apply(entities.Player.prototype, [function(intersection) {
         this.pos.y += (this.pos.y >= intersection.y)? intersection.height : -intersection.height;
     }
     this.force.reset();
+}]);
+
+mixins.Updateable.apply(entities.Player.prototype, [function (data) {
+    this.prevState = this.currentState;
+    this.force.reset();
+
+    var friction = this.vel.clone().scalar(-20);
+    this.force.add(friction);
+
+    this.applyInput(data.keyboardState);
+    this.stateHandlers[this.currentState](this);
+    if (this.currentState != this.prevState) {
+        this.stateChangeHandlers[this.currentState](this);
+    }
+
+    this.move(data.dt);
+    this.checkCollisions(data.stage);
+
+    this.render();
 }]);
