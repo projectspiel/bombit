@@ -5,8 +5,6 @@ mixins.Collidable = function(callback) {
         throw "Entity must be Sprite";
     }
 
-    this._callback = callback;
-
     this.checkCollisions = function(stage) {
         for(var i = 0 ; i < stage.getNumChildren() ; i++) {
             var entity = stage.getChildAt(i);
@@ -15,7 +13,7 @@ mixins.Collidable = function(callback) {
             }
 
             var intersection = ndgmr.checkPixelCollision(this._displayObject, entity, 0, true);
-            if(intersection) {this._callback(intersection)}
+            if(intersection) {callback.call(this, intersection)}
         }
     };
 
