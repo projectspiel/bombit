@@ -5,7 +5,7 @@ mixins.Physical = function() {
         throw "Entity must be Positionable";
     }
 
-    this.move = function(dt) {
+    this.move = function(dt) { //@todo split in applyForce and move?
         var halfDeltaVel = this.force.clone().scalar(1 / this.mass * dt / 1000 * 0.5);
         this.vel.add(halfDeltaVel);
         this.pos.add(this.vel.clone().scalar(dt / 1000));

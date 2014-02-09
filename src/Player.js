@@ -3,7 +3,7 @@ var entities = entities || {};
 const MOVEMENT_FORCE = 5000;
 const MASS = 1;
 
-entities.Player = function(x, y, keyMap) {
+entities.Player = function(x, y, keyMap, keyboardState) {
     mixins.Positionable.init.call(this, x, y);
     mixins.Sprite.init.call(this);
     mixins.Updateable.init.call(this);
@@ -11,10 +11,10 @@ entities.Player = function(x, y, keyMap) {
     mixins.Collidable.init.call(this);
 
     this.currentState = 'idle';
-    this.keyMap = keyMap;
+    this._keyMap = keyMap;
+    this._keyboardState = keyboardState;
 };
 
-/*++++++++++++++++++++++++++++++++++++++++++++*/
 /*
 @todo Refactor all the state / animation logic. It's awful stuff.
     We only execute the stateHandlers when the state changed from the previous frame. This is so that we don't call gotoAndPlay
@@ -27,32 +27,32 @@ entities.Player = function(x, y, keyMap) {
 
 entities.Player.prototype = {
     stateHandlers: {
-        movingUp: function (that) {
+        movingUp: function () {
         },
-        movingDown: function (that) {
+        movingDown: function () {
         },
-        movingLeft: function (that) {
+        movingLeft: function () {
         },
-        movingRight: function (that) {
+        movingRight: function () {
         },
-        idle: function (that) {
+        idle: function () {
         }
     },
     stateChangeHandlers: {
-        movingUp: function (that) {
-            that._displayObject.gotoAndPlay('moveUp');
+        movingUp: function () {
+            this._displayObject.gotoAndPlay('moveUp');
         },
-        movingDown: function (that) {
-            that._displayObject.gotoAndPlay('moveDown');
+        movingDown: function () {
+            this._displayObject.gotoAndPlay('moveDown');
         },
-        movingLeft: function (that) {
-            that._displayObject.gotoAndPlay('moveLeft');
+        movingLeft: function () {
+            this._displayObject.gotoAndPlay('moveLeft');
         },
-        movingRight: function (that) {
-            that._displayObject.gotoAndPlay('moveRight');
+        movingRight: function () {
+            this._displayObject.gotoAndPlay('moveRight');
         },
-        idle: function (that) {
-            that._displayObject.gotoAndPlay("idle");
+        idle: function () {
+            this._displayObject.gotoAndPlay("idle");
         }
         /*moving: function (that) {
          var animationName;
@@ -64,7 +64,7 @@ entities.Player.prototype = {
          that.sprite.gotoAndPlay(animationName);
          }*/
     },
-    applyInput: function (keyboardState) {
+    applyInput: function() {
         var impulseVectors = {
             up: Object.build(Vector, 0, -MOVEMENT_FORCE),
             down: Object.build(Vector, 0, MOVEMENT_FORCE),
@@ -73,31 +73,31 @@ entities.Player.prototype = {
         };
 
         this.currentState = 'idle';
-        if (keyboardState[this.keyMap.up]) {
+        if (this._keyboardState[this._keyMap.up]) {
             this.force.add(impulseVectors.up);
             this.currentState = 'movingUp';
         }
 
-        if (keyboardState[this.keyMap.down]) {
+        if (this._keyboardState[this._keyMap.down]) {
             this.force.add(impulseVectors.down);
             this.currentState = 'movingDown';
         }
 
-        if (keyboardState[this.keyMap.left]) {
+        if (this._keyboardState[this._keyMap.left]) {
             this.force.add(impulseVectors.left);
             this.currentState = 'movingLeft';
         }
 
-        if (keyboardState[this.keyMap.right]) {
+        if (this._keyboardState[this._keyMap.right]) {
             this.force.add(impulseVectors.right);
             this.currentState = 'movingRight';
         }
     }
 };
 
-mixins.Positionable.apply(entities.Player.prototype);
+mixins.Positionable.call(entities.Player.prototype);
 
-mixins.Sprite.apply(entities.Player.prototype, [{
+mixins.Sprite.call(entities.Player.prototype, {
     images: [resources['playerImage']],
     frames: {width: TILE_WIDTH, height: TILE_HEIGHT, regX: TILE_WIDTH / 2, regY: TILE_HEIGHT / 2},
     animations: {
@@ -107,26 +107,15 @@ mixins.Sprite.apply(entities.Player.prototype, [{
         moveLeft: [9, 10, true, 0.2],
         moveRight: [12, 13, true, 0.2]
     }
-}]);
+});
 
-mixins.Physical.apply(entities.Player.prototype, [1]);
-
-mixins.Collidable.apply(entities.Player.prototype, [function(intersection) {
-    if (intersection.width < intersection.height) {
-        this.pos.x += (this.pos.x >= intersection.x)? intersection.width : -intersection.width;
-    } else {
-        this.pos.y += (this.pos.y >= intersection.y)? intersection.height : -intersection.height;
-    }
-    this.force.reset();
-}]);
-
-mixins.Updateable.apply(entities.Player.prototype, [function (data) {
+mixins.Updateable.call(entities.Player.prototype, function (data) {
     this.prevState = this.currentState;
 
-    this.applyInput(data.keyboardState);
-    this.stateHandlers[this.currentState](this);
+    this.applyInput();
+    this.stateHandlers[this.currentState].call(this);
     if (this.currentState != this.prevState) {
-        this.stateChangeHandlers[this.currentState](this);
+        this.stateChangeHandlers[this.currentState].call(this);
     }
 
     var friction = this.vel.clone().scalar(-20);
@@ -137,4 +126,16 @@ mixins.Updateable.apply(entities.Player.prototype, [function (data) {
     this.checkCollisions(data.stage);
 
     this.render();
-}]);
+});
+
+mixins.Physical.call(entities.Player.prototype, 1);
+
+mixins.Collidable.call(entities.Player.prototype, function(intersection) {
+    if(intersection.width < intersection.height) {
+        this.pos.x += (this.pos.x >= intersection.x)? intersection.width : -intersection.width;
+        this.vel.set(0, this.vel.y);
+    } else {
+        this.pos.y += (this.pos.y >= intersection.y)? intersection.height : -intersection.height;
+        this.vel.set(this.vel.x, 0);
+    }
+});

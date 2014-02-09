@@ -1,19 +1,18 @@
 var World = function(canvas) {
-    this.stage = new createjs.Stage(canvas);
-    this.stage.autoClear = true;
+    this._stage = new createjs.Stage(canvas);
+    this._stage.autoClear = true;
 
-    this.initLevel();
-    this.initPlayer();
-    this.initMobs(0);
     this.registerKeyEvents();
+    this.initLevel();
+    this.initMobs(0);
+    this.initPlayer();
 };
 
 World.prototype = {
     tick: function (event) {
-        this.stage.update(event, {
-            keyboardState: this.keyboardState,
+        this._stage.update(event, {
             dt: event['delta'],
-            stage: this.stage
+            stage: this._stage
         });
     },
 
@@ -23,16 +22,15 @@ World.prototype = {
     },
 
     initPlayer: function () {
-        var keyMap = {
+        var keyMap = { // Defined outside Player because it could be configurable
             up: KEY_UP,
             down: KEY_DOWN,
             left: KEY_LEFT,
             right: KEY_RIGHT
         };
 
-        var player = Object.build(entities.Player, TILE_WIDTH / 2, TILE_HEIGHT / 2, keyMap);
-
-        this.stage.addChild(player.getDisplayObject());
+        var player = Object.build(entities.Player, TILE_WIDTH / 2, TILE_HEIGHT / 2, keyMap, this.keyboardState);
+        this._stage.addChild(player.getDisplayObject());
     },
 
     initMobs: function (numMobs) {
@@ -50,7 +48,7 @@ World.prototype = {
             for (var j = 0; j < numBlocksY; j++) {
                 y = STATUS_BAR_HEIGHT + TILE_HEIGHT * 1.5 + j * TILE_HEIGHT * 2;
                 var block = Object.build(entities.Block, x, y);
-                this.stage.addChild(block.getDisplayObject());
+                this._stage.addChild(block.getDisplayObject());
             }
         }
     },
