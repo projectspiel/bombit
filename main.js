@@ -1,12 +1,15 @@
-const TILE_WIDTH = 50;
-const TILE_HEIGHT = 50;
-const STATUS_BAR_HEIGHT = TILE_HEIGHT;
-const KEY_UP = 38;
-const KEY_LEFT = 37;
-const KEY_RIGHT = 39;
-const KEY_DOWN = 40;
+/* global createjs */
+/* global World */
 
-resources = {};
+var TILE_WIDTH = 50,
+    TILE_HEIGHT = 50,
+    STATUS_BAR_HEIGHT = TILE_HEIGHT,
+    KEY_UP = 38,
+    KEY_LEFT = 37,
+    KEY_RIGHT = 39,
+    KEY_DOWN = 40;
+
+var resources = {};
 
 window.onload = function() {
     var preloader = new createjs.LoadQueue(false),
@@ -49,8 +52,7 @@ window.onload = function() {
 };
 
 Object.build = function(o) {
-    var initArgs = Array.prototype.slice.call(arguments, 1);
     var instance = Object.create(o.prototype);
-    o.apply(instance, initArgs);
+    o.apply(instance, Array.prototype.slice.call(arguments, 1));
     return instance;
-}
+};

@@ -11,7 +11,7 @@ var World = function(canvas) {
 World.prototype = {
     tick: function (event) {
         this._stage.update(event, {
-            dt: event['delta'],
+            dt: event.delta,
             stage: this._stage
         });
     },
@@ -22,14 +22,14 @@ World.prototype = {
     },
 
     initPlayer: function () {
-        var keyMap = { // Defined outside Player because it could be configurable
+        var keyMap = { // Defined outside Player because it could be configurable someday
             up: KEY_UP,
             down: KEY_DOWN,
             left: KEY_LEFT,
             right: KEY_RIGHT
-        };
+        },
+        player = Object.build(entities.Player, TILE_WIDTH / 2, TILE_HEIGHT / 2, keyMap, this.keyboardState);
 
-        var player = Object.build(entities.Player, TILE_WIDTH / 2, TILE_HEIGHT / 2, keyMap, this.keyboardState);
         this._stage.addChild(player.getDisplayObject());
     },
 

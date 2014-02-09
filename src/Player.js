@@ -1,7 +1,7 @@
 var entities = entities || {};
 
-const MOVEMENT_FORCE = 5000;
-const MASS = 1;
+var MOVEMENT_FORCE = 5000,
+    MASS = 1;
 
 entities.Player = function(x, y, keyMap, keyboardState) {
     mixins.Positionable.init.call(this, x, y);
@@ -10,7 +10,7 @@ entities.Player = function(x, y, keyMap, keyboardState) {
     mixins.Physical.init.call(this, MASS);
     mixins.Collidable.init.call(this);
 
-    this.currentState = 'idle';
+    this.currentState = "idle";
     this._keyMap = keyMap;
     this._keyboardState = keyboardState;
 };
@@ -40,16 +40,16 @@ entities.Player.prototype = {
     },
     stateChangeHandlers: {
         movingUp: function () {
-            this._displayObject.gotoAndPlay('moveUp');
+            this._displayObject.gotoAndPlay("moveUp");
         },
         movingDown: function () {
-            this._displayObject.gotoAndPlay('moveDown');
+            this._displayObject.gotoAndPlay("moveDown");
         },
         movingLeft: function () {
-            this._displayObject.gotoAndPlay('moveLeft');
+            this._displayObject.gotoAndPlay("moveLeft");
         },
         movingRight: function () {
-            this._displayObject.gotoAndPlay('moveRight');
+            this._displayObject.gotoAndPlay("moveRight");
         },
         idle: function () {
             this._displayObject.gotoAndPlay("idle");
@@ -57,9 +57,9 @@ entities.Player.prototype = {
         /*moving: function (that) {
          var animationName;
          if (Math.abs(that.vel.x) > Math.abs(that.vel.y)) {
-         animationName = that.vel.x > 0 ? 'moveRight' : 'moveLeft';
+         animationName = that.vel.x > 0 ? "moveRight" : "moveLeft";
          } else {
-         animationName = that.vel.y > 0 ? 'moveDown' : 'moveUp';
+         animationName = that.vel.y > 0 ? "moveDown" : "moveUp";
          }
          that.sprite.gotoAndPlay(animationName);
          }*/
@@ -72,25 +72,25 @@ entities.Player.prototype = {
             right: Object.build(Vector, MOVEMENT_FORCE, 0)
         };
 
-        this.currentState = 'idle';
+        this.currentState = "idle";
         if (this._keyboardState[this._keyMap.up]) {
             this.force.add(impulseVectors.up);
-            this.currentState = 'movingUp';
+            this.currentState = "movingUp";
         }
 
         if (this._keyboardState[this._keyMap.down]) {
             this.force.add(impulseVectors.down);
-            this.currentState = 'movingDown';
+            this.currentState = "movingDown";
         }
 
         if (this._keyboardState[this._keyMap.left]) {
             this.force.add(impulseVectors.left);
-            this.currentState = 'movingLeft';
+            this.currentState = "movingLeft";
         }
 
         if (this._keyboardState[this._keyMap.right]) {
             this.force.add(impulseVectors.right);
-            this.currentState = 'movingRight';
+            this.currentState = "movingRight";
         }
     }
 };
@@ -98,7 +98,7 @@ entities.Player.prototype = {
 mixins.Positionable.call(entities.Player.prototype);
 
 mixins.Sprite.call(entities.Player.prototype, {
-    images: [resources['playerImage']],
+    images: [resources.playerImage],
     frames: {width: TILE_WIDTH, height: TILE_HEIGHT, regX: TILE_WIDTH / 2, regY: TILE_HEIGHT / 2},
     animations: {
         idle: [0, 2, true, 0.02],
@@ -114,7 +114,7 @@ mixins.Updateable.call(entities.Player.prototype, function (data) {
 
     this.applyInput();
     this.stateHandlers[this.currentState].call(this);
-    if (this.currentState != this.prevState) {
+    if (this.currentState !== this.prevState) {
         this.stateChangeHandlers[this.currentState].call(this);
     }
 
