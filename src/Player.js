@@ -99,13 +99,18 @@ mixins.Positionable.call(entities.Player.prototype);
 
 mixins.Sprite.call(entities.Player.prototype, {
     images: [resources.playerImage],
-    frames: {width: TILE_WIDTH, height: TILE_HEIGHT, regX: TILE_WIDTH / 2, regY: TILE_HEIGHT / 2},
+    frames: {
+        width: constants.TILE_WIDTH,
+        height: constants.TILE_HEIGHT,
+        regX: constants.TILE_WIDTH / 2,
+        regY: constants.TILE_HEIGHT / 2
+    },
     animations: {
-        idle: [0, 2, true, 0.02],
-        moveUp: [3, 4, true, 0.2],
-        moveDown: [6, 7, true, 0.2],
-        moveLeft: [9, 10, true, 0.2],
-        moveRight: [12, 13, true, 0.2]
+        idle: [0, 4, true, 0.1],
+        moveUp: [5, 8, true, 0.2],
+        moveDown: [5, 8, true, 0.2],
+        moveLeft: [5, 8, true, 0.2],
+        moveRight: [5, 8, true, 0.2]
     }
 });
 

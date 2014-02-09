@@ -9,5 +9,10 @@ mixins.Positionable.call(entities.Block.prototype);
 
 mixins.Sprite.call(entities.Block.prototype, {
     images: [resources.blockImage],
-    frames: {width: TILE_WIDTH, height: TILE_HEIGHT, regX: TILE_WIDTH / 2, regY: TILE_HEIGHT / 2}
+    frames: {
+        width: constants.TILE_WIDTH,
+        height: constants.TILE_HEIGHT,
+        regX: constants.TILE_WIDTH / 2,
+        regY: constants.TILE_HEIGHT / 2
+    }
 });

@@ -22,5 +22,6 @@ mixins.Sprite = function(spriteSheetData) {
 
 mixins.Sprite.init = function() {
     this._displayObject = new createjs.Sprite(this._spriteSheet);
+    this._displayObject.scaleX = this._displayObject.scaleY = 2;
     this.render();
 };

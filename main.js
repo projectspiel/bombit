@@ -1,19 +1,22 @@
-/* global createjs */
-/* global World */
+/* global constants:true */
+constants = {
+    TILE_WIDTH: 48,
+    TILE_HEIGHT: 96,
+    KEY_UP: 38,
+    KEY_LEFT: 37,
+    KEY_RIGHT: 39,
+    KEY_DOWN: 40
+};
 
-var TILE_WIDTH = 50,
-    TILE_HEIGHT = 50,
-    STATUS_BAR_HEIGHT = TILE_HEIGHT,
-    KEY_UP = 38,
-    KEY_LEFT = 37,
-    KEY_RIGHT = 39,
-    KEY_DOWN = 40;
-
-var resources = {};
+/* global resources:true */
+resources = {};
 
 window.onload = function() {
     var preloader = new createjs.LoadQueue(false),
-        canvas = window.document.getElementById("dasCanvas");
+        canvas = window.document.getElementById("dasCanvas"),
+        context = canvas.getContext("2d");
+
+    context.webkitImageSmoothingEnabled = context.imageSmoothingEnabled = context.mozImageSmoothingEnabled = context.oImageSmoothingEnabled = false;
 
     preloader.on("progress", function(event) {
         var ctx = canvas.getContext("2d"),

@@ -3,7 +3,7 @@ var World = function(canvas) {
     this._stage.autoClear = true;
 
     this.registerKeyEvents();
-    this.initLevel();
+    //this.initLevel();
     this.initMobs(0);
     this.initPlayer();
 };
@@ -23,12 +23,12 @@ World.prototype = {
 
     initPlayer: function () {
         var keyMap = { // Defined outside Player because it could be configurable someday
-            up: KEY_UP,
-            down: KEY_DOWN,
-            left: KEY_LEFT,
-            right: KEY_RIGHT
+            up: constants.KEY_UP,
+            down: constants.KEY_DOWN,
+            left: constants.KEY_LEFT,
+            right: constants.KEY_RIGHT
         },
-        player = Object.build(entities.Player, TILE_WIDTH / 2, TILE_HEIGHT / 2, keyMap, this.keyboardState);
+        player = Object.build(entities.Player, constants.TILE_WIDTH, constants.TILE_HEIGHT, keyMap, this.keyboardState);
 
         this._stage.addChild(player.getDisplayObject());
     },
@@ -44,9 +44,9 @@ World.prototype = {
             numBlocksY = 6;
 
         for (var i = 0; i < numBlocksX; i++) {
-            x = TILE_WIDTH * 1.5 + i * TILE_WIDTH * 2;
+            x = constants.TILE_WIDTH * 1.5 + i * constants.TILE_WIDTH * 2;
             for (var j = 0; j < numBlocksY; j++) {
-                y = STATUS_BAR_HEIGHT + TILE_HEIGHT * 1.5 + j * TILE_HEIGHT * 2;
+                y = constants.TILE_HEIGHT * 1.5 + j * constants.TILE_HEIGHT * 2;
                 var block = Object.build(entities.Block, x, y);
                 this._stage.addChild(block.getDisplayObject());
             }
