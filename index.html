@@ -9,26 +9,26 @@
     <script src="lib/advice.js"></script>
     <script src="main.js"></script>
     <style>
-        canvas {
-            background-color:#393;
-            float: left;
+        body {
+            background-color: black;
         }
 
-        #logOutput {
-            width: 500px;
-            height: 550px;
-            border: solid;
-            float: right;
+        #container {
+            width: 950px;
+            margin: 0 auto;
+        }
+
+        #dasCanvas {
+            background-color:#393;
         }
     </style>
 </head>
 
 <body>
-<div class="canvasContainer">
-    <canvas id="dasCanvas" width="950" height="700">
-        Your browser doesn't support canvas.
-    </canvas>
-</div>
-<div id="logOutput"></div>
+    <div id="container">
+        <canvas id="dasCanvas" width="950" height="700">
+            Your browser doesn't support canvas.
+        </canvas>
+    </div>
 </body>
 </html>
