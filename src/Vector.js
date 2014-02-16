@@ -31,7 +31,7 @@ Vector.prototype = {
     },
     normalize: function () {
         var aux = this.x * this.x + this.y * this.y;
-        if (Math.abs(aux - 1.0) > 0.00001) {	// Don't normalize if it's not needed
+        if (Math.abs(aux - 1.0) > 0.0001 && aux > 0) {	// Don't normalize if it's not needed
             var magnitude = Math.sqrt(aux);
             this.x /= magnitude;
             this.y /= magnitude;

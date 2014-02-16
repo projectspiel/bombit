@@ -1,6 +1,7 @@
 var entities = entities || {};
 
 var MOVEMENT_FORCE = 5000,
+    FRICTION_FORCE = 20,
     MASS = 1;
 
 entities.Player = function(x, y, keyMap, keyboardState) {
@@ -66,13 +67,23 @@ entities.Player.prototype = {
     },
     applyInput: function() {
         var impulseVectors = {
-            up: Object.build(Vector, 0, -MOVEMENT_FORCE),
-            down: Object.build(Vector, 0, MOVEMENT_FORCE),
-            left: Object.build(Vector, -MOVEMENT_FORCE, 0),
-            right: Object.build(Vector, MOVEMENT_FORCE, 0)
+            up: Object.build(Vector, 0, -1),
+            down: Object.build(Vector, 0, 1),
+            left: Object.build(Vector, -1, 0),
+            right: Object.build(Vector, 1, 0)
         };
 
         this.currentState = "idle";
+        if (this._keyboardState[this._keyMap.left]) {
+            this.force.add(impulseVectors.left);
+            this.currentState = "movingLeft";
+        }
+
+        if (this._keyboardState[this._keyMap.right]) {
+            this.force.add(impulseVectors.right);
+            this.currentState = "movingRight";
+        }
+
         if (this._keyboardState[this._keyMap.up]) {
             this.force.add(impulseVectors.up);
             this.currentState = "movingUp";
@@ -83,15 +94,7 @@ entities.Player.prototype = {
             this.currentState = "movingDown";
         }
 
-        if (this._keyboardState[this._keyMap.left]) {
-            this.force.add(impulseVectors.left);
-            this.currentState = "movingLeft";
-        }
-
-        if (this._keyboardState[this._keyMap.right]) {
-            this.force.add(impulseVectors.right);
-            this.currentState = "movingRight";
-        }
+        this.force.normalize().scalar(MOVEMENT_FORCE);
     }
 };
 
@@ -107,30 +110,11 @@ mixins.Sprite.call(entities.Player.prototype, {
     },
     animations: {
         idle: [0, 4, true, 0.1],
-        moveUp: [5, 8, true, 0.2],
-        moveDown: [5, 8, true, 0.2],
-        moveLeft: [5, 8, true, 0.2],
-        moveRight: [5, 8, true, 0.2]
+        moveDown: [8, 11, true, 0.2],
+        moveLeft: [16, 23, true, 0.3],
+        moveRight: [24, 31, true, 0.3],
+        moveUp: [32, 35, true, 0.2]
     }
-});
-
-mixins.Updateable.call(entities.Player.prototype, function (data) {
-    this.prevState = this.currentState;
-
-    this.applyInput();
-    this.stateHandlers[this.currentState].call(this);
-    if (this.currentState !== this.prevState) {
-        this.stateChangeHandlers[this.currentState].call(this);
-    }
-
-    var friction = this.vel.clone().scalar(-20);
-    this.force.add(friction);
-    this.move(data.dt);
-    this.force.reset();
-
-    this.checkCollisions(data.stage);
-
-    this.render();
 });
 
 mixins.Physical.call(entities.Player.prototype, 1);
@@ -143,4 +127,23 @@ mixins.Collidable.call(entities.Player.prototype, function(intersection) {
         this.pos.y += (this.pos.y >= intersection.y)? intersection.height : -intersection.height;
         this.vel.set(this.vel.x, 0);
     }
+});
+
+mixins.Updateable.call(entities.Player.prototype, function (data) {
+    this.prevState = this.currentState;
+
+    this.applyInput();
+    this.stateHandlers[this.currentState].call(this);
+    if (this.currentState !== this.prevState) {
+        this.stateChangeHandlers[this.currentState].call(this);
+    }
+
+    var friction = this.vel.clone().scalar(-FRICTION_FORCE);
+    this.force.add(friction);
+    this.move(data.dt);
+    this.force.reset();
+
+    this.checkCollisions(data.stage);
+
+    this.render();
 });
