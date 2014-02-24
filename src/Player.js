@@ -85,6 +85,27 @@ entities.Player.prototype = {
         }
 
         this.force.normalize().scalar(MOVEMENT_FORCE);
+    },
+    checkBounds: function(stage) {
+        if(this.pos.x < 0) {
+            this.pos.set(0, this.pos.y);
+            this.vel.set(0, this.vel.y);
+        }
+
+        if(this.pos.x > stage.canvas.width) {
+            this.pos.set(stage.canvas.width, this.pos.y);
+            this.vel.set(0, this.vel.y);
+        }
+
+        if(this.pos.y < 0) {
+            this.pos.set(this.pos.x, 0);
+            this.vel.set(this.vel.x, 0);
+        }
+
+        if(this.pos.y > stage.canvas.height) {
+            this.pos.set(this.pos.x, stage.canvas.height);
+            this.vel.set(this.vel.x, 0);
+        }
     }
 };
 
@@ -134,6 +155,7 @@ mixins.Updateable.call(entities.Player.prototype, function (data) {
     this.force.reset();
 
     this.checkCollisions(data.stage);
+    this.checkBounds(data.stage);
 
     this.render();
 });

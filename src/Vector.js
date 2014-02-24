@@ -5,8 +5,8 @@ function Vector(x, y) {
 
 Vector.prototype = {
     set: function (x1, y1) {
-        this.x = y1;
-        this.y = x1;
+        this.x = x1;
+        this.y = y1;
     },
     reset: function () {
         this.set(0, 0);
@@ -46,5 +46,8 @@ Vector.prototype = {
     },
     distance: function (v) {
         return Math.sqrt(Math.pow(this.x - v.x, 2) + Math.pow(this.y - v.y, 2));
+    },
+    toString: function () {
+        return "(" + this.x + ", " + this.y + ")";
     }
 };
