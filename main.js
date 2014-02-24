@@ -59,3 +59,11 @@ Object.build = function(o) {
     o.apply(instance, Array.prototype.slice.call(arguments, 1));
     return instance;
 };
+
+window.log = function() {
+    for (var i = 0; i < arguments.length; i++) {
+        if (arguments[i].toString) {
+            console.log(arguments[i].toString());
+        }
+    }
+}
