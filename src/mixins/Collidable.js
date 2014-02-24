@@ -8,11 +8,11 @@ mixins.Collidable = function(callback) {
     this.checkCollisions = function(stage) {
         for(var i = 0 ; i < stage.getNumChildren() ; i++) {
             var entity = stage.getChildAt(i);
-            if (entity === this._displayObject) {
-                continue;
+            if (entity === this.getDisplayObject()) {
+                continue; // Don't collide with self
             }
 
-            var intersection = ndgmr.checkPixelCollision(this._displayObject, entity, 0, true);
+            var intersection = ndgmr.checkPixelCollision(this.getDisplayObject(), entity, 0, true);
             if(intersection) {
                 callback.call(this, intersection);
             }

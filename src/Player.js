@@ -31,19 +31,19 @@ entities.Player.prototype = {
     },
     stateChangeHandlers: {
         movingUp: function () {
-            this._displayObject.gotoAndPlay("moveUp");
+            this.getDisplayObject().gotoAndPlay("moveUp");
         },
         movingDown: function () {
-            this._displayObject.gotoAndPlay("moveDown");
+            this.getDisplayObject().gotoAndPlay("moveDown");
         },
         movingLeft: function () {
-            this._displayObject.gotoAndPlay("moveLeft");
+            this.getDisplayObject().gotoAndPlay("moveLeft");
         },
         movingRight: function () {
-            this._displayObject.gotoAndPlay("moveRight");
+            this.getDisplayObject().gotoAndPlay("moveRight");
         },
         idle: function () {
-            this._displayObject.gotoAndPlay("idle");
+            this.getDisplayObject().gotoAndPlay("idle");
         }
         /*moving: function (that) {
          var animationName;
@@ -128,7 +128,7 @@ mixins.Sprite.call(entities.Player.prototype, {
     }
 });
 
-mixins.Physical.call(entities.Player.prototype, 1);
+mixins.Physical.call(entities.Player.prototype, MASS);
 
 mixins.Collidable.call(entities.Player.prototype, function(intersection) {
     if(intersection.width < intersection.height) {

@@ -62,8 +62,6 @@ Object.build = function(o) {
 
 window.log = function() {
     for (var i = 0; i < arguments.length; i++) {
-        if (arguments[i].toString) {
-            console.log(arguments[i].toString());
-        }
+        console.log(arguments[i].toString?arguments[i].toString():arguments[i]);
     }
 }
