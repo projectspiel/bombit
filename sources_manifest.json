@@ -9,6 +9,7 @@
         {"src":"mixins/Collidable.js", "id":"Collidable"},
         {"src":"World.js", "id":"world"},
         {"src":"Block.js", "id":"block"},
-        {"src":"Player.js", "id":"player"}
+        {"src":"Player.js", "id":"player"},
+        {"src":"Dog.js", "id":"dog"}
     ]
 }

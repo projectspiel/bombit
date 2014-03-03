@@ -4,8 +4,9 @@ var World = function(canvas) {
 
     this.registerKeyEvents();
     //this.initLevel();
-    this.initMobs(0);
+    //this.initMobs(0);
     this.initPlayer();
+    this.addDog();
 };
 
 World.prototype = {
@@ -28,9 +29,15 @@ World.prototype = {
             left: constants.KEY_LEFT,
             right: constants.KEY_RIGHT
         },
-        player = Object.build(entities.Player, constants.TILE_WIDTH, constants.TILE_HEIGHT, keyMap, this.keyboardState);
+        player = Object.build(entities.Player, this._stage.canvas.width / 2, this._stage.canvas.height / 2, keyMap, this.keyboardState);
 
         this._stage.addChild(player.getDisplayObject());
+    },
+
+    addDog: function () {
+        var dog = Object.build(entities.Dog, this._stage.canvas.width / 2 - 150, this._stage.canvas.height / 2);
+
+        this._stage.addChild(dog.getDisplayObject());
     },
 
     initMobs: function (numMobs) {

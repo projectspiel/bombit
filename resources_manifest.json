@@ -2,6 +2,7 @@
     "path": "res/",
     "manifest": [
         {"src":"img/solid_block.png", "id":"blockImage"},
-        {"src":"img/player.png", "id":"playerImage"}
+        {"src":"img/player.png", "id":"playerImage"},
+        {"src":"img/dog.png", "id":"dogImage"}
     ]
 }
