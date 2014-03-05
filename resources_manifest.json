@@ -3,6 +3,12 @@
     "manifest": [
         {"src":"img/solid_block.png", "id":"blockImage"},
         {"src":"img/player.png", "id":"playerImage"},
-        {"src":"img/dog.png", "id":"dogImage"}
+        {"src":"img/dog.png", "id":"dogImage"},
+        {"src":"img/grass1.png", "id":"grassImage1"},
+        {"src":"img/grass2.png", "id":"grassImage2"},
+        {"src":"img/grass3.png", "id":"grassImage3"},
+        {"src":"img/grass4.png", "id":"grassImage4"},
+        {"src":"img/grass5.png", "id":"grassImage5"},
+        {"src":"img/grass6.png", "id":"grassImage6"}
     ]
 }

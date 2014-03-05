@@ -3,7 +3,7 @@ var World = function(canvas) {
     this._stage.autoClear = true;
 
     this.registerKeyEvents();
-    //this.initLevel();
+    this.initLevel();
     //this.initMobs(0);
     this.initPlayer();
     this.addDog();
@@ -45,17 +45,25 @@ World.prototype = {
     },
 
     initLevel: function () {
-        var x = 0,
-            y = 50,
-            numBlocksX = 9,
-            numBlocksY = 6;
+        var tileSize = 32*2, //@todo because of the creepy scaling
+            grassTiles = [
+                resources.grassImage1,
+                resources.grassImage2,
+                resources.grassImage3,
+                resources.grassImage4,
+                resources.grassImage5,
+                resources.grassImage6
+            ];
 
-        for (var i = 0; i < numBlocksX; i++) {
-            x = constants.TILE_WIDTH * 1.5 + i * constants.TILE_WIDTH * 2;
-            for (var j = 0; j < numBlocksY; j++) {
-                y = constants.TILE_HEIGHT * 1.5 + j * constants.TILE_HEIGHT * 2;
-                var block = Object.build(entities.Block, x, y);
-                this._stage.addChild(block.getDisplayObject());
+        for (var x = -10; x < this._stage.canvas.width; x += tileSize) {
+            for (var y = -10; y < this._stage.canvas.height; y += tileSize) {
+                var tileIndex = Math.floor(Math.random()*grassTiles.length);
+                var grass = new createjs.Bitmap(grassTiles[tileIndex]);
+                grass.x = x;
+                grass.y = y;
+                grass.scaleX = grass.scaleY = 2;
+
+                this._stage.addChild(grass);
             }
         }
     },
