@@ -1,7 +1,5 @@
 /* global constants:true */
 constants = {
-    TILE_WIDTH: 48,
-    TILE_HEIGHT: 96,
     KEY_UP: 38,
     KEY_LEFT: 37,
     KEY_RIGHT: 39,
