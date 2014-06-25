@@ -46,6 +46,7 @@ World.prototype = {
 
     initLevel: function () {
         var tileSize = 32*2, //@todo because of the creepy scaling
+            tileIndex = 0, lastTileIndex = 0,
             grassTiles = [
                 resources.grassImage1,
                 resources.grassImage2,
@@ -55,9 +56,14 @@ World.prototype = {
                 resources.grassImage6
             ];
 
-        for (var x = -10; x < this._stage.canvas.width; x += tileSize) {
-            for (var y = -10; y < this._stage.canvas.height; y += tileSize) {
-                var tileIndex = Math.floor(Math.random()*grassTiles.length);
+        for (var y = -10; y < this._stage.canvas.height; y += tileSize) {
+            for (var x = -10; x < this._stage.canvas.width; x += tileSize) {
+                tileIndex = Math.floor(Math.random()*grassTiles.length);
+                if (tileIndex === lastTileIndex) {
+                    tileIndex++; // Avoid using the same tile twice in a row
+                }
+                lastTileIndex = tileIndex;
+
                 var grass = new createjs.Bitmap(grassTiles[tileIndex]);
                 grass.x = x;
                 grass.y = y;
