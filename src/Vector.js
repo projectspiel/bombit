@@ -39,7 +39,7 @@ Vector.prototype = {
         return this;
     },
     vectorTo: function (v) {
-        return v.substract(this).normalize();
+        return v.clone().substract(this).normalize();
     },
     modulo: function () {
         return Math.sqrt(this.x * this.x + this.y * this.y);
