@@ -146,10 +146,12 @@ mixins.Updateable.call(entities.Player.prototype, function (data) {
     this.prevState = this.currentState;
 
     this.applyInput();
-    this.stateHandlers[this.currentState].call(this);
+
     if (this.currentState !== this.prevState) {
         this.stateChangeHandlers[this.currentState].call(this);
     }
+
+    this.stateHandlers[this.currentState].call(this);
 
     var friction = this.vel.clone().scalar(-FRICTION_FORCE);
     this.force.add(friction);

@@ -19,11 +19,31 @@ entities.Dog.prototype = {
     stateHandlers: {
         idle: function () {
 
+        },
+        gettingOutOfTheWay: function() {
+            this.force.add(this.pos.vectorTo(this.targetPos));
+            this.force.normalize().scalar(2000);
+
+            var distanceToTarget = this.pos.distance(this.targetPos);
+            if (distanceToTarget <= 5) {
+                this.currentState = "idle";
+                this.isCollidable = true;
+            }
+
         }
     },
     stateChangeHandlers: {
         idle: function () {
             this.getDisplayObject().gotoAndPlay("idle");
+        },
+        gettingOutOfTheWay: function() {
+            this.targetPos = Object.build(
+                Vector,
+                this.pos.x + Math.floor(Math.random() * 300)-150,
+                this.pos.y + Math.floor(Math.random() * 300)-150
+            );
+            this.isCollidable = false;
+            log(this.pos, this.targetPos);
         }
         /*moving: function (that) {
          var animationName;
@@ -55,23 +75,24 @@ mixins.Sprite.call(entities.Dog.prototype, {
 mixins.Physical.call(entities.Dog.prototype, MASS);
 
 mixins.Collidable.call(entities.Dog.prototype, function(intersection) {
-
+    this.currentState = "gettingOutOfTheWay";
 });
 
 mixins.Updateable.call(entities.Dog.prototype, function (data) {
     this.prevState = this.currentState;
 
-    this.stateHandlers[this.currentState].call(this);
+    this.checkCollisions(data.stage);
+
     if (this.currentState !== this.prevState) {
         this.stateChangeHandlers[this.currentState].call(this);
     }
+
+    this.stateHandlers[this.currentState].call(this);
 
     var friction = this.vel.clone().scalar(-FRICTION_FORCE);
     this.force.add(friction);
     this.move(data.dt);
     this.force.reset();
-
-    this.checkCollisions(data.stage);
 
     this.render();
 });
