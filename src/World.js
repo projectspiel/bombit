@@ -1,12 +1,14 @@
 var World = function(canvas) {
     this._stage = new createjs.Stage(canvas);
     this._stage.autoClear = true;
+    this._entities = [];
 
     this.registerKeyEvents();
     this.initLevel();
     //this.initMobs(0);
     this.initPlayer();
     this.addDog();
+    this.addBlock();
 };
 
 World.prototype = {
@@ -22,6 +24,15 @@ World.prototype = {
         createjs.Ticker.setFPS(30);
     },
 
+    addEntity: function (entity) {
+      this._entities.push(entity);
+      this._stage.addChild(entity.getDisplayObject());
+
+      if (DISPLAY_DEBUG) {
+          this._stage.addChild(entity.getReferenceDisplayObject());
+      }
+    },
+
     initPlayer: function () {
         var keyMap = { // Defined outside Player because it could be configurable someday
             up: constants.KEY_UP,
@@ -31,13 +42,20 @@ World.prototype = {
         },
         player = Object.build(entities.Player, this._stage.canvas.width / 2, this._stage.canvas.height / 2, keyMap, this.keyboardState);
 
-        this._stage.addChild(player.getDisplayObject());
+        this.addEntity(player);
     },
 
     addDog: function () {
         var dog = Object.build(entities.Dog, this._stage.canvas.width / 2 - 150, this._stage.canvas.height / 2);
+        gdog = dog;
+        this.addEntity(dog);
+    },
 
-        this._stage.addChild(dog.getDisplayObject());
+    addBlock: function() {
+        var block = Object.build(entities.Block, 200, 200);
+        gblock = block;
+
+        this.addEntity(block)
     },
 
     initMobs: function (numMobs) {

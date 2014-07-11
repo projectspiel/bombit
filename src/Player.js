@@ -119,7 +119,7 @@ mixins.Sprite.call(entities.Player.prototype, {
         width: FRAME_WIDTH,
         height: FRAME_HEIGHT,
         regX: FRAME_WIDTH / 2,
-        regY: FRAME_HEIGHT / 2
+        regY: 85
     },
     animations: {
         idle: [0, 4, true, 0.1],

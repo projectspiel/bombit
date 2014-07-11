@@ -6,11 +6,24 @@ mixins.Sprite = function(spriteSheetData) {
     }
 
     this._displayObject = null; //@todo Make actually private
+    this._referenceDisplayObject = null
     this._spriteSheet = new createjs.SpriteSheet(spriteSheetData); //@todo Make actually private
 
+    if (this.calcDisplayVector === undefined) {
+        this.calcDisplayVector = function() {
+            return this.pos;
+        }
+    }
+
     this.render = function() {
-        this._displayObject.x = this.pos.x;
-        this._displayObject.y = this.pos.y;
+        var displayVector = this.getDisplayPosition();
+
+        this._displayObject.x = displayVector.x;
+        this._displayObject.y = displayVector.y;
+        if (this._referenceDisplayObject !== null) {
+            this._referenceDisplayObject.x = displayVector.x;
+            this._referenceDisplayObject.y = displayVector.y;
+        }
     };
 
     /**
@@ -20,12 +33,23 @@ mixins.Sprite = function(spriteSheetData) {
         return this._displayObject;
     };
 
+    this.getReferenceDisplayObject = function() {
+        return this._referenceDisplayObject;
+    };
+
+    this._createReferenceDisplayObject = function() {
+        var shape = new createjs.Shape();
+        shape.graphics.beginFill("blue").drawCircle(0, 0, 5);
+        return shape;
+    };
+
     this.isSprite = true;
 };
 
 mixins.Sprite.init = function() {
     this._displayObject = new createjs.Sprite(this._spriteSheet);
     this._displayObject.scaleX = this._displayObject.scaleY = 2;
+    this._referenceDisplayObject = this._createReferenceDisplayObject();
 
     /**
      * @fixme THIS IS NOT OKAY.

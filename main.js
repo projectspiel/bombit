@@ -6,6 +6,14 @@ constants = {
     KEY_DOWN: 40
 };
 
+var CANVAS_HEIGHT,
+    CANVAS_WIDTH,
+    MAP_HEIGHT = 1000,
+    MAP_WIDTH  = 1000,
+
+    // Debugging
+    DISPLAY_DEBUG = false;
+
 /* global resources:true */
 resources = {};
 
@@ -13,6 +21,10 @@ window.onload = function() {
     var preloader = new createjs.LoadQueue(false),
         canvas = window.document.getElementById("dasCanvas"),
         context = canvas.getContext("2d");
+
+    // @fixme
+    CANVAS_HEIGHT = canvas.height;
+    CANVAS_WIDTH  = canvas.width;
 
     context.webkitImageSmoothingEnabled = context.imageSmoothingEnabled = context.mozImageSmoothingEnabled = context.oImageSmoothingEnabled = false;
 

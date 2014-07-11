@@ -22,4 +22,8 @@ mixins.Collidable = function(callback) {
     this.isCollidable = true;
 };
 
-mixins.Collidable.init = function() {};
+mixins.Collidable.entities = [];
+
+mixins.Collidable.init = function() {
+    mixins.Collidable.entities.push(this);
+};
