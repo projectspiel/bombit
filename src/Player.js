@@ -7,11 +7,10 @@ var MOVEMENT_FORCE = 5000,
     FRAME_HEIGHT =  96;
 
 entities.Player = function(x, y, keyMap, keyboardState) {
-    mixins.Positionable.init.call(this, x, y);
-    mixins.Sprite.init.call(this);
-    mixins.Updateable.init.call(this);
-    mixins.Physical.init.call(this, MASS);
-    mixins.Collidable.init.call(this);
+    this.init();
+    this.position(x, y);
+    this.mass = MASS;
+    this.render();
 
     this.currentState = "idle";
     this._keyMap = keyMap;
@@ -111,6 +110,7 @@ entities.Player.prototype = {
     }
 };
 
+mixins.Initializable.call(entities.Player.prototype);
 mixins.Positionable.call(entities.Player.prototype);
 
 mixins.Sprite.call(entities.Player.prototype, {

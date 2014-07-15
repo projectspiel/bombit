@@ -1,9 +1,21 @@
 var mixins = mixins || {};
 
 mixins.Sprite = function(spriteSheetData) {
-    if (!this.isPositionable) {
-        throw "Entity must be Positionable";
+    if (!this.isPositionable || !this.isInitializable) {
+        throw "Entity must be Positionable and Initializable";
     }
+
+    this.onInit( function() {
+        this._displayObject = new createjs.Sprite(this._spriteSheet);
+        this._displayObject.scaleX = this._displayObject.scaleY = 2;
+        this._referenceDisplayObject = this._createReferenceDisplayObject();
+
+        /**
+         * @fixme THIS IS NOT OKAY.
+         * Kill once we replace the collision system
+         */
+        this._displayObject.parentEntity = this;
+    });
 
     this._displayObject = null; //@todo Make actually private
     this._referenceDisplayObject = null
@@ -44,18 +56,4 @@ mixins.Sprite = function(spriteSheetData) {
     };
 
     this.isSprite = true;
-};
-
-mixins.Sprite.init = function() {
-    this._displayObject = new createjs.Sprite(this._spriteSheet);
-    this._displayObject.scaleX = this._displayObject.scaleY = 2;
-    this._referenceDisplayObject = this._createReferenceDisplayObject();
-
-    /**
-     * @fixme THIS IS NOT OKAY.
-     * Kill once we replace the collision system
-     */
-    this._displayObject.parentEntity = this;
-
-    this.render();
 };

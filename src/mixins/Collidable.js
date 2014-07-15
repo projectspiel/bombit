@@ -1,9 +1,13 @@
 var mixins = mixins || {};
 
 mixins.Collidable = function(callback) {
-    if (!this.isSprite) {
-        throw "Entity must be Sprite";
+    if (!this.isSprite || !this.isInitializable) {
+        throw "Entity must be Sprite and Initializable";
     }
+
+    this.onInit( function() {
+        mixins.Collidable.entities.push(this);
+    });
 
     this.checkCollisions = function(stage) {
         for(var i = 0 ; i < stage.getNumChildren() ; i++) {
@@ -23,7 +27,3 @@ mixins.Collidable = function(callback) {
 };
 
 mixins.Collidable.entities = [];
-
-mixins.Collidable.init = function() {
-    mixins.Collidable.entities.push(this);
-};

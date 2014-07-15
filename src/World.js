@@ -5,7 +5,7 @@ var World = function(canvas) {
 
     this.registerKeyEvents();
     this.initLevel();
-    //this.initMobs(0);
+    this.initMobs(0);
     this.initPlayer();
     this.addDog();
     this.addBlock();

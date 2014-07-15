@@ -1,11 +1,12 @@
 var entities = entities || {};
 
 entities.Block = function(x, y) {
-    mixins.Positionable.init.call(this, x, y);
-    mixins.Sprite.init.call(this);
-    mixins.Collidable.init.call(this);
+    this.init();
+    this.position(x, y);
+    this.render();
 };
 
+mixins.Initializable.call(entities.Block.prototype);
 mixins.Positionable.call(entities.Block.prototype);
 
 mixins.Sprite.call(entities.Block.prototype, {

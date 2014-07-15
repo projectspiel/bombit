@@ -5,11 +5,10 @@ var MOVEMENT_FORCE = 5000,
     MASS = 1;
 
 entities.Dog = function(x, y) {
-    mixins.Positionable.init.call(this, x, y);
-    mixins.Sprite.init.call(this);
-    mixins.Updateable.init.call(this);
-    mixins.Physical.init.call(this, MASS);
-    mixins.Collidable.init.call(this);
+    this.init();
+    this.position(x, y);
+    this.maxx = MASS;
+    this.render();
 
     this.currentState = "idle";
     this.getDisplayObject().gotoAndPlay("idle");
@@ -57,6 +56,7 @@ entities.Dog.prototype = {
     }
 };
 
+mixins.Initializable.call(entities.Dog.prototype);
 mixins.Positionable.call(entities.Dog.prototype);
 
 mixins.Sprite.call(entities.Dog.prototype, {
