@@ -1,9 +1,10 @@
 var mixins = mixins || {};
 
 mixins.Positionable = function() {
-    if (!this.isInitializable) {
-        throw "Entity must be Initializable";
-    }
+    if (this.isPositionable === true) { return; }
+    this.isPositionable = true;
+
+    mixins.Initializable.call(this);
 
     this.onInit( function() {
         this.pos = Object.build(Vector);
@@ -22,6 +23,5 @@ mixins.Positionable = function() {
                            );
     };
 
-    this.isPositionable = true;
 };
 

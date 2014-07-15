@@ -1,9 +1,11 @@
 var mixins = mixins || {};
 
 mixins.Physical = function() {
-    if (!this.isPositionable || !this.isInitializable) {
-        throw "Entity must be Positionable and Initializable";
-    }
+    if (this.isPhysical === true) { return; }
+    this.isPhysical = true;
+
+    mixins.Initializable.call(this);
+    mixins.Positionable.call(this);
 
     this.onInit( function() {
         this.vel = Object.build(Vector);
@@ -20,5 +22,4 @@ mixins.Physical = function() {
         this.vel.add(halfDeltaVel);
     };
 
-    this.isPhysical = true;
 };

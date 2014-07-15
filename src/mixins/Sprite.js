@@ -1,9 +1,11 @@
 var mixins = mixins || {};
 
 mixins.Sprite = function(spriteSheetData) {
-    if (!this.isPositionable || !this.isInitializable) {
-        throw "Entity must be Positionable and Initializable";
-    }
+    if (this.isSprite === true) { return; }
+    this.isSprite = true;
+
+    mixins.Initializable.call(this);
+    mixins.Positionable.call(this);
 
     this.onInit( function() {
         this._displayObject = new createjs.Sprite(this._spriteSheet);
@@ -55,5 +57,4 @@ mixins.Sprite = function(spriteSheetData) {
         return shape;
     };
 
-    this.isSprite = true;
 };

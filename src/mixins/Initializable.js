@@ -1,6 +1,9 @@
 var mixins = mixins || {}
 
 mixins.Initializable = function() {
+    if (this.isInitializable === true) { return; }
+    this.isInitializable = true;
+
     // @fixme make private
     this._initCallbacks = [];
 
@@ -14,5 +17,4 @@ mixins.Initializable = function() {
       }
     };
 
-    this.isInitializable = true;
 };

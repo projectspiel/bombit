@@ -1,9 +1,10 @@
 var mixins = mixins || {};
 
 mixins.Updateable = function(callback) {
-    if (!this.isSprite || !this.isInitializable) {
-        throw "Entity must be Sprite and Initializable";
-    }
+    if (this.isUpdateable) { return; }
+    this.isUpdateable = true;
+
+    mixins.Sprite.call(this);
 
     this.onInit( function() {
         this.getDisplayObject().addEventListener("tick", function (event) {
@@ -13,5 +14,4 @@ mixins.Updateable = function(callback) {
 
     this._update = callback;
 
-    this.isUpdateable = true;
 };
