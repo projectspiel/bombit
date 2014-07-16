@@ -1,10 +1,11 @@
 var mixins = mixins || {};
 
-mixins.Collidable = function(callback) {
-    if (this.isCollidable === true) { return }
+mixins.Collidable = function(options) {
+    if (!this.isInitializable || !this.isPositionable || !this.isSprite) { throw "Dependencies not met"; }
     this.isCollidable = true;
 
-    mixins.Sprite.call(this);
+    var callback = options.callback,
+        boundingBox = options.boundingBox;
 
     this.onInit( function() {
         mixins.Collidable.entities.push(this);
@@ -22,6 +23,14 @@ mixins.Collidable = function(callback) {
                 callback.call(this, intersection);
             }
         }
+    };
+
+    this.getCollisionBoxPolygon = function() {
+        return Object.build(entities.Polygon,
+                            Object.build(Vector, -boundingBox.x / 2, -boundingBox.y / 2),
+                            Object.build(Vector,  boundingBox.x / 2, -boundingBox.y / 2),
+                            Object.build(Vector,  boundingBox.x / 2,  boundingBox.y / 2),
+                            Object.build(Vector, -boundingBox.x / 2,  boundingBox.y / 2));
     };
 
 };

@@ -1,11 +1,8 @@
 var mixins = mixins || {};
 
 mixins.Physical = function() {
-    if (this.isPhysical === true) { return; }
+    if (!this.isInitializable || !this.isPositionable) { throw "Dependencies not met"; }
     this.isPhysical = true;
-
-    mixins.Initializable.call(this);
-    mixins.Positionable.call(this);
 
     this.onInit( function() {
         this.vel = Object.build(Vector);

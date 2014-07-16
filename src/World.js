@@ -30,17 +30,18 @@ World.prototype = {
 
       if (DISPLAY_DEBUG) {
           this._stage.addChild(entity.getReferenceDisplayObject());
+          this._stage.addChild(entity.getCollisionBoxDisplayObject());
       }
     },
 
     initPlayer: function () {
         var keyMap = { // Defined outside Player because it could be configurable someday
-            up: constants.KEY_UP,
-            down: constants.KEY_DOWN,
-            left: constants.KEY_LEFT,
-            right: constants.KEY_RIGHT
-        },
-        player = Object.build(entities.Player, this._stage.canvas.width / 2, this._stage.canvas.height / 2, keyMap, this.keyboardState);
+                up: constants.KEY_UP,
+                down: constants.KEY_DOWN,
+                left: constants.KEY_LEFT,
+                right: constants.KEY_RIGHT
+            },
+            player = Object.build(entities.Player, this._stage.canvas.width / 2, this._stage.canvas.height / 2, keyMap, this.keyboardState);
 
         this.addEntity(player);
     },

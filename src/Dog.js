@@ -74,8 +74,11 @@ mixins.Sprite.call(entities.Dog.prototype, {
 
 mixins.Physical.call(entities.Dog.prototype, MASS);
 
-mixins.Collidable.call(entities.Dog.prototype, function(intersection) {
-    this.currentState = "gettingOutOfTheWay";
+mixins.Collidable.call(entities.Dog.prototype, {
+    callback: function(intersection) {
+        this.currentState = "gettingOutOfTheWay";
+    },
+    boundingBox: Object.build(Vector, 30, 30)
 });
 
 mixins.Updateable.call(entities.Dog.prototype, function (data) {

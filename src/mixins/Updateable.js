@@ -1,10 +1,8 @@
 var mixins = mixins || {};
 
 mixins.Updateable = function(callback) {
-    if (this.isUpdateable) { return; }
+    if (!this.isSprite) { throw "Dependencies not met"; }
     this.isUpdateable = true;
-
-    mixins.Sprite.call(this);
 
     this.onInit( function() {
         this.getDisplayObject().addEventListener("tick", function (event) {

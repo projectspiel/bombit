@@ -2,6 +2,7 @@
     "path": "src/",
     "manifest": [
         {"src":"Vector.js", "id":"vector"},
+        {"src":"Polygon.js", "id":"polygon"},
         {"src":"mixins/Sprite.js", "id":"Renderable"},
         {"src":"mixins/Updateable.js", "id":"Updateable"},
         {"src":"mixins/Positionable.js", "id":"Positionable"},

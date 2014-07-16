@@ -10,6 +10,7 @@ entities.Player = function(x, y, keyMap, keyboardState) {
     this.init();
     this.position(x, y);
     this.mass = MASS;
+
     this.render();
 
     this.currentState = "idle";
@@ -132,14 +133,17 @@ mixins.Sprite.call(entities.Player.prototype, {
 
 mixins.Physical.call(entities.Player.prototype, MASS);
 
-mixins.Collidable.call(entities.Player.prototype, function(intersection) {
-    if(intersection.width < intersection.height) {
-        this.pos.x += (this.pos.x >= intersection.x)? intersection.width : -intersection.width;
-        this.vel.set(0, this.vel.y);
-    } else {
-        this.pos.y += (this.pos.y >= intersection.y)? intersection.height : -intersection.height;
-        this.vel.set(this.vel.x, 0);
-    }
+mixins.Collidable.call(entities.Player.prototype, {
+    callback: function(intersection) {
+        if(intersection.width < intersection.height) {
+            this.pos.x += (this.pos.x >= intersection.x)? intersection.width : -intersection.width;
+            this.vel.set(0, this.vel.y);
+        } else {
+            this.pos.y += (this.pos.y >= intersection.y)? intersection.height : -intersection.height;
+            this.vel.set(this.vel.x, 0);
+        }
+    },
+    boundingBox: Object.build(Vector, 36, 36)
 });
 
 mixins.Updateable.call(entities.Player.prototype, function (data) {
