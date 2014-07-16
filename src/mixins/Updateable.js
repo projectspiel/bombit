@@ -6,10 +6,9 @@ mixins.Updateable = function(callback) {
 
     this.onInit( function() {
         this.getDisplayObject().addEventListener("tick", function (event) {
-            this._update(event.params[1]);
+            callback.call(this, event.params[1]);
         }.bind(this));
     });
 
-    this._update = callback;
 
 };
