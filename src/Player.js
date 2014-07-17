@@ -16,6 +16,31 @@ entities.Player = function(x, y, keyMap, keyboardState) {
     this.currentState = "idle";
     this._keyMap = keyMap;
     this._keyboardState = keyboardState;
+
+    this.onTick(
+        this.getDisplayObject(),
+        function (data) {
+            this.prevState = this.currentState;
+
+            this.applyInput();
+
+            if (this.currentState !== this.prevState) {
+                this.stateChangeHandlers[this.currentState].call(this);
+            }
+
+            this.stateHandlers[this.currentState].call(this);
+
+            var friction = this.vel.clone().scalar(-FRICTION_FORCE);
+            this.force.add(friction);
+            this.move(data.dt);
+            this.force.reset();
+
+            this.checkCollisions(data.stage);
+            this.checkBounds(data.stage);
+
+            this.render();
+        }
+    );
 };
 
 entities.Player.prototype = {
@@ -146,24 +171,4 @@ mixins.Collidable.call(entities.Player.prototype, {
     boundingBox: Object.build(Vector, 36, 36)
 });
 
-mixins.Updateable.call(entities.Player.prototype, function (data) {
-    this.prevState = this.currentState;
-
-    this.applyInput();
-
-    if (this.currentState !== this.prevState) {
-        this.stateChangeHandlers[this.currentState].call(this);
-    }
-
-    this.stateHandlers[this.currentState].call(this);
-
-    var friction = this.vel.clone().scalar(-FRICTION_FORCE);
-    this.force.add(friction);
-    this.move(data.dt);
-    this.force.reset();
-
-    this.checkCollisions(data.stage);
-    this.checkBounds(data.stage);
-
-    this.render();
-});
+mixins.Updateable.call(entities.Player.prototype);
