@@ -76,6 +76,7 @@ entities.Dog.prototype = {
 };
 
 mixins.Initializable.call(entities.Dog.prototype);
+mixins.Renderable.call(entities.Dog.prototype);
 mixins.Positionable.call(entities.Dog.prototype);
 
 mixins.Sprite.call(entities.Dog.prototype, {

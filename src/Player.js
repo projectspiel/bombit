@@ -137,6 +137,7 @@ entities.Player.prototype = {
 };
 
 mixins.Initializable.call(entities.Player.prototype);
+mixins.Renderable.call(entities.Player.prototype);
 mixins.Positionable.call(entities.Player.prototype);
 
 mixins.Sprite.call(entities.Player.prototype, {
