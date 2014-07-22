@@ -1,7 +1,7 @@
 var mixins = mixins || {};
 
 mixins.Sprite = function(spriteSheetData) {
-    if (!this.isInitializable || !this.isPositionable) { throw "Dependencies not met"; }
+    if (!this.isInitializable || !this.isPositionable || !this.isRenderable) { throw "Dependencies not met"; }
     if (this.isSprite === true) { return; }
     this.isSprite = true;
 
@@ -19,14 +19,14 @@ mixins.Sprite = function(spriteSheetData) {
     });
 
     this._displayObject = null; //@todo Make actually private
-    this._referenceDisplayObject = null
-    this._collisionBoxDisplayObject = null
+    this._referenceDisplayObject = null;
+    this._collisionBoxDisplayObject = null;
     this._spriteSheet = new createjs.SpriteSheet(spriteSheetData); //@todo Make actually private
 
     if (this.calcDisplayVector === undefined) {
         this.calcDisplayVector = function() {
             return this.pos;
-        }
+        };
     }
 
     this.render = function() {
@@ -75,6 +75,7 @@ mixins.Sprite = function(spriteSheetData) {
     this._createReferenceDisplayObject = function() {
         var shape = new createjs.Shape();
         shape.graphics.beginFill("blue").drawCircle(0, 0, 5);
+        shape.zindex = 1000;
         return shape;
     };
 
@@ -92,7 +93,7 @@ mixins.Sprite = function(spriteSheetData) {
                                            lineTo(vertices[2].x, vertices[2].y).
                                            lineTo(vertices[3].x, vertices[3].y).
                                            lineTo(vertices[0].x, vertices[0].y);
+        shape.zindex = 1000;
         return shape;
     };
-
 };

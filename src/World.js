@@ -13,6 +13,15 @@ var World = function(canvas) {
 
 World.prototype = {
     tick: function (event) {
+        this._stage.sortChildren(function(obj1, obj2, options) {
+            var obj1zindex = obj1.zindex? obj1.zindex : obj1.y;
+            var obj2zindex = obj2.zindex? obj2.zindex : obj2.y;
+
+            if (obj1zindex > obj2zindex) { return 1; }
+            if (obj1zindex < obj2zindex) { return -1; }
+            return 0;
+        });
+
         this._stage.update(event, {
             dt: event.delta,
             stage: this._stage
@@ -25,13 +34,13 @@ World.prototype = {
     },
 
     addEntity: function (entity) {
-      this._entities.push(entity);
-      this._stage.addChild(entity.getDisplayObject());
+        this._entities.push(entity);
+        this._stage.addChild(entity.getDisplayObject());
 
-      if (DISPLAY_DEBUG) {
-          this._stage.addChild(entity.getReferenceDisplayObject());
-          this._stage.addChild(entity.getCollisionBoxDisplayObject());
-      }
+        if (DISPLAY_DEBUG) {
+            this._stage.addChild(entity.getReferenceDisplayObject());
+            this._stage.addChild(entity.getCollisionBoxDisplayObject());
+        }
     },
 
     initPlayer: function () {
@@ -87,6 +96,7 @@ World.prototype = {
                 grass.x = x;
                 grass.y = y;
                 grass.scaleX = grass.scaleY = 2;
+                grass.zindex = 0;
 
                 this._stage.addChild(grass);
             }

@@ -32,7 +32,6 @@ mixins.Collidable = function(options) {
                             Object.build(Vector,  boundingBox.x / 2,  boundingBox.y / 2),
                             Object.build(Vector, -boundingBox.x / 2,  boundingBox.y / 2));
     };
-
 };
 
 mixins.Collidable.entities = [];

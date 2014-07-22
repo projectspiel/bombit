@@ -11,6 +11,4 @@ mixins.Positionable = function() {
     this.position = function(x, y) {
         this.pos.set(x, y);
     };
-
 };
-

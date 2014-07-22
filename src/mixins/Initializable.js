@@ -1,4 +1,4 @@
-var mixins = mixins || {}
+var mixins = mixins || {};
 
 mixins.Initializable = function() {
     this.isInitializable = true;
@@ -7,12 +7,11 @@ mixins.Initializable = function() {
 
     this.onInit = function(callable) {
         initCallbacks.push(callable);
-    }
-
-    this.init = function() {
-      for(var i = 0; i < initCallbacks.length; i++) {
-        initCallbacks[i].apply(this);
-      }
     };
 
+    this.init = function() {
+        for(var i = 0; i < initCallbacks.length; i++) {
+            initCallbacks[i].apply(this);
+        }
+    };
 };

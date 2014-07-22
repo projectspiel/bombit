@@ -18,5 +18,4 @@ mixins.Physical = function() {
         this.pos.add(this.vel.clone().scalar(dt / 1000));
         this.vel.add(halfDeltaVel);
     };
-
 };
