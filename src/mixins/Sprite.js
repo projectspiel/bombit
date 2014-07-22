@@ -29,11 +29,12 @@ mixins.Sprite = function(spriteSheetData) {
         };
     }
 
-    this.render = function() {
+    this.onRender( function() {
         var displayVector = this.getDisplayPosition();
 
         this._displayObject.x = displayVector.x;
         this._displayObject.y = displayVector.y;
+
         if (this._referenceDisplayObject !== null) {
             this._referenceDisplayObject.x = displayVector.x;
             this._referenceDisplayObject.y = displayVector.y;
@@ -43,7 +44,7 @@ mixins.Sprite = function(spriteSheetData) {
             this._collisionBoxDisplayObject.x = displayVector.x;
             this._collisionBoxDisplayObject.y = displayVector.y;
         }
-    };
+    });
 
     // Transforms 2D map position to
     // visual position on the map

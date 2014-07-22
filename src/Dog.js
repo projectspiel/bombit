@@ -12,6 +12,25 @@ entities.Dog = function(x, y) {
 
     this.currentState = "idle";
     this.getDisplayObject().gotoAndPlay("idle");
+
+    this.onTick(this.getDisplayObject(), function (data) {
+        this.prevState = this.currentState;
+
+        this.checkCollisions(data.stage);
+
+        if (this.currentState !== this.prevState) {
+            this.stateChangeHandlers[this.currentState].call(this);
+        }
+
+        this.stateHandlers[this.currentState].call(this);
+
+        var friction = this.vel.clone().scalar(-FRICTION_FORCE);
+        this.force.add(friction);
+        this.move(data.dt);
+        this.force.reset();
+
+        this.render();
+    });
 };
 
 entities.Dog.prototype = {
@@ -57,6 +76,7 @@ entities.Dog.prototype = {
 };
 
 mixins.Initializable.call(entities.Dog.prototype);
+mixins.Renderable.call(entities.Dog.prototype);
 mixins.Positionable.call(entities.Dog.prototype);
 
 mixins.Sprite.call(entities.Dog.prototype, {
@@ -81,21 +101,4 @@ mixins.Collidable.call(entities.Dog.prototype, {
     boundingBox: Object.build(Vector, 30, 30)
 });
 
-mixins.Updateable.call(entities.Dog.prototype, function (data) {
-    this.prevState = this.currentState;
-
-    this.checkCollisions(data.stage);
-
-    if (this.currentState !== this.prevState) {
-        this.stateChangeHandlers[this.currentState].call(this);
-    }
-
-    this.stateHandlers[this.currentState].call(this);
-
-    var friction = this.vel.clone().scalar(-FRICTION_FORCE);
-    this.force.add(friction);
-    this.move(data.dt);
-    this.force.reset();
-
-    this.render();
-});
+mixins.Updateable.call(entities.Dog.prototype);

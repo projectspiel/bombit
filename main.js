@@ -12,7 +12,7 @@ var CANVAS_HEIGHT,
     MAP_WIDTH  = 1000,
 
     // Debugging
-    DISPLAY_DEBUG = false;
+    DISPLAY_DEBUG = true;
 
 /* global resources:true */
 resources = {};
