@@ -7,10 +7,6 @@ mixins.Collidable = function(options) {
     var callback = options.callback,
         boundingBox = options.boundingBox;
 
-    this.onInit( function() {
-        mixins.Collidable.entities.push(this);
-    });
-
     this.checkCollisions = function(stage) {
         for(var i = 0 ; i < stage.getNumChildren() ; i++) {
             var entity = stage.getChildAt(i);
@@ -33,5 +29,3 @@ mixins.Collidable = function(options) {
                             Object.build(Vector, -boundingBox.x / 2,  boundingBox.y / 2));
     };
 };
-
-mixins.Collidable.entities = [];
