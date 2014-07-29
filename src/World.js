@@ -36,11 +36,6 @@ World.prototype = {
     addEntity: function (entity) {
         this._entities.push(entity);
         this._stage.addChild(entity.getDisplayObject());
-
-        if (DISPLAY_DEBUG) {
-            this._stage.addChild(entity.getReferenceDisplayObject());
-            this._stage.addChild(entity.getCollisionBoxDisplayObject());
-        }
     },
 
     initPlayer: function () {

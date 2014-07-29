@@ -17,9 +17,7 @@ entities.Player = function(x, y, keyMap, keyboardState) {
     this._keyMap = keyMap;
     this._keyboardState = keyboardState;
 
-    this.onTick(
-        this.getDisplayObject(),
-        function (data) {
+    this.onTick(this.getSpriteDisplayObject(), function (data) {
             this.prevState = this.currentState;
 
             this.applyInput();
@@ -58,19 +56,19 @@ entities.Player.prototype = {
     },
     stateChangeHandlers: {
         movingUp: function () {
-            this.getDisplayObject().gotoAndPlay("moveUp");
+            this.gotoAndPlay("moveUp");
         },
         movingDown: function () {
-            this.getDisplayObject().gotoAndPlay("moveDown");
+            this.gotoAndPlay("moveDown");
         },
         movingLeft: function () {
-            this.getDisplayObject().gotoAndPlay("moveLeft");
+            this.gotoAndPlay("moveLeft");
         },
         movingRight: function () {
-            this.getDisplayObject().gotoAndPlay("moveRight");
+            this.gotoAndPlay("moveRight");
         },
         idle: function () {
-            this.getDisplayObject().gotoAndPlay("idle");
+            this.gotoAndPlay("idle");
         }
         /*moving: function (that) {
          var animationName;
@@ -137,8 +135,8 @@ entities.Player.prototype = {
 };
 
 mixins.Initializable.call(entities.Player.prototype);
-mixins.Renderable.call(entities.Player.prototype);
 mixins.Positionable.call(entities.Player.prototype);
+mixins.Renderable.call(entities.Player.prototype);
 
 mixins.Sprite.call(entities.Player.prototype, {
     images: [resources.playerImage],

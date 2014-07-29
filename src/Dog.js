@@ -11,9 +11,9 @@ entities.Dog = function(x, y) {
     this.render();
 
     this.currentState = "idle";
-    this.getDisplayObject().gotoAndPlay("idle");
+    this.gotoAndPlay("idle");
 
-    this.onTick(this.getDisplayObject(), function (data) {
+    this.onTick(this.getSpriteDisplayObject(), function (data) {
         this.prevState = this.currentState;
 
         this.checkCollisions(data.stage);
@@ -52,7 +52,7 @@ entities.Dog.prototype = {
     },
     stateChangeHandlers: {
         idle: function () {
-            this.getDisplayObject().gotoAndPlay("idle");
+            this.gotoAndPlay("idle");
         },
         gettingOutOfTheWay: function() {
             this.targetPos = Object.build(
@@ -76,8 +76,8 @@ entities.Dog.prototype = {
 };
 
 mixins.Initializable.call(entities.Dog.prototype);
-mixins.Renderable.call(entities.Dog.prototype);
 mixins.Positionable.call(entities.Dog.prototype);
+mixins.Renderable.call(entities.Dog.prototype);
 
 mixins.Sprite.call(entities.Dog.prototype, {
     images: [resources.dogImage],
