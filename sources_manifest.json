@@ -12,6 +12,7 @@
         {"src":"mixins/Renderable.js", "id":"Renderable"},
         {"src":"World.js", "id":"world"},
         {"src":"Block.js", "id":"block"},
+        {"src":"Ball.js", "id":"ball"},
         {"src":"Player.js", "id":"player"},
         {"src":"Dog.js", "id":"dog"}
     ]

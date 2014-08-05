@@ -9,6 +9,7 @@ var World = function(canvas) {
     this.initPlayer();
     this.addDog();
     this.addBlock();
+    this.addBall();
 };
 
 World.prototype = {
@@ -52,15 +53,17 @@ World.prototype = {
 
     addDog: function () {
         var dog = Object.build(entities.Dog, this._stage.canvas.width / 2 - 150, this._stage.canvas.height / 2);
-        gdog = dog;
         this.addEntity(dog);
     },
 
     addBlock: function() {
         var block = Object.build(entities.Block, 200, 200);
-        gblock = block;
+        this.addEntity(block);
+    },
 
-        this.addEntity(block)
+    addBall: function() {
+        var ball = Object.build(entities.Ball, 300, 500);
+        this.addEntity(ball);
     },
 
     initMobs: function (numMobs) {
