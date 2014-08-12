@@ -144,7 +144,7 @@ mixins.Sprite.call(entities.Player.prototype, {
         width: FRAME_WIDTH,
         height: FRAME_HEIGHT,
         regX: FRAME_WIDTH / 2,
-        regY: 85
+        regY: 88
     },
     animations: {
         idle: [0, 4, true, 0.1],
@@ -171,3 +171,6 @@ mixins.Collidable.call(entities.Player.prototype, {
 });
 
 mixins.Updateable.call(entities.Player.prototype);
+mixins.HasShadow.call(entities.Player.prototype, FRAME_WIDTH * 1.1, FRAME_HEIGHT);
+
+

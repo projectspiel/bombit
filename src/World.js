@@ -94,7 +94,7 @@ World.prototype = {
                 grass.x = x;
                 grass.y = y;
                 grass.scaleX = grass.scaleY = 2;
-                grass.zindex = 0;
+                grass.zindex = -10;
 
                 this._stage.addChild(grass);
             }

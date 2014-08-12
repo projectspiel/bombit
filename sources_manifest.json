@@ -10,6 +10,7 @@
         {"src":"mixins/Collidable.js", "id":"Collidable"},
         {"src":"mixins/Initializable.js", "id":"Initializable"},
         {"src":"mixins/Renderable.js", "id":"Renderable"},
+        {"src":"mixins/HasShadow.js", "id":"Renderable"},
         {"src":"World.js", "id":"world"},
         {"src":"Block.js", "id":"block"},
         {"src":"Ball.js", "id":"ball"},

@@ -15,6 +15,15 @@ mixins.Renderable = function() {
 
     this.addDisplayObject = function(displayObject) {
         container.addChild(displayObject);
+        container.sortChildren(function(obj1, obj2, options) {
+            var obj1zindex = obj1.zindex? obj1.zindex : 0;
+            var obj2zindex = obj2.zindex? obj2.zindex : 0;
+
+            if (obj1zindex > obj2zindex) { return 1; }
+            if (obj1zindex < obj2zindex) { return -1; }
+            return 0;
+        });
+
     };
 
     this.getDisplayObject = function() {
