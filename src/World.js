@@ -62,7 +62,7 @@ World.prototype = {
     },
 
     addBall: function() {
-        var ball = Object.build(entities.Ball, 300, 500);
+        var ball = Object.build(entities.Ball, 300, 500, 50);
         this.addEntity(ball);
     },
 

@@ -10,7 +10,17 @@ mixins.Collidable = function(options) {
     this.afterInit(function() {
         if (DISPLAY_DEBUG) {
             if (!this.isRenderable) { throw "Dependencies not met"; }
-            this.addDisplayObject(createCollisionBoxDisplayObject());
+
+            var referenceDisplayObject = createCollisionBoxDisplayObject();
+
+            this.addDisplayObject(referenceDisplayObject);
+
+            this.onRender(function() {
+                if (!this.isRenderable) { throw "Dependencies not met"; }
+                referenceDisplayObject.y = this.pos.z;
+            });
+
+
         }
     });
 

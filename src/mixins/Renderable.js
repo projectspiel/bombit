@@ -39,7 +39,7 @@ mixins.Renderable = function() {
     this._mapToCanvas = function (vector) {
         return Object.build( Vector,
             vector.x * CANVAS_WIDTH / MAP_WIDTH,
-            vector.y * CANVAS_HEIGHT / MAP_HEIGHT );
+            vector.y * CANVAS_HEIGHT / MAP_HEIGHT - vector.z);
     };
 
     // Transforms 2D map position to

@@ -11,17 +11,23 @@ mixins.Positionable = function() {
     this.afterInit(function() {
         if (DISPLAY_DEBUG) {
             if (!this.isRenderable) { throw "Dependencies not met"; }
-            this.addDisplayObject(createReferenceDisplayObject());
+
+            var referenceDisplayObject = (function() {
+                var shape = new createjs.Shape();
+                shape.graphics.beginFill("blue").drawCircle(0, 0, 5);
+                return shape;
+            })();
+
+            this.addDisplayObject(referenceDisplayObject);
+
+            this.onRender(function() {
+                if (!this.isRenderable) { throw "Dependencies not met"; }
+                referenceDisplayObject.y = this.pos.z;
+            });
         }
     });
 
-    this.position = function(x, y) {
-        this.pos.set(x, y);
-    };
-
-    var createReferenceDisplayObject = function() {
-        var shape = new createjs.Shape();
-        shape.graphics.beginFill("blue").drawCircle(0, 0, 5);
-        return shape;
+    this.position = function(x, y, z) {
+        this.pos.set(x, y, z);
     };
 };
