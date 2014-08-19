@@ -11,9 +11,9 @@ entities.Ball = function(x, y, z) {
             var friction = this.vel.clone().scalar(-FRICTION_FORCE);
             this.force.add(friction);
 
-            var gravity = Object.build(Vector);
+            /*var gravity = Object.build(Vector);
             gravity.set(0, 0, -9.8 * 50);
-            this.force.add(gravity);
+            this.force.add(gravity);*/
 
             this.move(data.dt);
             this.force.reset();
@@ -47,3 +47,4 @@ mixins.Collidable.call(entities.Ball.prototype, {
 mixins.Physical.call(entities.Ball.prototype, MASS);
 
 mixins.Updateable.call(entities.Ball.prototype);
+mixins.HasShadow.call(entities.Ball.prototype, 8 * 2, 8 * 2);

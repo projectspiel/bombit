@@ -20,6 +20,6 @@ mixins.HasShadow = function(objectWidth, objectHeight) {
     });
 
     this.onRender(function() {
-        // Update on height change
+        displayObject.y = this.pos.z;
     });
 };

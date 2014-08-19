@@ -85,7 +85,7 @@ mixins.Sprite.call(entities.Dog.prototype, {
         width: 32,
         height: 32,
         regX: 16,
-        regY: 16
+        regY: 25
     },
     animations: {
         idle: [0, 3, true, 0.05]
@@ -102,3 +102,4 @@ mixins.Collidable.call(entities.Dog.prototype, {
 });
 
 mixins.Updateable.call(entities.Dog.prototype);
+mixins.HasShadow.call(entities.Dog.prototype, 32 * 1.1, 32 * 1.5);
