@@ -17,11 +17,51 @@ mixins.Physical = function() {
         this.vel.add(halfDeltaVel);
         this.pos.add(this.vel.clone().scalar(dt / 1000));
         this.vel.add(halfDeltaVel);
+
+        this.force.reset();
     };
 
     this.applyGravity = function() {
+        //@fixme FIX ME!
         var gravity = Object.build(Vector);
         gravity.set(0, 0, -9.8 * 50);
         this.force.add(gravity);
+    };
+
+    this.applyFriction = function(factor) {
+        //@fixme FIX ME!
+        if (this.pos.z === 0) {
+            var friction = Object.build(Vector);
+            friction.set(this.vel.x * -factor, this.vel.y * -factor, this.vel.z);
+            this.force.add(friction);
+        }
+    };
+
+    this.checkBounds = function(dampFactor, canvasWidth, canvasHeight) {
+        //@fixme FIX ME!
+        if (this.pos.z <= 0.05) {
+            this.vel.z *= -1 * dampFactor;
+            this.pos.set(this.pos.x, this.pos.y, 0);
+        }
+
+        if(this.pos.x < 0) {
+            this.pos.set(0, this.pos.y);
+            this.vel.set(0, this.vel.y);
+        }
+
+        if(this.pos.x > canvasWidth) {
+            this.pos.set(canvasWidth, this.pos.y);
+            this.vel.set(0, this.vel.y);
+        }
+
+        if(this.pos.y < 0) {
+            this.pos.set(this.pos.x, 0);
+            this.vel.set(this.vel.x, 0);
+        }
+
+        if(this.pos.y > canvasHeight) {
+            this.pos.set(this.pos.x, canvasHeight);
+            this.vel.set(this.vel.x, 0);
+        }
     };
 };

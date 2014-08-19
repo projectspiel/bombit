@@ -1,10 +1,9 @@
 var entities = entities || {};
 
-var MOVEMENT_FORCE = 5000,
-    FRICTION_FORCE = 20,
-    MASS = 1;
-
 entities.Dog = function(x, y) {
+    var MOVEMENT_FORCE = 5000,
+        FRICTION_FORCE = 20;
+
     this.init();
     this.position(x, y);
     this.render();
@@ -15,18 +14,18 @@ entities.Dog = function(x, y) {
     this.onTick(this.getSpriteDisplayObject(), function (data) {
         this.prevState = this.currentState;
 
-        this.checkCollisions(data.stage);
-
         if (this.currentState !== this.prevState) {
             this.stateChangeHandlers[this.currentState].call(this);
         }
 
         this.stateHandlers[this.currentState].call(this);
 
-        var friction = this.vel.clone().scalar(-FRICTION_FORCE);
-        this.force.add(friction);
+        this.applyFriction(FRICTION_FORCE);
+        this.applyGravity();
         this.move(data.dt);
-        this.force.reset();
+        this.checkBounds(0, data.stage.canvas.width, data.stage.canvas.height);
+
+        this.checkCollisions(data.stage);
 
         this.render();
     });
@@ -91,7 +90,7 @@ mixins.Sprite.call(entities.Dog.prototype, {
     }
 });
 
-mixins.Physical.call(entities.Dog.prototype, MASS);
+mixins.Physical.call(entities.Dog.prototype, 1);
 
 mixins.Collidable.call(entities.Dog.prototype, {
     callback: function(intersection) {

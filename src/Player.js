@@ -1,12 +1,12 @@
 var entities = entities || {};
 
-var MOVEMENT_FORCE = 5000,
-    FRICTION_FORCE = 20,
-    MASS = 1,
-    FRAME_WIDTH = 48,
-    FRAME_HEIGHT =  96;
+var FRAME_WIDTH = 48,
+    FRAME_HEIGHT =  96,
+    MOVEMENT_FORCE = 5000;
 
 entities.Player = function(x, y, keyMap, keyboardState) {
+    var FRICTION_FORCE = 20;
+
     this.init();
     this.position(x, y);
 
@@ -17,27 +17,25 @@ entities.Player = function(x, y, keyMap, keyboardState) {
     this._keyboardState = keyboardState;
 
     this.onTick(this.getSpriteDisplayObject(), function (data) {
-            this.prevState = this.currentState;
+        this.prevState = this.currentState;
 
-            this.applyInput();
+        this.applyInput();
 
-            if (this.currentState !== this.prevState) {
-                this.stateChangeHandlers[this.currentState].call(this);
-            }
-
-            this.stateHandlers[this.currentState].call(this);
-
-            var friction = this.vel.clone().scalar(-FRICTION_FORCE);
-            this.force.add(friction);
-            this.move(data.dt);
-            this.force.reset();
-
-            this.checkCollisions(data.stage);
-            this.checkBounds(data.stage);
-
-            this.render();
+        if (this.currentState !== this.prevState) {
+            this.stateChangeHandlers[this.currentState].call(this);
         }
-    );
+
+        this.stateHandlers[this.currentState].call(this);
+
+        this.applyFriction(FRICTION_FORCE);
+        this.applyGravity();
+        this.move(data.dt);
+        this.checkBounds(0, data.stage.canvas.width, data.stage.canvas.height);
+
+        this.checkCollisions(data.stage);
+
+        this.render();
+    });
 };
 
 entities.Player.prototype = {
@@ -109,27 +107,6 @@ entities.Player.prototype = {
         }
 
         this.force.normalize().scalar(MOVEMENT_FORCE);
-    },
-    checkBounds: function(stage) {
-        if(this.pos.x < 0) {
-            this.pos.set(0, this.pos.y);
-            this.vel.set(0, this.vel.y);
-        }
-
-        if(this.pos.x > stage.canvas.width) {
-            this.pos.set(stage.canvas.width, this.pos.y);
-            this.vel.set(0, this.vel.y);
-        }
-
-        if(this.pos.y < 0) {
-            this.pos.set(this.pos.x, 0);
-            this.vel.set(this.vel.x, 0);
-        }
-
-        if(this.pos.y > stage.canvas.height) {
-            this.pos.set(this.pos.x, stage.canvas.height);
-            this.vel.set(this.vel.x, 0);
-        }
     }
 };
 
@@ -154,7 +131,7 @@ mixins.Sprite.call(entities.Player.prototype, {
     }
 });
 
-mixins.Physical.call(entities.Player.prototype, MASS);
+mixins.Physical.call(entities.Player.prototype, 1);
 
 mixins.Collidable.call(entities.Player.prototype, {
     callback: function(intersection) {
