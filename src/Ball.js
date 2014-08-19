@@ -1,22 +1,35 @@
 var entities = entities || {};
 
-var MASS = 1;
-
 entities.Ball = function(x, y, z) {
+    var DAMP_FACTOR = 0.6,
+        FRICTION_FORCE = 2;
+
     this.init();
     this.position(x, y, z);
     this.render();
 
-    this.onTick(this.getSpriteDisplayObject(), function (data) {
-            var friction = this.vel.clone().scalar(-FRICTION_FORCE);
-            this.force.add(friction);
+    this.vel.set(50, 50, 50);
 
-            /*var gravity = Object.build(Vector);
-            gravity.set(0, 0, -9.8 * 50);
-            this.force.add(gravity);*/
+    this.onTick(this.getSpriteDisplayObject(), function (data) {
+            if (this.pos.z === 0) {
+                var friction = Object.build(Vector);
+                friction.set(
+                    this.vel.x * -FRICTION_FORCE,
+                    this.vel.y * -FRICTION_FORCE,
+                    this.vel.z
+                );
+                this.force.add(friction);
+            }
+
+            this.applyGravity();
 
             this.move(data.dt);
             this.force.reset();
+
+            if (this.pos.z <= 0.05) {
+                this.vel.z *= -1 * DAMP_FACTOR;
+                this.pos.set(this.pos.x, this.pos.y, 0);
+            }
 
             this.render();
         }
@@ -44,7 +57,7 @@ mixins.Collidable.call(entities.Ball.prototype, {
     boundingBox: Object.build(Vector, 100, 100)
 });
 
-mixins.Physical.call(entities.Ball.prototype, MASS);
+mixins.Physical.call(entities.Ball.prototype, 1);
 
 mixins.Updateable.call(entities.Ball.prototype);
 mixins.HasShadow.call(entities.Ball.prototype, 8 * 2, 8 * 2);

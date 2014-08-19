@@ -18,4 +18,10 @@ mixins.Physical = function() {
         this.pos.add(this.vel.clone().scalar(dt / 1000));
         this.vel.add(halfDeltaVel);
     };
+
+    this.applyGravity = function() {
+        var gravity = Object.build(Vector);
+        gravity.set(0, 0, -9.8 * 50);
+        this.force.add(gravity);
+    };
 };

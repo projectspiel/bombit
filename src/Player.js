@@ -9,7 +9,6 @@ var MOVEMENT_FORCE = 5000,
 entities.Player = function(x, y, keyMap, keyboardState) {
     this.init();
     this.position(x, y);
-    this.mass = MASS;
 
     this.render();
 

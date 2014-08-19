@@ -7,7 +7,6 @@ var MOVEMENT_FORCE = 5000,
 entities.Dog = function(x, y) {
     this.init();
     this.position(x, y);
-    this.maxx = MASS;
     this.render();
 
     this.currentState = "idle";
