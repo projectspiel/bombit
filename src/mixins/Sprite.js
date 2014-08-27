@@ -11,12 +11,6 @@ mixins.Sprite = function(spriteSheetData) {
         sprite = new createjs.Sprite(new createjs.SpriteSheet(spriteSheetData));
         sprite.scaleX = sprite.scaleY = 2;
         this.addDisplayObject(sprite);
-
-        /**
-         * @fixme THIS IS NOT OKAY.
-         * Kill once we replace the collision system
-         */
-        sprite.parentEntity = this;
     });
 
     if (this.calcDisplayVector === undefined) {

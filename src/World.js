@@ -23,10 +23,7 @@ World.prototype = {
             return 0;
         });
 
-        this._stage.update(event, {
-            dt: event.delta,
-            stage: this._stage
-        });
+        this._stage.update(event, event.delta);
     },
 
     start: function () {

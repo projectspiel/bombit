@@ -5,13 +5,24 @@ mixins.Collidable = function(options) {
     this.isCollidable = true;
 
     var callback = options.callback,
-        boundingBox = options.boundingBox;
+        hitAreaRadius = options.hitAreaRadius;
+
+    var collidables = mixins.Collidable.entities;
+    var hitArea;
+
+    this.onInit(function() {
+        hitArea = new SAT.Circle(new SAT.Vector(this.pos.x, this.pos.y), hitAreaRadius);
+        collidables.push(this);
+    });
+
+
 
     this.afterInit(function() {
         if (DISPLAY_DEBUG) {
             if (!this.isRenderable) { throw "Dependencies not met"; }
 
-            var referenceDisplayObject = createCollisionBoxDisplayObject();
+            var referenceDisplayObject = createCollisionAreaDisplayObject();
+            referenceDisplayObject.zindex = -1000;
 
             this.addDisplayObject(referenceDisplayObject);
 
@@ -19,49 +30,42 @@ mixins.Collidable = function(options) {
                 if (!this.isRenderable) { throw "Dependencies not met"; }
                 referenceDisplayObject.y = this.pos.z;
             });
-
-
         }
     });
 
-    this.checkCollisions = function(stage) {
-        return; //@todo broken because stage.getChildAt(i) will return container displayObjects
-        for(var i = 0 ; i < stage.getNumChildren() ; i++) {
-            var entity = stage.getChildAt(i);
-            if (entity === this.getSpriteDisplayObject() || !entity.parentEntity || (entity.parentEntity && !entity.parentEntity.isCollidable)) {
-                continue; // Don't collide with self or non-collidables
-            }
+    this.checkCollisions = function() {
+        hitArea.pos.x = this.pos.x;
+        hitArea.pos.y = this.pos.y;
+        var response,
+            collided;
 
-            var intersection = ndgmr.checkPixelCollision(this.getSpriteDisplayObject(), entity, 0, true);
-            if(intersection) {
-                callback.call(this, intersection);
+        for(var i = 0 ; i < collidables.length ; i++) {
+            if (this === collidables[i]) { continue; }
+            response = new SAT.Response();
+            collided = SAT.testCircleCircle(hitArea, collidables[i].getHitArea(), response);
+            if(collided) {
+                callback.call(this, response);
             }
         }
-    };
-
-    var getCollisionBoxPolygon = function() {
-        return Object.build(entities.Polygon,
-                            Object.build(Vector, -boundingBox.x / 2, -boundingBox.y / 2),
-                            Object.build(Vector,  boundingBox.x / 2, -boundingBox.y / 2),
-                            Object.build(Vector,  boundingBox.x / 2,  boundingBox.y / 2),
-                            Object.build(Vector, -boundingBox.x / 2,  boundingBox.y / 2));
     };
 
     var that = this;
-    var createCollisionBoxDisplayObject = function() {
-        var shape = new createjs.Shape(),
-            vertices = getCollisionBoxPolygon().getVertices();
+    var createCollisionAreaDisplayObject = function() {
+        var shape = new createjs.Shape();
 
-        for( var i=0; i < vertices.length; i++) {
-            vertices[i] = that._mapToCanvas(vertices[i]);
-        }
+        mappedBoundingBox = that._mapToCanvas(Object.build(Vector, hitAreaRadius * 2, hitAreaRadius * 2));
+        shape.graphics.beginFill("rgba(250,0,0,0.5)").drawEllipse(
+            -mappedBoundingBox.x/2,
+            -mappedBoundingBox.y/2,
+            mappedBoundingBox.x,
+            mappedBoundingBox.y
+        );
 
-        // @fixme Make generic to polygons
-        shape.graphics.beginStroke("blue").moveTo(vertices[0].x, vertices[0].y).
-            lineTo(vertices[1].x, vertices[1].y).
-            lineTo(vertices[2].x, vertices[2].y).
-            lineTo(vertices[3].x, vertices[3].y).
-            lineTo(vertices[0].x, vertices[0].y);
         return shape;
     };
+
+    this.getHitArea = function() {
+        return hitArea;
+    };
 };
+mixins.Collidable.entities = [];

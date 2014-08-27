@@ -11,7 +11,7 @@ entities.Dog = function(x, y) {
     this.currentState = "idle";
     this.gotoAndPlay("idle");
 
-    this.onTick(this.getSpriteDisplayObject(), function (data) {
+    this.onTick(this.getSpriteDisplayObject(), function (dt) {
         this.prevState = this.currentState;
 
         if (this.currentState !== this.prevState) {
@@ -22,10 +22,10 @@ entities.Dog = function(x, y) {
 
         this.applyFriction(FRICTION_FORCE);
         this.applyGravity();
-        this.move(data.dt);
+        this.move(dt);
         this.checkBounds(0, MAP_WIDTH, MAP_HEIGHT);
 
-        this.checkCollisions(data.stage);
+        this.checkCollisions();
 
         this.render();
     });
@@ -94,9 +94,10 @@ mixins.Physical.call(entities.Dog.prototype, 1);
 
 mixins.Collidable.call(entities.Dog.prototype, {
     callback: function(intersection) {
+        return;
         this.currentState = "gettingOutOfTheWay";
     },
-    boundingBox: Object.build(Vector, 30, 30)
+    hitAreaRadius: 36
 });
 
 mixins.Updateable.call(entities.Dog.prototype);

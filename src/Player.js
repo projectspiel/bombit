@@ -16,7 +16,7 @@ entities.Player = function(x, y, keyMap, keyboardState) {
     this._keyMap = keyMap;
     this._keyboardState = keyboardState;
 
-    this.onTick(this.getSpriteDisplayObject(), function (data) {
+    this.onTick(this.getSpriteDisplayObject(), function (dt) {
         this.prevState = this.currentState;
 
         this.applyInput();
@@ -29,10 +29,10 @@ entities.Player = function(x, y, keyMap, keyboardState) {
 
         this.applyFriction(FRICTION_FORCE);
         this.applyGravity();
-        this.move(data.dt);
+        this.move(dt);
         this.checkBounds(0, MAP_WIDTH, MAP_HEIGHT);
 
-        this.checkCollisions(data.stage);
+        this.checkCollisions();
 
         this.render();
     });
@@ -135,15 +135,10 @@ mixins.Physical.call(entities.Player.prototype, 1);
 
 mixins.Collidable.call(entities.Player.prototype, {
     callback: function(intersection) {
-        if(intersection.width < intersection.height) {
-            this.pos.x += (this.pos.x >= intersection.x)? intersection.width : -intersection.width;
-            this.vel.set(0, this.vel.y);
-        } else {
-            this.pos.y += (this.pos.y >= intersection.y)? intersection.height : -intersection.height;
-            this.vel.set(this.vel.x, 0);
-        }
+        this.pos.x -= intersection.overlapV.x;
+        this.pos.y -= intersection.overlapV.y;
     },
-    boundingBox: Object.build(Vector, 36, 36)
+    hitAreaRadius: 36
 });
 
 mixins.Updateable.call(entities.Player.prototype);

@@ -10,13 +10,13 @@ entities.Ball = function(x, y, z) {
 
     this.vel.set(50, 50, 50);
 
-    this.onTick(this.getSpriteDisplayObject(), function (data) {
+    this.onTick(this.getSpriteDisplayObject(), function (dt) {
         this.applyFriction(FRICTION_FORCE);
         this.applyGravity();
-        this.move(data.dt);
+        this.move(dt);
         this.checkBounds(DAMP_FACTOR, MAP_WIDTH, MAP_HEIGHT);
 
-        this.checkCollisions(data.stage);
+        this.checkCollisions();
 
         this.render();
     });
@@ -40,7 +40,7 @@ mixins.Collidable.call(entities.Ball.prototype, {
     callback: function(intersection) {
         console.log('Ball collided');
     },
-    boundingBox: Object.build(Vector, 100, 100)
+    hitAreaRadius: 8
 });
 
 mixins.Physical.call(entities.Ball.prototype, 1);

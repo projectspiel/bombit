@@ -1,5 +1,6 @@
 var mixins = mixins || {};
 
+// @fixme params in canvas coordinates system, should be in Map coordinates system.
 mixins.HasShadow = function(objectWidth, objectHeight) {
     if (!this.isRenderable) { throw "Dependencies not met"; }
     this.hasShadow = true;

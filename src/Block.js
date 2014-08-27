@@ -24,5 +24,5 @@ mixins.Collidable.call(entities.Block.prototype, {
     callback: function(intersection) {
         console.log('block collided');
     },
-    boundingBox: Object.build(Vector, 100, 100)
+    hitAreaRadius: 100
 });
