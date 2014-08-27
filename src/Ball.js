@@ -14,7 +14,7 @@ entities.Ball = function(x, y, z) {
         this.applyFriction(FRICTION_FORCE);
         this.applyGravity();
         this.move(data.dt);
-        this.checkBounds(DAMP_FACTOR, data.stage.canvas.width, data.stage.canvas.height);
+        this.checkBounds(DAMP_FACTOR, MAP_WIDTH, MAP_HEIGHT);
 
         this.checkCollisions(data.stage);
 

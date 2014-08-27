@@ -37,8 +37,7 @@ mixins.Physical = function() {
         }
     };
 
-    this.checkBounds = function(dampFactor, canvasWidth, canvasHeight) {
-        //@fixme FIX ME!
+    this.checkBounds = function(dampFactor, width, height) {
         if (this.pos.z <= 0.05) {
             this.vel.z *= -1 * dampFactor;
             this.pos.set(this.pos.x, this.pos.y, 0);
@@ -49,8 +48,8 @@ mixins.Physical = function() {
             this.vel.set(0, this.vel.y);
         }
 
-        if(this.pos.x > canvasWidth) {
-            this.pos.set(canvasWidth, this.pos.y);
+        if(this.pos.x > width) {
+            this.pos.set(width, this.pos.y);
             this.vel.set(0, this.vel.y);
         }
 
@@ -59,8 +58,8 @@ mixins.Physical = function() {
             this.vel.set(this.vel.x, 0);
         }
 
-        if(this.pos.y > canvasHeight) {
-            this.pos.set(this.pos.x, canvasHeight);
+        if(this.pos.y > height) {
+            this.pos.set(this.pos.x, height);
             this.vel.set(this.vel.x, 0);
         }
     };

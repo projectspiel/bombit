@@ -23,7 +23,7 @@ entities.Dog = function(x, y) {
         this.applyFriction(FRICTION_FORCE);
         this.applyGravity();
         this.move(data.dt);
-        this.checkBounds(0, data.stage.canvas.width, data.stage.canvas.height);
+        this.checkBounds(0, MAP_WIDTH, MAP_HEIGHT);
 
         this.checkCollisions(data.stage);
 
