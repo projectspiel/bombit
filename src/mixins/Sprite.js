@@ -5,12 +5,10 @@ mixins.Sprite = function(spriteSheetData) {
     if (this.isSprite === true) { return; }
     this.isSprite = true;
 
-    var sprite = null;
-
     this.onInit( function() {
-        sprite = new createjs.Sprite(new createjs.SpriteSheet(spriteSheetData));
-        sprite.scaleX = sprite.scaleY = 2;
-        this.addDisplayObject(sprite);
+        this.sprite = new createjs.Sprite(new createjs.SpriteSheet(spriteSheetData));
+        this.sprite.scaleX = this.sprite.scaleY = 2;
+        this.addDisplayObject(this.sprite);
     });
 
     if (this.calcDisplayVector === undefined) {
@@ -23,10 +21,10 @@ mixins.Sprite = function(spriteSheetData) {
      * @fixme Kill this method and replace with a list of proxy methods
      */
     this.getSpriteDisplayObject = function() {
-        return sprite;
+        return this.sprite;
     };
 
     this.gotoAndPlay = function(animation) {
-        sprite.gotoAndPlay(animation);
+        this.sprite.gotoAndPlay(animation);
     };
 };

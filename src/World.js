@@ -1,3 +1,5 @@
+var fuckyou = null;
+
 var World = function(canvas) {
     this._stage = new createjs.Stage(canvas);
     this._stage.autoClear = true;
@@ -7,9 +9,13 @@ var World = function(canvas) {
     this.initLevel();
     this.initMobs(0);
     this.initPlayer();
-    this.addDog();
+    this.addDog(this._stage.canvas.width / 2 - 150, this._stage.canvas.height / 2);
+    this.addDog(this._stage.canvas.width / 2 - 0, this._stage.canvas.height / 2 + 200);
     this.addBlock();
-    this.addBall();
+    this.addBall(100, 300, 400);
+    this.addBall(300, 200, 500);
+
+    fuckyou = this._entities;
 };
 
 World.prototype = {
@@ -48,8 +54,8 @@ World.prototype = {
         this.addEntity(player);
     },
 
-    addDog: function () {
-        var dog = Object.build(entities.Dog, this._stage.canvas.width / 2 - 150, this._stage.canvas.height / 2);
+    addDog: function(x, y) {
+        var dog = Object.build(entities.Dog, x, y);
         this.addEntity(dog);
     },
 
@@ -58,8 +64,8 @@ World.prototype = {
         this.addEntity(block);
     },
 
-    addBall: function() {
-        var ball = Object.build(entities.Ball, 300, 500, 200);
+    addBall: function(x, y, z) {
+        var ball = Object.build(entities.Ball, x, y, z);
         this.addEntity(ball);
     },
 

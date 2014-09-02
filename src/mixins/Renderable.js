@@ -7,15 +7,14 @@ mixins.Renderable = function() {
     this.isRenderable = true;
 
     var renderCallbacks = [];
-    var container;
 
     this.onInit(function() {
-        container = new createjs.Container();
+        this.container = new createjs.Container();
     });
 
     this.addDisplayObject = function(displayObject) {
-        container.addChild(displayObject);
-        container.sortChildren(function(obj1, obj2, options) {
+        this.container.addChild(displayObject);
+        this.container.sortChildren(function(obj1, obj2, options) {
             var obj1zindex = obj1.zindex? obj1.zindex : 0;
             var obj2zindex = obj2.zindex? obj2.zindex : 0;
 
@@ -27,7 +26,7 @@ mixins.Renderable = function() {
     };
 
     this.getDisplayObject = function() {
-        return container;
+        return this.container;
     };
 
     this.onRender = function(callable) {
@@ -41,8 +40,8 @@ mixins.Renderable = function() {
 
         var displayVector = this.getDisplayPosition();
 
-        container.x = displayVector.x;
-        container.y = displayVector.y;
+        this.container.x = displayVector.x;
+        this.container.y = displayVector.y;
     };
 
     this._mapToCanvas = function (vector) {
