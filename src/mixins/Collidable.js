@@ -1,7 +1,7 @@
 var mixins = mixins || {};
 
 mixins.Collidable = function(options) {
-    if (!this.isInitializable || !this.isPositionable || !this.isSprite) { throw "Dependencies not met"; }
+    if (!this.isInitializable || !this.isSimulable || !this.isPositionable || !this.isSprite) { throw "Dependencies not met"; }
     this.isCollidable = true;
 
     var callback = options.callback,
@@ -11,6 +11,10 @@ mixins.Collidable = function(options) {
     this.onInit(function() {
         this.hitArea = new SAT.Circle(new SAT.Vector(this.pos.x, this.pos.y), hitAreaRadius);
         collidables.push(this);
+    });
+
+    this.onSimulate( function(dt) {
+        this.checkCollisions();
     });
 
     this.afterInit(function() {

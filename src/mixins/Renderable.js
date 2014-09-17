@@ -22,7 +22,6 @@ mixins.Renderable = function() {
             if (obj1zindex < obj2zindex) { return -1; }
             return 0;
         });
-
     };
 
     this.getDisplayObject = function() {
