@@ -11,7 +11,6 @@ var World = function(canvas) {
     this.initPlayer();
     this.addDog(this._stage.canvas.width / 2 - 150, this._stage.canvas.height / 2);
     this.addDog(this._stage.canvas.width / 2 - 0, this._stage.canvas.height / 2 + 200);
-    this.addBlock();
     this.addBall(100, 300, 400);
     this.addBall(300, 200, 500);
 
@@ -64,11 +63,6 @@ World.prototype = {
     addDog: function(x, y) {
         var dog = Object.build(entities.Dog, x, y);
         this.addEntity(dog);
-    },
-
-    addBlock: function() {
-        var block = Object.build(entities.Block, 200, 200);
-        this.addEntity(block);
     },
 
     addBall: function(x, y, z) {
