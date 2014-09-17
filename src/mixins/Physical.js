@@ -9,7 +9,7 @@ mixins.Physical = function(options) {
     this.isPhysical = true;
 
     this.onInit(function() {
-        this.vel = Object.build(Vector);
+        this._vel = Object.build(Vector);
         this.force = Object.build(Vector);
         if (this.mass === undefined) {
             this.mass = 1;
@@ -25,9 +25,9 @@ mixins.Physical = function(options) {
 
     this.move = function(dt) { //@todo split in applyForce and move?
         var halfDeltaVel = this.force.clone().scalar(1 / this.mass * dt / 1000 * 0.5);
-        this.vel.add(halfDeltaVel);
-        this.pos.add(this.vel.clone().scalar(dt / 1000));
-        this.vel.add(halfDeltaVel);
+        this._vel.add(halfDeltaVel);
+        this.nextPos.add(this._vel.clone().scalar(dt / 1000));
+        this._vel.add(halfDeltaVel);
 
         this.force.reset();
     };
@@ -43,35 +43,36 @@ mixins.Physical = function(options) {
         //@fixme FIX ME!
         if (this.pos.z === 0) {
             var friction = Object.build(Vector);
-            friction.set(this.vel.x * -factor, this.vel.y * -factor, this.vel.z);
+            friction.set(this._vel.x * -factor, this._vel.y * -factor, this._vel.z);
             this.force.add(friction);
         }
     };
 
     this.checkBounds = function(dampFactor, width, height) {
-        if (this.pos.z <= 0.05) {
-            this.vel.z *= -1 * dampFactor;
-            this.pos.set(this.pos.x, this.pos.y, 0);
+
+        if (this.nextPos.z <= 0.05) {
+            this._vel.z *= -1 * dampFactor;
+            this.nextPos.set(this.nextPos.x, this.nextPos.y, 0);
         }
 
         if(this.pos.x < 0) {
-            this.pos.set(0, this.pos.y);
-            this.vel.set(0, this.vel.y);
+            this.nextPos.set(0, this.nextPos.y);
+            this._vel.set(0, this._vel.y);
         }
 
         if(this.pos.x > width) {
-            this.pos.set(width, this.pos.y);
-            this.vel.set(0, this.vel.y);
+            this.nextPos.set(width, this.nextPos.y);
+            this._vel.set(0, this._vel.y);
         }
 
         if(this.pos.y < 0) {
-            this.pos.set(this.pos.x, 0);
-            this.vel.set(this.vel.x, 0);
+            this.nextPos.set(this.nextPos.x, 0);
+            this._vel.set(this._vel.x, 0);
         }
 
         if(this.pos.y > height) {
-            this.pos.set(this.pos.x, height);
-            this.vel.set(this.vel.x, 0);
+            this.nextPos.set(this.nextPos.x, height);
+            this._vel.set(this._vel.x, 0);
         }
     };
 };

@@ -28,6 +28,9 @@ World.prototype = {
             return 0;
         });
 
+        for(var i in this._entities) {
+            this._entities[i].update(event.delta);
+        }
         this._stage.update(event, event.delta);
     },
 

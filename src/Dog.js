@@ -5,7 +5,7 @@ entities.Dog = function(x, y) {
         FRICTION_FORCE = 20;
 
     this.init();
-    this.position(x, y);
+    this.initPosition(x, y);
     this.render();
 
     this.currentState = "idle";
@@ -21,7 +21,7 @@ entities.Dog = function(x, y) {
         this.stateHandlers[this.currentState].call(this);
     });
 
-    this.onUpdate(this.getSpriteDisplayObject(), function (dt) {
+    this.onUpdate(function (dt) {
         this.render();
     });
 };
@@ -69,6 +69,7 @@ entities.Dog.prototype = {
 };
 
 mixins.Initializable.call(entities.Dog.prototype);
+mixins.Updateable.call(entities.Dog.prototype);
 mixins.Simulable.call(entities.Dog.prototype);
 mixins.Positionable.call(entities.Dog.prototype);
 mixins.Renderable.call(entities.Dog.prototype);
@@ -96,5 +97,4 @@ mixins.Collidable.call(entities.Dog.prototype, {
     hitAreaRadius: 36
 });
 
-mixins.Updateable.call(entities.Dog.prototype);
 mixins.HasShadow.call(entities.Dog.prototype, 32 * 1.1, 32 * 1.5);

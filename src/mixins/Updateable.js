@@ -3,11 +3,16 @@ var mixins = mixins || {};
 mixins.Updateable = function(callback) {
     this.isUpdateable = true;
 
-    this.onUpdate = function(displayObject, callable) {
-        var that = this;
-        displayObject.addEventListener("tick", function (event) {
-            callable.call(that, event.params[1]);
-        });
+    var callbacks = [];
+
+    this.onUpdate = function(callable) {
+        callbacks.push(callable);
+    };
+
+    this.update = function (dt) {
+        for(var i in callbacks) {
+            callbacks[i].apply(this, [dt]);
+        }
     };
 
 };

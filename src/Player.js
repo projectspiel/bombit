@@ -5,9 +5,8 @@ var FRAME_WIDTH = 48,
     MOVEMENT_FORCE = 5000;
 
 entities.Player = function(x, y, keyMap, keyboardState) {
-
     this.init();
-    this.position(x, y);
+    this.initPosition(x, y);
 
     this.render();
 
@@ -27,7 +26,7 @@ entities.Player = function(x, y, keyMap, keyboardState) {
         this.stateHandlers[this.currentState].call(this);
     });
 
-    this.onUpdate(this.getSpriteDisplayObject(), function (dt) {
+    this.onUpdate(function (dt) {
         this.render();
     });
 };
@@ -105,6 +104,7 @@ entities.Player.prototype = {
 };
 
 mixins.Initializable.call(entities.Player.prototype);
+mixins.Updateable.call(entities.Player.prototype);
 mixins.Simulable.call(entities.Player.prototype);
 mixins.Positionable.call(entities.Player.prototype);
 mixins.Renderable.call(entities.Player.prototype);
@@ -130,11 +130,10 @@ mixins.Physical.call(entities.Player.prototype, { friction: 20, mass: 1 });
 
 mixins.Collidable.call(entities.Player.prototype, {
     callback: function(intersection) {
-        this.pos.x -= intersection.overlapV.x;
-        this.pos.y -= intersection.overlapV.y;
+        this.nextPos.x -= intersection.overlapV.x;
+        this.nextPos.y -= intersection.overlapV.y;
     },
     hitAreaRadius: 36
 });
 
-mixins.Updateable.call(entities.Player.prototype);
 mixins.HasShadow.call(entities.Player.prototype, FRAME_WIDTH * 1.1, FRAME_HEIGHT);
