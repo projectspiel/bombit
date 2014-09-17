@@ -1,28 +1,19 @@
 var entities = entities || {};
 
 entities.Ball = function(x, y, z) {
-    var DAMP_FACTOR = 0.6,
-        FRICTION_FORCE = 2;
-
     this.init();
     this.position(x, y, z);
     this.render();
 
     this.vel.set(50, 50, 50);
 
-    this.onTick(this.getSpriteDisplayObject(), function (dt) {
-        this.applyFriction(FRICTION_FORCE);
-        this.applyGravity();
-        this.move(dt);
-        this.checkBounds(DAMP_FACTOR, MAP_WIDTH, MAP_HEIGHT);
-
-        this.checkCollisions();
-
+    this.onUpdate(this.getSpriteDisplayObject(), function (dt) {
         this.render();
     });
 };
 
 mixins.Initializable.call(entities.Ball.prototype);
+mixins.Simulable.call(entities.Ball.prototype);
 mixins.Positionable.call(entities.Ball.prototype);
 mixins.Renderable.call(entities.Ball.prototype);
 
@@ -43,7 +34,7 @@ mixins.Collidable.call(entities.Ball.prototype, {
     hitAreaRadius: 8
 });
 
-mixins.Physical.call(entities.Ball.prototype, 1);
+mixins.Physical.call(entities.Ball.prototype, { friction: 2, mass: 1, dampFactor: 0.6 } );
 
 mixins.Updateable.call(entities.Ball.prototype);
 mixins.HasShadow.call(entities.Ball.prototype, 8 * 2, 8 * 2);

@@ -5,6 +5,7 @@
         {"src":"Polygon.js", "id":"polygon"},
         {"src":"mixins/Sprite.js", "id":"Sprite"},
         {"src":"mixins/Updateable.js", "id":"Updateable"},
+        {"src":"mixins/Simulable.js", "id":"Simulable"},
         {"src":"mixins/Positionable.js", "id":"Positionable"},
         {"src":"mixins/Physical.js", "id":"Physical"},
         {"src":"mixins/Collidable.js", "id":"Collidable"},

@@ -7,6 +7,7 @@ entities.Block = function(x, y) {
 };
 
 mixins.Initializable.call(entities.Block.prototype);
+mixins.Simulable.call(entities.Block.prototype);
 mixins.Positionable.call(entities.Block.prototype);
 mixins.Renderable.call(entities.Block.prototype);
 

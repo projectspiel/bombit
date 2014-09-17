@@ -1,15 +1,26 @@
 var mixins = mixins || {};
 
-mixins.Physical = function() {
-    if (!this.isInitializable || !this.isPositionable) { throw "Dependencies not met"; }
+mixins.Physical = function(options) {
+    this.friction = options.friction;
+    this.mass     = options.mass;
+    this.dampFactor = options.dampFactor;
+
+    if (!this.isInitializable || !this.isSimulable || !this.isPositionable) { throw "Dependencies not met"; }
     this.isPhysical = true;
 
-    this.onInit( function() {
+    this.onInit(function() {
         this.vel = Object.build(Vector);
         this.force = Object.build(Vector);
         if (this.mass === undefined) {
             this.mass = 1;
         }
+    });
+
+    this.onSimulate(function(dt) {
+        this.applyFriction(this.friction);
+        this.applyGravity();
+        this.move(dt);
+        this.checkBounds(this.dampFactor, MAP_WIDTH, MAP_HEIGHT);
     });
 
     this.move = function(dt) { //@todo split in applyForce and move?

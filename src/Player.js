@@ -5,7 +5,6 @@ var FRAME_WIDTH = 48,
     MOVEMENT_FORCE = 5000;
 
 entities.Player = function(x, y, keyMap, keyboardState) {
-    var FRICTION_FORCE = 20;
 
     this.init();
     this.position(x, y);
@@ -16,7 +15,7 @@ entities.Player = function(x, y, keyMap, keyboardState) {
     this._keyMap = keyMap;
     this._keyboardState = keyboardState;
 
-    this.onTick(this.getSpriteDisplayObject(), function (dt) {
+    this.prependOnSimulate( function(dt) {
         this.prevState = this.currentState;
 
         this.applyInput();
@@ -26,14 +25,9 @@ entities.Player = function(x, y, keyMap, keyboardState) {
         }
 
         this.stateHandlers[this.currentState].call(this);
+    });
 
-        this.applyFriction(FRICTION_FORCE);
-        this.applyGravity();
-        this.move(dt);
-        this.checkBounds(0, MAP_WIDTH, MAP_HEIGHT);
-
-        this.checkCollisions();
-
+    this.onUpdate(this.getSpriteDisplayObject(), function (dt) {
         this.render();
     });
 };
@@ -111,6 +105,7 @@ entities.Player.prototype = {
 };
 
 mixins.Initializable.call(entities.Player.prototype);
+mixins.Simulable.call(entities.Player.prototype);
 mixins.Positionable.call(entities.Player.prototype);
 mixins.Renderable.call(entities.Player.prototype);
 
@@ -131,7 +126,7 @@ mixins.Sprite.call(entities.Player.prototype, {
     }
 });
 
-mixins.Physical.call(entities.Player.prototype, 1);
+mixins.Physical.call(entities.Player.prototype, { friction: 20, mass: 1 });
 
 mixins.Collidable.call(entities.Player.prototype, {
     callback: function(intersection) {

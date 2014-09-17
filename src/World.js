@@ -13,7 +13,7 @@ var World = function(canvas) {
 };
 
 World.prototype = {
-    tick: function (event) {
+    update: function (event) {
         this._stage.sortChildren(function(obj1, obj2, options) {
             var obj1zindex = obj1.zindex? obj1.zindex : obj1.y;
             var obj2zindex = obj2.zindex? obj2.zindex : obj2.y;
@@ -26,8 +26,15 @@ World.prototype = {
         this._stage.update(event, event.delta);
     },
 
+    simulate: function(event) {
+        for(var i in this._entities) {
+            this._entities[i].simulate(event.delta);
+        }
+    },
+
     start: function () {
-        createjs.Ticker.addEventListener("tick", this.tick.bind(this));
+        createjs.Ticker.addEventListener("tick", this.simulate.bind(this));
+        createjs.Ticker.addEventListener("tick", this.update.bind(this));
         createjs.Ticker.setFPS(30);
     },
 
