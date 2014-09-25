@@ -1,5 +1,3 @@
-var fuckyou = null;
-
 var World = function(canvas) {
     this._stage = new createjs.Stage(canvas);
     this._stage.autoClear = true;
@@ -9,6 +7,7 @@ var World = function(canvas) {
     this.initLevel();
     this.initMobs(0);
     this.initPlayer();
+    this.initSecondPlayer();
     this.addDog(this._stage.canvas.width / 2 - 150, this._stage.canvas.height / 2);
     this.addDog(this._stage.canvas.width / 2 - 0, this._stage.canvas.height / 2 + 200);
     this.addBall(100, 300, 400);
@@ -59,6 +58,18 @@ World.prototype = {
                 right: constants.KEY_RIGHT
             },
             player = new entities.Player(this._stage.canvas.width / 2, this._stage.canvas.height / 2, keyMap, this.keyboardState);
+
+        this.addEntity(player);
+    },
+
+    initSecondPlayer: function () {
+        var keyMap = { // Defined outside Player because it could be configurable someday
+                up: constants.KEY_W,
+                down: constants.KEY_S,
+                left: constants.KEY_A,
+                right: constants.KEY_D
+            },
+            player = new entities.Player(400, 400, keyMap, this.keyboardState);
 
         this.addEntity(player);
     },
