@@ -72,10 +72,10 @@ entities.Player.prototype = {
     },
     applyInput: function() {
         var impulseVectors = {
-            up: Object.build(Vector, 0, -1),
-            down: Object.build(Vector, 0, 1),
-            left: Object.build(Vector, -1, 0),
-            right: Object.build(Vector, 1, 0)
+            up:    new Vector(0, -1),
+            down:  new Vector(0, 1),
+            left:  new Vector(-1, 0),
+            right: new Vector(1, 0)
         };
 
         this.currentState = "idle";

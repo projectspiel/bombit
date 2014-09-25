@@ -57,21 +57,15 @@ window.onload = function() {
     });
 
     preloader.on("complete", function() {
-        Object.build(World, canvas).start();
+        new World(canvas).start();
     });
 
     preloader.loadManifest("resources_manifest.json");
     preloader.loadManifest("sources_manifest.json");
 };
 
-Object.build = function(o) {
-    var instance = Object.create(o.prototype);
-    o.apply(instance, Array.prototype.slice.call(arguments, 1));
-    return instance;
-};
-
 window.log = function() {
     for (var i = 0; i < arguments.length; i++) {
         console.log(arguments[i].toString?arguments[i].toString():arguments[i]);
     }
-}
+};

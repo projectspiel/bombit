@@ -14,7 +14,7 @@ Vector.prototype = {
         this.set(0, 0, 0);
     },
     clone: function () {
-        return Object.build(Vector, this.x, this.y, this.z);
+        return new Vector(this.x, this.y, this.z);
     },
     add: function (v) {
         this.x += v.x;

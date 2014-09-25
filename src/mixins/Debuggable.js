@@ -27,7 +27,7 @@ mixins.Debuggable = function() {
         this.debugCollisionDisplayObject = (function() {
             var shape = new createjs.Shape();
 
-            var mappedBoundingBox = that._mapToCanvas(Object.build(Vector, that.getHitArea().r * 2, that.getHitArea().r * 2));
+            var mappedBoundingBox = that._mapToCanvas(new Vector(that.getHitArea().r * 2, that.getHitArea().r * 2));
             shape.graphics.beginFill("rgba(250,0,0,0.5)").drawEllipse(
                 -mappedBoundingBox.x/2,
                 -mappedBoundingBox.y/2,

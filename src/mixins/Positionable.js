@@ -5,7 +5,7 @@ mixins.Positionable = function() {
     this.isPositionable = true;
 
     this.onInit(function() {
-        this.pos = Object.build(Vector);
+        this.pos = new Vector();
         this.nextPos = this.pos.clone();
     });
 

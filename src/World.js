@@ -58,18 +58,18 @@ World.prototype = {
                 left: constants.KEY_LEFT,
                 right: constants.KEY_RIGHT
             },
-            player = Object.build(entities.Player, this._stage.canvas.width / 2, this._stage.canvas.height / 2, keyMap, this.keyboardState);
+            player = new entities.Player(this._stage.canvas.width / 2, this._stage.canvas.height / 2, keyMap, this.keyboardState);
 
         this.addEntity(player);
     },
 
     addDog: function(x, y) {
-        var dog = Object.build(entities.Dog, x, y);
+        var dog = new entities.Dog(x, y);
         this.addEntity(dog);
     },
 
     addBall: function(x, y, z) {
-        var ball = Object.build(entities.Ball, x, y, z);
+        var ball = new entities.Ball(x, y, z);
         this.addEntity(ball);
     },
 

@@ -30,7 +30,7 @@ mixins.Sprite.call(entities.Ball.prototype, {
 
 mixins.Collidable.call(entities.Ball.prototype, {
     callback: function(intersection) {
-        var vector = Object.build(Vector, -1000 * intersection.overlapV.x, -1000 * intersection.overlapV.y, 2000);
+        var vector = new Vector(-1000 * intersection.overlapV.x, -1000 * intersection.overlapV.y, 2000);
         this.force.add(vector);
     },
     hitAreaRadius: 8

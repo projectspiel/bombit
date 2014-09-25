@@ -48,8 +48,7 @@ entities.Dog.prototype = {
             this.gotoAndPlay("idle");
         },
         gettingOutOfTheWay: function() {
-            this.targetPos = Object.build(
-                Vector,
+            this.targetPos = new Vector(
                 this.pos.x + Math.floor(Math.random() * 300)-150,
                 this.pos.y + Math.floor(Math.random() * 300)-150
             );
