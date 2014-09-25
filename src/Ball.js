@@ -39,3 +39,4 @@ mixins.Collidable.call(entities.Ball.prototype, {
 mixins.Physical.call(entities.Ball.prototype, { friction: 2, mass: 1, dampFactor: 0.6 } );
 
 mixins.HasShadow.call(entities.Ball.prototype, 8 * 2, 8 * 2);
+mixins.Debuggable.call(entities.Ball.prototype);

@@ -6,19 +6,19 @@ mixins.HasShadow = function(objectWidth, objectHeight) {
     this.hasShadow = true;
 
     this.onInit(function() {
-        this.displayObject = (function() {
+        this.shadowDisplayObject = (function() {
             var shape = new createjs.Shape();
             var transformedHeight = objectHeight * 0.2;
             shape.graphics.beginFill("rgba(0,0,0,0.5)").drawEllipse(-objectWidth/2, -transformedHeight/2, objectWidth, transformedHeight);
             return shape;
         })();
 
-        this.displayObject.zindex = -1;
+        this.shadowDisplayObject.zindex = -1;
 
-        this.addDisplayObject(this.displayObject);
+        this.addDisplayObject(this.shadowDisplayObject);
     });
 
     this.onRender(function() {
-        this.displayObject.y = this.pos.z;
+        this.shadowDisplayObject.y = this.pos.z;
     });
 };

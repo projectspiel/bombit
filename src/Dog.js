@@ -98,3 +98,4 @@ mixins.Collidable.call(entities.Dog.prototype, {
 });
 
 mixins.HasShadow.call(entities.Dog.prototype, 32 * 1.1, 32 * 1.5);
+mixins.Debuggable.call(entities.Dog.prototype);

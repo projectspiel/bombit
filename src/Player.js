@@ -137,3 +137,4 @@ mixins.Collidable.call(entities.Player.prototype, {
 });
 
 mixins.HasShadow.call(entities.Player.prototype, FRAME_WIDTH * 1.1, FRAME_HEIGHT);
+mixins.Debuggable.call(entities.Player.prototype);
