@@ -15,6 +15,7 @@
         {"src":"mixins/Alive.js", "id":"Alive"},
         {"src":"mixins/Debuggable.js", "id":"Debuggable"},
         {"src":"inputSources/Keyboard.js", "id":"KeyboardInputSource"},
+        {"src":"inputSources/Null.js", "id":"NullInputSource"},
         {"src":"World.js", "id":"world"},
         {"src":"Ball.js", "id":"ball"},
         {"src":"Player.js", "id":"player"},

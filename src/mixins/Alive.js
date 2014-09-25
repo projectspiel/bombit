@@ -1,7 +1,7 @@
 var mixins = mixins || {};
 
 mixins.Alive = function() {
-    if (!this.isSimulable || !this.isSprite) { throw "Dependencies not met"; }
+    if (!this.isInitializable || !this.isSimulable || !this.isSprite) { throw "Dependencies not met"; }
     this.isAlive = true;
 
     var MOVEMENT_FORCE = 5000;
@@ -21,6 +21,10 @@ mixins.Alive = function() {
         this.updateSpriteState(forceToApply);
         this.force.add(forceToApply);
     };
+
+    this.onInit(function() {
+        this._inputSource = this._inputSource || new inputSources.Null();
+    });
 
     this.onSimulate(function() {
         this._applyInput();
