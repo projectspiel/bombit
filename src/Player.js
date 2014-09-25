@@ -1,106 +1,16 @@
 var entities = entities || {};
 
 var FRAME_WIDTH = 48,
-    FRAME_HEIGHT =  96,
-    MOVEMENT_FORCE = 5000;
+    FRAME_HEIGHT =  96;
 
 entities.Player = function(x, y, keyMap, keyboardState) {
     this.init();
     this.initPosition(x, y);
-
-    this.render();
-
-    this.currentState = "idle";
-    this._keyMap = keyMap;
-    this._keyboardState = keyboardState;
-
-    this.prependOnSimulate( function(dt) {
-        this.prevState = this.currentState;
-
-        this.applyInput();
-
-        if (this.currentState !== this.prevState) {
-            this.stateChangeHandlers[this.currentState].call(this);
-        }
-
-        this.stateHandlers[this.currentState].call(this);
-    });
+    this.setInputSource(new inputSources.Keyboard(keyMap, keyboardState));
 
     this.onUpdate(function (dt) {
         this.render();
     });
-};
-
-entities.Player.prototype = {
-    stateHandlers: {
-        movingUp: function () {
-        },
-        movingDown: function () {
-        },
-        movingLeft: function () {
-        },
-        movingRight: function () {
-        },
-        idle: function () {
-        }
-    },
-    stateChangeHandlers: {
-        movingUp: function () {
-            this.gotoAndPlay("moveUp");
-        },
-        movingDown: function () {
-            this.gotoAndPlay("moveDown");
-        },
-        movingLeft: function () {
-            this.gotoAndPlay("moveLeft");
-        },
-        movingRight: function () {
-            this.gotoAndPlay("moveRight");
-        },
-        idle: function () {
-            this.gotoAndPlay("idle");
-        }
-        /*moving: function (that) {
-         var animationName;
-         if (Math.abs(that.vel.x) > Math.abs(that.vel.y)) {
-         animationName = that.vel.x > 0 ? "moveRight" : "moveLeft";
-         } else {
-         animationName = that.vel.y > 0 ? "moveDown" : "moveUp";
-         }
-         that.sprite.gotoAndPlay(animationName);
-         }*/
-    },
-    applyInput: function() {
-        var impulseVectors = {
-            up:    new Vector(0, -1),
-            down:  new Vector(0, 1),
-            left:  new Vector(-1, 0),
-            right: new Vector(1, 0)
-        };
-
-        this.currentState = "idle";
-        if (this._keyboardState[this._keyMap.left]) {
-            this.force.add(impulseVectors.left);
-            this.currentState = "movingLeft";
-        }
-
-        if (this._keyboardState[this._keyMap.right]) {
-            this.force.add(impulseVectors.right);
-            this.currentState = "movingRight";
-        }
-
-        if (this._keyboardState[this._keyMap.up]) {
-            this.force.add(impulseVectors.up);
-            this.currentState = "movingUp";
-        }
-
-        if (this._keyboardState[this._keyMap.down]) {
-            this.force.add(impulseVectors.down);
-            this.currentState = "movingDown";
-        }
-
-        this.force.normalize().scalar(MOVEMENT_FORCE);
-    }
 };
 
 mixins.Initializable.call(entities.Player.prototype);
@@ -126,6 +36,7 @@ mixins.Sprite.call(entities.Player.prototype, {
     }
 });
 
+mixins.Alive.call(entities.Player.prototype);
 mixins.Physical.call(entities.Player.prototype, { friction: 20, mass: 1 });
 
 mixins.Collidable.call(entities.Player.prototype, {
