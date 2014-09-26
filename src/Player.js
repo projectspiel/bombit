@@ -13,13 +13,13 @@ entities.Player = function(x, y, keyMap, keyboardState) {
     });
 };
 
-mixins.Initializable.call(entities.Player.prototype);
-mixins.Updateable.call(entities.Player.prototype);
-mixins.Simulable.call(entities.Player.prototype);
-mixins.Positionable.call(entities.Player.prototype);
-mixins.Renderable.call(entities.Player.prototype);
+entities.Player.includeMixin( mixins.Initializable );
+entities.Player.includeMixin( mixins.Updateable );
+entities.Player.includeMixin( mixins.Simulable );
+entities.Player.includeMixin( mixins.Positionable );
+entities.Player.includeMixin( mixins.Renderable );
 
-mixins.Sprite.call(entities.Player.prototype, {
+entities.Player.includeMixin( mixins.Sprite, {
     images: [resources.playerImage],
     frames: {
         width: FRAME_WIDTH,
@@ -36,10 +36,10 @@ mixins.Sprite.call(entities.Player.prototype, {
     }
 });
 
-mixins.Alive.call(entities.Player.prototype);
-mixins.Physical.call(entities.Player.prototype, { friction: 20, mass: 1 });
+entities.Player.includeMixin( mixins.Alive );
+entities.Player.includeMixin( mixins.Physical, { friction: 20, mass: 1 });
 
-mixins.Collidable.call(entities.Player.prototype, {
+entities.Player.includeMixin( mixins.Collidable, {
     callback: function(intersection) {
         this.nextPos.x -= intersection.overlapV.x;
         this.nextPos.y -= intersection.overlapV.y;
@@ -47,5 +47,6 @@ mixins.Collidable.call(entities.Player.prototype, {
     hitAreaRadius: 36
 });
 
-mixins.HasShadow.call(entities.Player.prototype, FRAME_WIDTH * 1.1, FRAME_HEIGHT);
-mixins.Debuggable.call(entities.Player.prototype);
+entities.Player.includeMixin( mixins.HasShadow, FRAME_WIDTH * 1.1, FRAME_HEIGHT );
+entities.Player.includeMixin( mixins.Debuggable );
+

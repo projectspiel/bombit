@@ -9,13 +9,13 @@ entities.Dog = function(x, y) {
     });
 };
 
-mixins.Initializable.call(entities.Dog.prototype);
-mixins.Updateable.call(entities.Dog.prototype);
-mixins.Simulable.call(entities.Dog.prototype);
-mixins.Positionable.call(entities.Dog.prototype);
-mixins.Renderable.call(entities.Dog.prototype);
+entities.Dog.includeMixin( mixins.Initializable );
+entities.Dog.includeMixin( mixins.Updateable );
+entities.Dog.includeMixin( mixins.Simulable );
+entities.Dog.includeMixin( mixins.Positionable );
+entities.Dog.includeMixin( mixins.Renderable );
 
-mixins.Sprite.call(entities.Dog.prototype, {
+entities.Dog.includeMixin( mixins.Sprite, {
     images: [resources.dogImage],
     frames: {
         width: 32,
@@ -28,15 +28,15 @@ mixins.Sprite.call(entities.Dog.prototype, {
     }
 });
 
-mixins.Alive.call(entities.Dog.prototype);
-mixins.Physical.call(entities.Dog.prototype, 1);
+entities.Dog.includeMixin( mixins.Alive );
+entities.Dog.includeMixin( mixins.Physical, 1 );
 
-mixins.Collidable.call(entities.Dog.prototype, {
+entities.Dog.includeMixin( mixins.Collidable, {
     callback: function(intersection) {
         return;
     },
     hitAreaRadius: 36
 });
 
-mixins.HasShadow.call(entities.Dog.prototype, 32 * 1.1, 32 * 1.5);
-mixins.Debuggable.call(entities.Dog.prototype);
+entities.Dog.includeMixin( mixins.HasShadow,  32 * 1.1, 32 * 1.5 );
+entities.Dog.includeMixin( mixins.Debuggable );
