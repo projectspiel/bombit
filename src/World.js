@@ -8,8 +8,12 @@ var World = function(canvas) {
     this.initMobs(0);
     this.initPlayer();
     this.initSecondPlayer();
-    this.addDog(this._stage.canvas.width / 2 - 150, this._stage.canvas.height / 2);
-    this.addDog(this._stage.canvas.width / 2 - 0, this._stage.canvas.height / 2 + 200);
+    this.addDog({
+        position: { x: this._stage.canvas.width / 2 - 150, y: this._stage.canvas.height / 2 }
+    });
+    this.addDog({
+        position: { x: this._stage.canvas.width / 2, y: this._stage.canvas.height / 2 + 200 }
+    });
     this.addBall(100, 300, 400);
     this.addBall(300, 200, 500);
 
@@ -57,7 +61,13 @@ World.prototype = {
                 left: constants.KEY_LEFT,
                 right: constants.KEY_RIGHT
             },
-            player = new entities.Player(this._stage.canvas.width / 2, this._stage.canvas.height / 2, keyMap, this.keyboardState);
+            player = new entities.Player({
+                position: {
+                    x: this._stage.canvas.width / 2,
+                    y: this._stage.canvas.height / 2
+                },
+                inputSource: new inputSources.Keyboard(keyMap, this.keyboardState)
+            });
 
         this.addEntity(player);
     },
@@ -69,7 +79,13 @@ World.prototype = {
                 left: constants.KEY_A,
                 right: constants.KEY_D
             },
-            player = new entities.Player(400, 400, keyMap, this.keyboardState);
+            player = new entities.Player({
+                position: {
+                    x: 400,
+                    y: 400
+                },
+                inputSource: new inputSources.Keyboard(keyMap, this.keyboardState)
+            });
 
         this.addEntity(player);
     },
@@ -80,7 +96,7 @@ World.prototype = {
     },
 
     addBall: function(x, y, z) {
-        var ball = new entities.Ball(x, y, z);
+        var ball = new entities.Ball({ position: { x: x, y: y, z: z } });
         this.addEntity(ball);
     },
 
