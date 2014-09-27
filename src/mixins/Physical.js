@@ -1,9 +1,11 @@
 var mixins = mixins || {};
 
 mixins.Physical = function(options) {
+    //@fixme use `var` local variables instead of adding attrs to this
     this.friction = options.friction;
     this.mass     = options.mass;
     this.dampFactor = options.dampFactor;
+    this._inputForce = options.inputForce || 5000;
 
     if (!this.isInitializable || !this.isSimulable || !this.isPositionable) { throw "Dependencies not met"; }
     this.isPhysical = true;
@@ -74,5 +76,9 @@ mixins.Physical = function(options) {
             this.nextPos.set(this.nextPos.x, height);
             this._vel.set(this._vel.x, 0);
         }
+    };
+
+    this.addInputForce = function(force) {
+        this.force.add(force).scalar(this._inputForce);
     };
 };

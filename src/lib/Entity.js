@@ -1,4 +1,6 @@
 var Entity = function(entitySpec) {
+    if (entitySpec.spriteSheetData === undefined) { throw "spriteSheetData cant be undefined"; }
+    if (entitySpec.physical === undefined)        { throw "physical cant be undefined"; }
 
     var entity = function(instanceSpec) {
         this.init();
@@ -11,17 +13,14 @@ var Entity = function(entitySpec) {
             );
         }
 
-        if(instanceSpec.inputSource !== undefined) {
-            this.setInputSource(instanceSpec.inputSource);
+        if(instanceSpec.inputSourceBuilder !== undefined) {
+            this.buildInputSource(instanceSpec.inputSourceBuilder, instanceSpec.world);
         }
 
         this.onUpdate(function (dt) {
             this.render();
         });
     };
-
-    if (entitySpec.spriteSheetData === undefined) { throw "spriteSheetData cant be undefined"; }
-    if (entitySpec.physical === undefined)        { throw "physical cant be undefined"; }
 
     entity.includeMixin( mixins.Initializable ).
            includeMixin( mixins.Updateable ).

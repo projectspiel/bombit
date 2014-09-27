@@ -1,23 +1,26 @@
 var World = function(canvas) {
     this._stage = new createjs.Stage(canvas);
     this._stage.autoClear = true;
-    this._entities = [];
 
+    this.keyboardState = {};
     this.registerKeyEvents();
+
+    this._entities = [];
+    this._globalStatus = {
+        entities: {},
+        keyboardState: this.keyboardState,
+        dimensions: {
+            width: MAP_WIDTH,
+            height: MAP_HEIGHT
+        }
+    };
+
     this.initLevel();
-    this.initMobs(0);
     this.initPlayer();
-    this.initSecondPlayer();
-    this.addDog({
-        position: { x: this._stage.canvas.width / 2 - 150, y: this._stage.canvas.height / 2 }
-    });
-    this.addDog({
-        position: { x: this._stage.canvas.width / 2, y: this._stage.canvas.height / 2 + 200 }
-    });
+    this.initDog();
+    this.initZombie();
     this.addBall(100, 300, 400);
     this.addBall(300, 200, 500);
-
-    fuckyou = this._entities;
 };
 
 World.prototype = {
@@ -49,9 +52,12 @@ World.prototype = {
         createjs.Ticker.setFPS(30);
     },
 
-    addEntity: function (entity) {
+    addEntity: function (entity, category) {
         this._entities.push(entity);
         this._stage.addChild(entity.getDisplayObject());
+        if (category !== undefined) {
+            this._globalStatus.entities[category] = entity;
+        }
     },
 
     initPlayer: function () {
@@ -66,42 +72,39 @@ World.prototype = {
                     x: this._stage.canvas.width / 2,
                     y: this._stage.canvas.height / 2
                 },
-                inputSource: new inputSources.Keyboard(keyMap, this.keyboardState)
+                world: this._globalStatus,
+                inputSourceBuilder: inputSources.Keyboard(keyMap)
             });
 
         this.addEntity(player);
     },
 
-    initSecondPlayer: function () {
-        var keyMap = { // Defined outside Player because it could be configurable someday
-                up: constants.KEY_W,
-                down: constants.KEY_S,
-                left: constants.KEY_A,
-                right: constants.KEY_D
+    initZombie: function () {
+        var zombie = new entities.Zombie({
+            position: {
+                x: 30,
+                y: 30
             },
-            player = new entities.Player({
-                position: {
-                    x: 400,
-                    y: 400
-                },
-                inputSource: new inputSources.Keyboard(keyMap, this.keyboardState)
-            });
+            world: this._globalStatus,
+            inputSourceBuilder: inputSources.Enemy
+        });
 
-        this.addEntity(player);
+        this.addEntity(zombie);
     },
 
-    addDog: function(x, y) {
-        var dog = new entities.Dog(x, y);
-        this.addEntity(dog);
+    initDog: function() {
+        var dog = new entities.Dog({
+            position: {
+                x: 600,
+                y: 800
+            }
+        });
+        this.addEntity(dog, 'dog');
     },
 
     addBall: function(x, y, z) {
         var ball = new entities.Ball({ position: { x: x, y: y, z: z } });
         this.addEntity(ball);
-    },
-
-    initMobs: function (numMobs) {
-
     },
 
     initLevel: function () {
@@ -136,7 +139,6 @@ World.prototype = {
     },
 
     registerKeyEvents: function () {
-        this.keyboardState = {};
 
         document.onkeydown = function (e) {
             this.keyboardState[e.keyCode] = true;

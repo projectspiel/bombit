@@ -17,9 +17,11 @@
         {"src":"mixins/Debuggable.js", "id":"Debuggable"},
         {"src":"inputSources/Keyboard.js", "id":"KeyboardInputSource"},
         {"src":"inputSources/Null.js", "id":"NullInputSource"},
+        {"src":"inputSources/Enemy.js", "id":"EnemyInputSource"},
         {"src":"World.js", "id":"world"},
         {"src":"Ball.js", "id":"ball"},
         {"src":"Player.js", "id":"player"},
+        {"src":"Zombie.js", "id":"zombie"},
         {"src":"Dog.js", "id":"dog"}
     ]
 }

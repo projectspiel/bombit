@@ -45,12 +45,12 @@ Vector.prototype = {
         return this;
     },
     vectorTo: function (v) {
-        return v.clone().substract(this).normalize();
+        return v.clone().substract(this);
     },
     modulo: function () {
         return Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
     },
-    distance: function (v) {
+    distanceTo: function (v) {
         return Math.sqrt(Math.pow(this.x - v.x, 2) + Math.pow(this.y - v.y, 2) + Math.pow(this.z - v.z, 2));
     },
     toString: function () {

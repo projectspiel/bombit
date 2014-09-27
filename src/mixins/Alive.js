@@ -8,25 +8,24 @@ mixins.Alive = function() {
 
     /* Public  --------------------  */
 
-    this.setInputSource = function(inputSource) {
-        this._inputSource = inputSource;
+    this.buildInputSource = function(inputSourceBuilder, world) {
+        this._inputSource = new inputSourceBuilder(this, world);
     };
 
     /* ----------------------------- */
 
-    this._applyInput = function() {
-        var forceToApply = this._inputSource.getCurrentInputVector().
-                           scalar(MOVEMENT_FORCE);
+    this._applyInput = function(dt) {
+        var forceToApply = this._inputSource.getCurrentInputVector(dt);
 
         this.updateSpriteState(forceToApply);
-        this.force.add(forceToApply);
+        this.addInputForce(forceToApply);
     };
 
     this.onInit(function() {
         this._inputSource = this._inputSource || new inputSources.Null();
     });
 
-    this.onSimulate(function() {
-        this._applyInput();
+    this.onSimulate(function(dt) {
+        this._applyInput(dt);
     });
 };
