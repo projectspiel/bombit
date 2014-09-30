@@ -3,7 +3,7 @@
     "manifest": [
         {"src":"Vector.js", "id":"vector"},
         {"src":"Polygon.js", "id":"polygon"},
-        {"src":"lib/Entity.js", "id":"Entity"},
+        {"src":"Entity.js", "id":"Entity"},
         {"src":"mixins/Sprite.js", "id":"Sprite"},
         {"src":"mixins/Updateable.js", "id":"Updateable"},
         {"src":"mixins/Simulable.js", "id":"Simulable"},
