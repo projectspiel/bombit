@@ -79,6 +79,7 @@ mixins.Physical = function(options) {
     };
 
     this.addInputForce = function(force) {
-        this.force.add(force).scalar(this._inputForce);
+        force.scalar(this._inputForce);
+        this.force.add(force);
     };
 };
