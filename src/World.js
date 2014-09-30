@@ -2,13 +2,9 @@ var World = function(canvas) {
     this._stage = new createjs.Stage(canvas);
     this._stage.autoClear = true;
 
-    this.keyboardState = {};
-    this.registerKeyEvents();
-
     this._entities = [];
     this._globalStatus = {
         entities: {},
-        keyboardState: this.keyboardState,
         dimensions: {
             width: MAP_WIDTH,
             height: MAP_HEIGHT
@@ -72,8 +68,7 @@ World.prototype = {
                     x: this._stage.canvas.width / 2,
                     y: this._stage.canvas.height / 2
                 },
-                world: this._globalStatus,
-                inputSourceBuilder: inputSources.Keyboard(keyMap)
+                inputSource: new inputSources.Keyboard(keyMap)
             });
 
         this.addEntity(player);
@@ -85,8 +80,7 @@ World.prototype = {
                 x: 30,
                 y: 30
             },
-            world: this._globalStatus,
-            inputSourceBuilder: inputSources.Enemy
+            inputSource: new inputSources.Enemy(this._globalStatus)
         });
 
         this.addEntity(zombie);
@@ -136,16 +130,6 @@ World.prototype = {
                 this._stage.addChild(grass);
             }
         }
-    },
-
-    registerKeyEvents: function () {
-
-        document.onkeydown = function (e) {
-            this.keyboardState[e.keyCode] = true;
-        }.bind(this);
-
-        document.onkeyup = function (e) {
-            delete this.keyboardState[e.keyCode];
-        }.bind(this);
     }
+
 };

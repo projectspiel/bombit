@@ -1,10 +1,8 @@
 var inputSources =  inputSources || {};
 
 // @notes Instead of returning a movement vector, we should return an object { action: 'pickUpDog', move: vector }
-inputSources.Enemy = function(entity, world) {
+inputSources.Enemy = function(world) {
     var dog = world.entities.dog;
-
-    if (entity === undefined) { throw "entity is undefined"; }
     if (world === undefined) { throw "world is undefined"; }
     if (dog === undefined) { throw "dog is undefined"; }
 
@@ -31,6 +29,8 @@ inputSources.Enemy = function(entity, world) {
 
     /* Helpers -------------------- */
 
+    that = this;
+
     var vectorsToEdge = {
         left:  new Vector(-1, 0),
         top:   new Vector(0, -1),
@@ -39,11 +39,11 @@ inputSources.Enemy = function(entity, world) {
     };
 
     function vectorToDog() {
-        return entity.pos.vectorTo(dog.pos).normalize();
+        return that.entity.pos.vectorTo(dog.pos).normalize();
     }
 
     function distanceToDog() {
-        return entity.pos.distanceTo(dog.pos);
+        return that.entity.pos.distanceTo(dog.pos);
     }
 
     function nearDog() {
@@ -51,7 +51,7 @@ inputSources.Enemy = function(entity, world) {
     }
 
     function vectorToClosestEdge() {
-        var pos = entity.pos;
+        var pos = that.entity.pos;
         var width = world.dimensions.width;
         var height = world.dimensions.height;
 
@@ -79,6 +79,10 @@ inputSources.Enemy = function(entity, world) {
 
     this.getCurrentInputVector = function(dt) {
         return stateHandler[state]();
+    };
+
+    this.setEntity = function(entity) {
+        this.entity = entity;
     };
 
 };

@@ -8,8 +8,11 @@ mixins.Alive = function() {
 
     /* Public  --------------------  */
 
-    this.buildInputSource = function(inputSourceBuilder, world) {
-        this._inputSource = new inputSourceBuilder(this, world);
+    this.injectInputSource = function(inputSource) {
+        if(typeof inputSource.setEntity === 'function') {
+            inputSource.setEntity(this);
+        }
+        this._inputSource = inputSource;
     };
 
     /* ----------------------------- */

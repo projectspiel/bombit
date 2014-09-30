@@ -13,8 +13,8 @@ var Entity = function(entitySpec) {
             );
         }
 
-        if(instanceSpec.inputSourceBuilder !== undefined) {
-            this.buildInputSource(instanceSpec.inputSourceBuilder, instanceSpec.world);
+        if(instanceSpec.inputSource!== undefined) {
+            this.injectInputSource(instanceSpec.inputSource);
         }
 
         this.onUpdate(function (dt) {
