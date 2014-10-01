@@ -16,7 +16,10 @@ var CANVAS_HEIGHT,
     MAP_WIDTH  = 1000,
 
     // Debugging
-    DISPLAY_DEBUG = false;
+    Debug = {
+        positionable: false,
+        collidable: true
+    };
 
 /* global resources:true */
 resources = {};
