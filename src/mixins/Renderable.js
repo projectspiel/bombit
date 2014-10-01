@@ -44,10 +44,19 @@ mixins.Renderable = function() {
     };
 
     this._mapToCanvas = function (vector) {
-        return new Vector (
+        var newVector = new Vector (
             vector.x * CANVAS_WIDTH / MAP_WIDTH,
-            vector.y * CANVAS_HEIGHT / MAP_HEIGHT - vector.z
+            vector.y * CANVAS_HEIGHT / MAP_HEIGHT
         );
+
+        //@fixme Added this check since sometimes z is NaN and
+        //       I ended up with an y with value 0. Im not sure why
+        //       z is NaN, probably a bug.
+        if( typeof vector.z === 'number' && !isNaN(vector.z) ) {
+            newVector.y -= vector.z;
+        }
+
+        return newVector;
     };
 
     // Transforms 2D map position to

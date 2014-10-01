@@ -18,7 +18,8 @@ var CANVAS_HEIGHT,
     // Debugging
     Debug = {
         positionable: false,
-        collidable: true
+        collidable: false,
+        physical: false
     };
 
 /* global resources:true */

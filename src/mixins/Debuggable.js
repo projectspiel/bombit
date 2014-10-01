@@ -51,4 +51,27 @@ mixins.Debuggable = function() {
         });
     }
 
+    /* Physical */
+
+    if(Debug.physical) {
+        this.afterInit(function() {
+            var that = this;
+            this.debugVelocityDisplayObject = new createjs.Shape();
+            this.addDisplayObject(this.debugVelocityDisplayObject);
+        });
+
+        this.onRender(function() {
+            var mappedVelocity = this._mapToCanvas(this._vel).
+                                      scalar(0.7);
+
+            this.debugVelocityDisplayObject.graphics.
+                clear().
+                beginStroke('#000').
+                moveTo(0, 0).
+                lineTo(mappedVelocity.x, mappedVelocity.y).
+                endStroke();
+        });
+
+    }
+
 };
