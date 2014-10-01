@@ -23,7 +23,7 @@ mixins.Debuggable = function() {
     /* Collidable  */
 
     this.afterInit(function() {
-        that = this;
+        var that = this;
         this.debugCollisionDisplayObject = (function() {
             var shape = new createjs.Shape();
 
