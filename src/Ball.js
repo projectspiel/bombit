@@ -1,6 +1,6 @@
 var entities = entities || {};
 
-entities.Ball = new Entity({
+entities.Ball = new entities.Entity({
     spriteSheetData: {
         images: [resources.ballImage],
         frames: {
@@ -16,7 +16,7 @@ entities.Ball = new Entity({
         dampFactor: 0.6
     },
     collidable: {
-        callback: function(intersection) {
+        callback: function (intersection) {
             var vector = new Vector(-1000 * intersection.overlapV.x, -1000 * intersection.overlapV.y, 2000);
             this.force.add(vector);
         },

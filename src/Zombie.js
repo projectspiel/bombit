@@ -1,9 +1,9 @@
 var entities = entities || {};
 
 var FRAME_WIDTH = 48,
-    FRAME_HEIGHT =  96;
+    FRAME_HEIGHT = 96;
 
-entities.Zombie = new Entity({
+entities.Zombie = new entities.Entity({
     spriteSheetData: {
         images: [resources.playerImage],
         frames: {
@@ -26,7 +26,7 @@ entities.Zombie = new Entity({
         inputForce: 3500
     },
     collidable: {
-        callback: function(intersection) {
+        callback: function (intersection) {
             this.nextPos.x -= intersection.overlapV.x;
             this.nextPos.y -= intersection.overlapV.y;
         },
@@ -34,6 +34,6 @@ entities.Zombie = new Entity({
     },
     shadow: {
         width: FRAME_WIDTH * 1.1,
-        height:  FRAME_HEIGHT
+        height: FRAME_HEIGHT
     }
 });

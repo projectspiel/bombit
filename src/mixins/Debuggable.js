@@ -1,12 +1,11 @@
 var mixins = mixins || {};
 
-mixins.Debuggable = function() {
+mixins.Debuggable = function () {
     this.isDebuggable = true;
 
-    /* Positionable */
-    if(Debug.positionable) {
-        this.afterInit(function() {
-            this.debugPositionDisplayObject = (function() {
+    if (Debug.positionable) {
+        this.afterInit(function () {
+            this.debugPositionDisplayObject = (function () {
                 var shape = new createjs.Shape();
                 shape.graphics.beginFill("blue").drawCircle(0, 0, 5);
                 return shape;
@@ -15,24 +14,21 @@ mixins.Debuggable = function() {
             this.addDisplayObject(this.debugPositionDisplayObject);
         });
 
-        this.onRender(function() {
+        this.onRender(function () {
             this.debugPositionDisplayObject.y = this.pos.z;
         });
     }
 
-
-    /* Collidable  */
-
-    if(Debug.collidable) {
-        this.afterInit(function() {
+    if (Debug.collidable) {
+        this.afterInit(function () {
             var that = this;
-            this.debugCollisionDisplayObject = (function() {
+            this.debugCollisionDisplayObject = (function () {
                 var shape = new createjs.Shape();
 
                 var mappedBoundingBox = that._mapToCanvas(new Vector(that.getHitArea().r * 2, that.getHitArea().r * 2));
                 shape.graphics.beginFill("rgba(250,0,0,0.5)").drawEllipse(
-                    -mappedBoundingBox.x/2,
-                    -mappedBoundingBox.y/2,
+                    -mappedBoundingBox.x / 2,
+                    -mappedBoundingBox.y / 2,
                     mappedBoundingBox.x,
                     mappedBoundingBox.y
                 );
@@ -45,33 +41,29 @@ mixins.Debuggable = function() {
             this.addDisplayObject(this.debugCollisionDisplayObject);
         });
 
-
-        this.onRender(function() {
+        this.onRender(function () {
             this.debugCollisionDisplayObject.y = this.pos.z;
         });
     }
 
-    /* Physical */
-
-    if(Debug.physical) {
-        this.afterInit(function() {
+    if (Debug.physical) {
+        this.afterInit(function () {
             var that = this;
             this.debugVelocityDisplayObject = new createjs.Shape();
             this.addDisplayObject(this.debugVelocityDisplayObject);
         });
 
-        this.onRender(function() {
+        this.onRender(function () {
             var mappedVelocity = this._mapToCanvas(this._vel).
-                                      scalar(0.7);
+                scalar(0.7);
 
             this.debugVelocityDisplayObject.graphics.
                 clear().
-                beginStroke('#000').
+                beginStroke("#000").
                 moveTo(0, 0).
                 lineTo(mappedVelocity.x, mappedVelocity.y).
                 endStroke();
         });
 
     }
-
 };

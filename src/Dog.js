@@ -1,6 +1,6 @@
 var entities = entities || {};
 
-entities.Dog = new Entity({
+entities.Dog = new entities.Entity({
     spriteSheetData: {
         images: [resources.dogImage],
         frames: {
@@ -18,13 +18,13 @@ entities.Dog = new Entity({
         mass: 1
     },
     collidable: {
-        callback: function(intersection) {
+        callback: function (intersection) {
             return;
         },
         hitAreaRadius: 36
     },
     shadow: {
         width: 32 * 1.1,
-        height:  32 * 1.5
+        height: 32 * 1.5
     }
 });

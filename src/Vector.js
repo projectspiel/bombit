@@ -8,7 +8,9 @@ Vector.prototype = {
     set: function (x1, y1, z1) {
         this.x = x1;
         this.y = y1;
-        if (typeof z1 !== "undefined") {this.z = z1;}
+        if (typeof z1 !== "undefined") {
+            this.z = z1;
+        }
     },
     reset: function () {
         this.set(0, 0, 0);

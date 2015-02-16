@@ -1,9 +1,8 @@
-var entities = entities || {};
+var entities = entities || {},
+    FRAME_WIDTH = 48,
+    FRAME_HEIGHT = 96;
 
-var FRAME_WIDTH = 48,
-    FRAME_HEIGHT =  96;
-
-entities.Player = new Entity({
+entities.Player = new entities.Entity({
     spriteSheetData: {
         images: [resources.playerImage],
         frames: {
@@ -25,7 +24,7 @@ entities.Player = new Entity({
         mass: 1
     },
     collidable: {
-        callback: function(intersection) {
+        callback: function (intersection) {
             this.nextPos.x -= intersection.overlapV.x;
             this.nextPos.y -= intersection.overlapV.y;
         },
@@ -33,6 +32,6 @@ entities.Player = new Entity({
     },
     shadow: {
         width: FRAME_WIDTH * 1.1,
-        height:  FRAME_HEIGHT
+        height: FRAME_HEIGHT
     }
 });

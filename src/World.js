@@ -1,4 +1,4 @@
-var World = function(canvas) {
+var World = function (canvas) {
     this._stage = new createjs.Stage(canvas);
     this._stage.autoClear = true;
 
@@ -21,23 +21,27 @@ var World = function(canvas) {
 
 World.prototype = {
     update: function (event) {
-        this._stage.sortChildren(function(obj1, obj2, options) {
-            var obj1zindex = obj1.zindex? obj1.zindex : obj1.y;
-            var obj2zindex = obj2.zindex? obj2.zindex : obj2.y;
+        this._stage.sortChildren(function (obj1, obj2, options) {
+            var obj1zindex = obj1.zindex ? obj1.zindex : obj1.y;
+            var obj2zindex = obj2.zindex ? obj2.zindex : obj2.y;
 
-            if (obj1zindex > obj2zindex) { return 1; }
-            if (obj1zindex < obj2zindex) { return -1; }
+            if (obj1zindex > obj2zindex) {
+                return 1;
+            }
+            if (obj1zindex < obj2zindex) {
+                return -1;
+            }
             return 0;
         });
 
-        for(var i in this._entities) {
+        for (var i in this._entities) {
             this._entities[i].update(event.delta);
         }
         this._stage.update(event, event.delta);
     },
 
-    simulate: function(event) {
-        for(var i in this._entities) {
+    simulate: function (event) {
+        for (var i in this._entities) {
             this._entities[i].simulate(event.delta);
         }
     },
@@ -86,7 +90,7 @@ World.prototype = {
         this.addEntity(zombie);
     },
 
-    initDog: function() {
+    initDog: function () {
         var dog = new entities.Dog({
             position: {
                 x: 600,
@@ -96,13 +100,13 @@ World.prototype = {
         this.addEntity(dog, 'dog');
     },
 
-    addBall: function(x, y, z) {
-        var ball = new entities.Ball({ position: { x: x, y: y, z: z } });
+    addBall: function (x, y, z) {
+        var ball = new entities.Ball({position: {x: x, y: y, z: z}});
         this.addEntity(ball);
     },
 
     initLevel: function () {
-        var tileSize = 32*2, //@todo because of the creepy scaling
+        var tileSize = 32 * 2, //@todo because of the creepy scaling
             tileIndex = 0, lastTileIndex = 0,
             grassTiles = [
                 resources.grassImage1,
@@ -115,7 +119,7 @@ World.prototype = {
 
         for (var y = -10; y < this._stage.canvas.height; y += tileSize) {
             for (var x = -10; x < this._stage.canvas.width; x += tileSize) {
-                tileIndex = Math.floor(Math.random()*grassTiles.length);
+                tileIndex = Math.floor(Math.random() * grassTiles.length);
                 if (tileIndex === lastTileIndex) {
                     tileIndex++; // Avoid using the same tile twice in a row
                 }
