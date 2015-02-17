@@ -19,7 +19,7 @@ entities.Dog = new entities.Entity({
     },
     collidable: {
         callback: function (intersection) {
-            return;
+            return null;
         },
         hitAreaRadius: 36
     },
