@@ -1,7 +1,13 @@
 var inputSources = inputSources || {};
 
-inputSources.Enemy = function (world) {
-    var dog = world.entities.dog; // @todo should be passed in from outside
+inputSources.Enemy = function (globalStatus) {
+    var dog = (function () {
+        for (var i = 0; i < globalStatus.entities.length; i++) { //@todo replace with World.findEntityByType()
+            if (globalStatus.entities[i] instanceof entities.Dog) {
+                return globalStatus.entities[i];
+            }
+        }
+    })();
 
     var state = "getDog",
         stateHandler = {
@@ -40,8 +46,8 @@ inputSources.Enemy = function (world) {
 
     function vectorToClosestEdge() {
         var pos = that.entity.pos,
-            width = world.dimensions.width,
-            height = world.dimensions.height,
+            width = globalStatus.dimensions.width,
+            height = globalStatus.dimensions.height,
             distances = {
                 left: pos.x - 0,
                 top: pos.y - 0,
