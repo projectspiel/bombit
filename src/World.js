@@ -34,14 +34,14 @@ World.prototype = {
             return 0;
         });
 
-        for (var i in this._entities) {
+        for (var i = 0; this._entities.length; i++) {
             this._entities[i].update(event.delta);
         }
         this._stage.update(event, event.delta);
     },
 
     simulate: function (event) {
-        for (var i in this._entities) {
+        for (var i = 0; i < this._entities.length; i++) {
             this._entities[i].simulate(event.delta);
         }
     },
@@ -97,7 +97,7 @@ World.prototype = {
                 y: 800
             }
         });
-        this.addEntity(dog, 'dog');
+        this.addEntity(dog, "dog");
     },
 
     addBall: function (x, y, z) {
@@ -135,5 +135,4 @@ World.prototype = {
             }
         }
     }
-
 };
