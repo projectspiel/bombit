@@ -9,8 +9,10 @@ entities.Entity = function (entitySpec) {
     }
 
     var entity = function (instanceSpec) {
+        //Initializable
         this.init();
 
+        //Positionable
         if (instanceSpec.position !== undefined) {
             this.initPosition(
                 instanceSpec.position.x,
@@ -19,10 +21,12 @@ entities.Entity = function (entitySpec) {
             );
         }
 
+        //Alive
         if (instanceSpec.inputSource !== undefined) {
             this.injectInputSource(instanceSpec.inputSource);
         }
 
+        //Updateable
         this.onUpdate(function (dt) {
             this.render();
         });

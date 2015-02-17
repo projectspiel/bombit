@@ -24,9 +24,14 @@ entities.Player = new entities.Entity({
         mass: 1
     },
     collidable: {
-        callback: function (intersection) {
-            this.nextPos.x -= intersection.overlapV.x;
-            this.nextPos.y -= intersection.overlapV.y;
+        callback: function (collision, entity) {
+            if (entity instanceof entities.Ball) {
+                this.catchBall();
+                this.hasBall = true;
+            }
+
+            this.nextPos.x -= collision.overlapV.x;
+            this.nextPos.y -= collision.overlapV.y;
         },
         hitAreaRadius: 36
     },
@@ -35,3 +40,23 @@ entities.Player = new entities.Entity({
         height: FRAME_HEIGHT
     }
 });
+
+entities.Player.prototype.onInit(function () {
+    this.hasBall = false;
+});
+
+entities.Player.prototype.catchBall = function () {
+    var spriteSheetData = {
+        images: [resources.ballImage],
+        frames: {
+            width: 8,
+            height: 8,
+            regX: 4,
+            regY: 8
+        }
+    };
+
+    var ballSprite = new createjs.Sprite(new createjs.SpriteSheet(spriteSheetData));
+    ballSprite.scaleX = ballSprite.scaleY = 2;
+    this.addDisplayObject(ballSprite);
+};
