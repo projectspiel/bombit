@@ -34,7 +34,7 @@ World.prototype = {
             return 0;
         });
 
-        for (var i = 0; this._entities.length; i++) {
+        for (var i = 0; i < this._entities.length; i++) {
             this._entities[i].update(event.delta);
         }
         this._stage.update(event, event.delta);
