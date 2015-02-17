@@ -16,9 +16,13 @@ entities.Ball = new entities.Entity({
         dampFactor: 0.6
     },
     collidable: {
-        callback: function (intersection) {
-            var vector = new Vector(-1000 * intersection.overlapV.x, -1000 * intersection.overlapV.y, 2000);
-            this.force.add(vector);
+        callback: function (collision, entity) {
+            if (!entity instanceof entities.Player) {
+                var vector = new Vector(-1000 * collision.overlapV.x, -1000 * collision.overlapV.y, 2000);
+                this.force.add(vector);
+            } else {
+                world.removeEntity(this);
+            }
         },
         hitAreaRadius: 8
     },

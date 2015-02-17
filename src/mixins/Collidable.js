@@ -40,3 +40,12 @@ mixins.Collidable = function (options) {
     };
 };
 mixins.Collidable.entities = [];
+
+mixins.Collidable.removeEntity = function (entity) {
+    for (var i = 0; i < this.entities.length; i++) {
+        if (this.entities[i] === entity) {
+            this.entities.splice(i, 1);
+            return;
+        }
+    }
+};

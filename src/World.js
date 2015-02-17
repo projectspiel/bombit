@@ -4,7 +4,7 @@ var World = function (canvas) {
 
     this._entities = [];
     this._globalStatus = {
-        entities: {},
+        entities: this._entities,
         dimensions: {
             width: MAP_WIDTH,
             height: MAP_HEIGHT
@@ -52,11 +52,19 @@ World.prototype = {
         createjs.Ticker.setFPS(30);
     },
 
-    addEntity: function (entity, category) {
+    addEntity: function (entity) {
         this._entities.push(entity);
         this._stage.addChild(entity.getDisplayObject());
-        if (category !== undefined) {
-            this._globalStatus.entities[category] = entity;
+    },
+
+    removeEntity: function (entity) {
+        for (var i = 0; i < this._entities.length; i++) {
+            if (this._entities[i] === entity) {
+                mixins.Collidable.removeEntity(this._entities[i]);
+                this._stage.removeChild(this._entities[i].getDisplayObject());
+                this._entities.splice(i, 1);
+                return;
+            }
         }
     },
 
@@ -86,7 +94,6 @@ World.prototype = {
             },
             inputSource: new inputSources.Enemy(this._globalStatus)
         });
-
         this.addEntity(zombie);
     },
 
@@ -97,7 +104,7 @@ World.prototype = {
                 y: 800
             }
         });
-        this.addEntity(dog, "dog");
+        this.addEntity(dog);
     },
 
     addBall: function (x, y, z) {
