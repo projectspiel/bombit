@@ -16,14 +16,16 @@ var CANVAS_HEIGHT,
     MAP_WIDTH = 1000,
 
 // Debugging
-    Debug = {
-        positionable: false,
-        collidable: false,
-        physical: false
-    };
+Debug = {
+    positionable: false,
+    collidable: false,
+    physical: false
+};
 
 /* global resources:true */
 resources = {};
+/* global world:true */
+world = null;
 
 window.onload = function () {
     var preloader = new createjs.LoadQueue(false),
@@ -65,7 +67,8 @@ window.onload = function () {
     });
 
     preloader.on("complete", function () {
-        new World(canvas).start();
+        world = new World(canvas);
+        world.start();
     });
 
     preloader.loadManifest("resources_manifest.json");
