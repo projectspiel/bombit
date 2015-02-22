@@ -1,7 +1,7 @@
 var entities = entities || {};
 
 entities.Ball = new entities.Entity({
-    spriteSheetData: {
+    sprite: {
         images: [resources.ballImage],
         frames: {
             width: 8,
@@ -13,7 +13,8 @@ entities.Ball = new entities.Entity({
     physical: {
         friction: 2,
         mass: 1,
-        dampFactor: 0.6
+        dampFactor: 0.6,
+        inputForce: 100 //@todo this hacks around the fact that there is no good way of adding a force on construction to a Physical (like when the player makes a Ball to throw), so we use Physical.addInputForce for now
     },
     collidable: {
         callback: function (collision, entity) {

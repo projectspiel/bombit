@@ -54,7 +54,7 @@ mixins.Debuggable = function () {
         });
 
         this.onRender(function () {
-            var mappedVelocity = this._mapToCanvas(this._vel).
+            var mappedVelocity = this._mapToCanvas(this.vel).
                 scalar(0.7);
 
             this.debugVelocityDisplayObject.graphics.

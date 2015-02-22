@@ -3,7 +3,7 @@ var entities = entities || {},
     FRAME_HEIGHT = 96;
 
 entities.Player = new entities.Entity({
-    spriteSheetData: {
+    sprite: {
         images: [resources.playerImage],
         frames: {
             width: FRAME_WIDTH,
@@ -25,9 +25,8 @@ entities.Player = new entities.Entity({
     },
     collidable: {
         callback: function (collision, entity) {
-            if (entity instanceof entities.Ball) {
+            if (entity instanceof entities.Ball && !this.hasBall) {
                 this.catchBall();
-                this.hasBall = true;
             }
 
             this.nextPos.x -= collision.overlapV.x;
@@ -38,6 +37,19 @@ entities.Player = new entities.Entity({
     shadow: {
         width: FRAME_WIDTH * 1.1,
         height: FRAME_HEIGHT
+    },
+    alive: {
+        callback: function (action) {
+            switch (action) {
+                case inputSources.PlayerInput.actions.throwBall:
+                    if (this.hasBall) {
+                        this.throwBall();
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 });
 
@@ -59,4 +71,24 @@ entities.Player.prototype.catchBall = function () {
     var ballSprite = new createjs.Sprite(new createjs.SpriteSheet(spriteSheetData));
     ballSprite.scaleX = ballSprite.scaleY = 2;
     this.addDisplayObject(ballSprite);
+
+    this.hasBall = true;
+};
+
+entities.Player.prototype.throwBall = function () {
+    var normalVel = this.vel.clone().normalize(),
+        ball = new entities.Ball({
+        position: {
+            x: this.pos.x + normalVel.x * 50,
+            y: this.pos.y + normalVel.y * 50
+        },
+        force: {
+            x: this.vel.x,
+            y: this.vel.y,
+            z: 100
+        }
+    });
+    world.addEntity(ball);
+
+    this.hasBall = false;
 };

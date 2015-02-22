@@ -1,7 +1,8 @@
 var mixins = mixins || {};
 
-mixins.Alive = function () {
-    var MOVEMENT_FORCE = 5000;
+mixins.Alive = function (options) {
+    var MOVEMENT_FORCE = 5000,
+        callback = options.callback;
 
     if (!this.isInitializable || !this.isSimulable || !this.isSprite) {
         throw "Dependencies not met";
@@ -15,18 +16,18 @@ mixins.Alive = function () {
         this._inputSource = inputSource;
     };
 
-    this._applyInput = function (dt) {
-        var forceToApply = this._inputSource.getCurrentInputVector(dt);
+    this._applyInput = function () {
+        var forceToApply = this._inputSource.getCurrentInputVector();
 
         this.updateSpriteState(forceToApply);
         this.addInputForce(forceToApply);
+
+        callback.call(this, this._inputSource.getCurrentAction());
     };
 
     this.onInit(function () {
         this._inputSource = this._inputSource || new inputSources.Null();
     });
 
-    this.onSimulate(function (dt) {
-        this._applyInput(dt);
-    });
+    this.onSimulate(this._applyInput);
 };

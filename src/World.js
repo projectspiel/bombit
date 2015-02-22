@@ -73,14 +73,15 @@ World.prototype = {
                 up: constants.KEY_UP,
                 down: constants.KEY_DOWN,
                 left: constants.KEY_LEFT,
-                right: constants.KEY_RIGHT
+                right: constants.KEY_RIGHT,
+                space: constants.KEY_SPACE
             },
             player = new entities.Player({
                 position: {
                     x: this._stage.canvas.width / 2,
                     y: this._stage.canvas.height / 2
                 },
-                inputSource: new inputSources.Keyboard(keyMap)
+                inputSource: new inputSources.PlayerInput(keyMap)
             });
 
         this.addEntity(player);
@@ -92,7 +93,7 @@ World.prototype = {
                 x: 30,
                 y: 30
             },
-            inputSource: new inputSources.Enemy(this._globalStatus)
+            inputSource: new inputSources.EnemyInput(this._globalStatus)
         });
         this.addEntity(zombie);
     },

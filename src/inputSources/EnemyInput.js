@@ -1,6 +1,6 @@
 var inputSources = inputSources || {};
 
-inputSources.Enemy = function (globalStatus) {
+inputSources.EnemyInput = function (globalStatus) {
     var dog = (function () {
         for (var i = 0; i < globalStatus.entities.length; i++) { //@todo replace with World.findEntityByType()
             if (globalStatus.entities[i] instanceof entities.Dog) {
@@ -67,6 +67,10 @@ inputSources.Enemy = function (globalStatus) {
 
         return vectorsToEdge[minKey].clone();
     }
+
+    this.getCurrentAction = function () {
+        return null;
+    };
 
     this.getCurrentInputVector = function (dt) {
         return stateHandler[state]();

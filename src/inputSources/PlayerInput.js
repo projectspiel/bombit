@@ -1,16 +1,22 @@
 var inputSources = inputSources || {};
 
-//@fixme: make consistent with the other inputSource.
-inputSources.Keyboard = function (keyMap) {
+inputSources.PlayerInput = function (keyMap) {
     var keyboardState = this.buildKeyboardStateObject(),
         impulseVectors = {
-        up: new Vector(0, -1),
-        down: new Vector(0, 1),
-        left: new Vector(-1, 0),
-        right: new Vector(1, 0)
+            up: new Vector(0, -1),
+            down: new Vector(0, 1),
+            left: new Vector(-1, 0),
+            right: new Vector(1, 0)
+        };
+
+    this.getCurrentAction = function () {
+        if (keyboardState[keyMap.space]) {
+            return inputSources.PlayerInput.actions.throwBall;
+        }
+        return null;
     };
 
-    this.getCurrentInputVector = function (dt) {
+    this.getCurrentInputVector = function () {
         var vector = new Vector();
 
         if (keyboardState[keyMap.left]) {
@@ -33,7 +39,7 @@ inputSources.Keyboard = function (keyMap) {
     };
 };
 
-inputSources.Keyboard.prototype.buildKeyboardStateObject = function () {
+inputSources.PlayerInput.prototype.buildKeyboardStateObject = function () {
     var obj = {};
 
     document.onkeydown = function (e) {
@@ -45,4 +51,8 @@ inputSources.Keyboard.prototype.buildKeyboardStateObject = function () {
     };
 
     return obj;
+};
+
+inputSources.PlayerInput.actions = {
+    throwBall: "throwBall"
 };

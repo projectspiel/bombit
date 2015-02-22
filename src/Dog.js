@@ -1,7 +1,7 @@
 var entities = entities || {};
 
 entities.Dog = new entities.Entity({
-    spriteSheetData: {
+    sprite: {
         images: [resources.dogImage],
         frames: {
             width: 32,
@@ -26,5 +26,8 @@ entities.Dog = new entities.Entity({
     shadow: {
         width: 32 * 1.1,
         height: 32 * 1.5
+    },
+    alive: {
+        callback: function (action) {}
     }
 });
