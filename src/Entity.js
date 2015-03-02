@@ -33,7 +33,7 @@ entities.Entity = function (entitySpec) {
 
         //Physical
         if (instanceSpec.force !== undefined) {
-            this.addInputForce(new Vector(
+            this.addInputForce(new bombit.Vector(
                 instanceSpec.force.x,
                 instanceSpec.force.y,
                 instanceSpec.force.z

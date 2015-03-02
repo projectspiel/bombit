@@ -55,32 +55,27 @@ entities.Player = new entities.Entity({
 
 entities.Player.prototype.onInit(function () {
     this.hasBall = false;
+
+    this.ballSprite = new createjs.Sprite(new createjs.SpriteSheet({
+        images: [resources.ballImage],
+        frames: {width: 8, height: 8, regX: 4, regY: 8}
+    }));
+    this.ballSprite.scaleX = this.ballSprite.scaleY = 2;
+    this.ballSprite.y = -42;
+    this.ballSprite.x = 23;
 });
 
 entities.Player.prototype.catchBall = function () {
-    var spriteSheetData = {
-        images: [resources.ballImage],
-        frames: {
-            width: 8,
-            height: 8,
-            regX: 4,
-            regY: 8
-        }
-    };
-
-    var ballSprite = new createjs.Sprite(new createjs.SpriteSheet(spriteSheetData));
-    ballSprite.scaleX = ballSprite.scaleY = 2;
-    this.addDisplayObject(ballSprite);
-
+    this.addDisplayObject(this.ballSprite);
     this.hasBall = true;
 };
 
 entities.Player.prototype.throwBall = function () {
-    var normalVel = this.vel.clone().normalize(),
+    var spawnVel = this.vel.clone().normalize().scalar(60),
         ball = new entities.Ball({
         position: {
-            x: this.pos.x + normalVel.x * 50,
-            y: this.pos.y + normalVel.y * 50
+            x: this.pos.x + spawnVel.x,
+            y: this.pos.y + spawnVel.y
         },
         force: {
             x: this.vel.x,
@@ -90,5 +85,6 @@ entities.Player.prototype.throwBall = function () {
     });
     world.addEntity(ball);
 
+    this.removeDisplayObject(this.ballSprite);
     this.hasBall = false;
 };

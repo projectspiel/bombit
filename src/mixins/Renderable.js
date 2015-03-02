@@ -30,6 +30,10 @@ mixins.Renderable = function () {
         });
     };
 
+    this.removeDisplayObject = function (displayObject) {
+        this.container.removeChild(displayObject);
+    };
+
     this.getDisplayObject = function () {
         return this.container;
     };
@@ -50,7 +54,7 @@ mixins.Renderable = function () {
     };
 
     this._mapToCanvas = function (vector) {
-        var newVector = new Vector(
+        var newVector = new bombit.Vector(
             vector.x * CANVAS_WIDTH / MAP_WIDTH,
             vector.y * CANVAS_HEIGHT / MAP_HEIGHT
         );

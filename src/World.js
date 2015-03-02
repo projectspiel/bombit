@@ -14,8 +14,8 @@ var World = function (canvas) {
     this.initLevel();
     this.initPlayer();
     this.initDog();
-    this.initZombie();
-    this.addBall(100, 300, 400);
+    //this.initZombie();
+    this.addBall(400, 500, 400);
 };
 
 World.prototype = {

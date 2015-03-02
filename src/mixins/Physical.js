@@ -13,8 +13,8 @@ mixins.Physical = function (options) {
     this.isPhysical = true;
 
     this.onInit(function () {
-        this.vel = new Vector();
-        this.force = new Vector();
+        this.vel = new bombit.Vector();
+        this.force = new bombit.Vector();
         if (this.mass === undefined) {
             this.mass = 1;
         }
@@ -38,7 +38,7 @@ mixins.Physical = function (options) {
 
     this.applyGravity = function () {
         //@fixme FIX ME!
-        var gravity = new Vector();
+        var gravity = new bombit.Vector();
         gravity.set(0, 0, -9.8 * 50);
         this.force.add(gravity);
     };
@@ -46,7 +46,7 @@ mixins.Physical = function (options) {
     this.applyFriction = function (factor) {
         //@fixme FIX ME!
         if (this.pos.z === 0) {
-            var friction = new Vector();
+            var friction = new bombit.Vector();
             friction.set(this.vel.x * -factor, this.vel.y * -factor, this.vel.z);
             this.force.add(friction);
         }

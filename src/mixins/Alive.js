@@ -19,8 +19,10 @@ mixins.Alive = function (options) {
     this._applyInput = function () {
         var forceToApply = this._inputSource.getCurrentInputVector();
 
-        this.updateSpriteState(forceToApply);
-        this.addInputForce(forceToApply);
+        if (forceToApply instanceof bombit.Vector) {
+            this.updateSpriteState(forceToApply);
+            this.addInputForce(forceToApply);
+        }
 
         callback.call(this, this._inputSource.getCurrentAction());
     };

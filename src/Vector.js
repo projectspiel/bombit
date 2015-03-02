@@ -1,10 +1,12 @@
-function Vector(x, y, z) {
+var bombit = bombit || {};
+
+bombit.Vector = function (x, y, z) {
     this.x = x || 0;
     this.y = y || 0;
     this.z = z || 0;
-}
+};
 
-Vector.prototype = {
+bombit.Vector.prototype = {
     set: function (x1, y1, z1) {
         this.x = x1;
         this.y = y1;
@@ -16,7 +18,7 @@ Vector.prototype = {
         this.set(0, 0, 0);
     },
     clone: function () {
-        return new Vector(this.x, this.y, this.z);
+        return new bombit.Vector(this.x, this.y, this.z);
     },
     add: function (v) {
         this.x += v.x;

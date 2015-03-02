@@ -7,7 +7,7 @@ mixins.Positionable = function () {
     this.isPositionable = true;
 
     this.onInit(function () {
-        this.pos = new Vector();
+        this.pos = new bombit.Vector();
         this.nextPos = this.pos.clone();
     });
 
