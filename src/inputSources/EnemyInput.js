@@ -1,21 +1,18 @@
 var inputSources = inputSources || {};
 
 inputSources.EnemyInput = function (globalStatus) {
-    var dog = (function () {
-        for (var i = 0; i < globalStatus.entities.length; i++) { //@todo replace with World.findEntityByType()
-            if (globalStatus.entities[i] instanceof entities.Dog) {
-                return globalStatus.entities[i];
-            }
-        }
-    })();
-
     var state = "getDog",
+        dog = null,
         stateHandler = {
             escape: function () {
                 //@OPTIMIZE by caching the vector
                 return vectorToClosestEdge();
             },
             getDog: function () {
+                if (!dog) {
+                    dog = world.findEntityByType(entities.Dog);
+                }
+
                 if (nearDog()) {
                     state = "escape";
                     return stateHandler[state]();

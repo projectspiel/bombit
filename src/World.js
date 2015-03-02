@@ -16,7 +16,6 @@ var World = function (canvas) {
     this.initDog();
     this.initZombie();
     this.addBall(100, 300, 400);
-    this.addBall(300, 200, 500);
 };
 
 World.prototype = {
@@ -103,7 +102,8 @@ World.prototype = {
             position: {
                 x: 600,
                 y: 800
-            }
+            },
+            inputSource: new inputSources.DogInput()
         });
         this.addEntity(dog);
     },
@@ -114,7 +114,7 @@ World.prototype = {
     },
 
     initLevel: function () {
-        var tileSize = 32 * 2, //@todo because of the creepy scaling
+        var tileSize = 32 * 2, //@todo this is because of the creepy scaling
             tileIndex = 0, lastTileIndex = 0,
             grassTiles = [
                 resources.grassImage1,
@@ -140,6 +140,14 @@ World.prototype = {
                 grass.zindex = -10;
 
                 this._stage.addChild(grass);
+            }
+        }
+    },
+
+    findEntityByType: function (type) {
+        for (var i = 0; i < this._entities.length; i++) {
+            if (this._entities[i] instanceof type) {
+                return this._entities[i];
             }
         }
     }
