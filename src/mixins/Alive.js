@@ -1,8 +1,7 @@
 var mixins = mixins || {};
 
-mixins.Alive = function (options) {
-    var MOVEMENT_FORCE = 5000,
-        callback = options.callback;
+mixins.Alive = function () {
+    var MOVEMENT_FORCE = 5000;
 
     if (!this.isInitializable || !this.isSimulable || !this.isSprite) {
         throw "Dependencies not met";
@@ -17,14 +16,16 @@ mixins.Alive = function (options) {
     };
 
     this._applyInput = function () {
-        var forceToApply = this._inputSource.getCurrentInputVector();
+        var input = this._inputSource.getCurrentInput() || {};
 
-        if (forceToApply instanceof bombit.Vector) {
-            this.updateSpriteState(forceToApply);
-            this.addInputForce(forceToApply);
+        if (input.force instanceof bombit.Vector) {
+            this.updateSpriteState(input.force);
+            this.addInputForce(input.force);
         }
 
-        callback.call(this, this._inputSource.getCurrentAction());
+        if(typeof(input.action) === 'string' && typeof(this[input.action]) === 'function') {
+            this[input.action]();
+        }
     };
 
     this.onInit(function () {

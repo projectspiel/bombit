@@ -4,41 +4,43 @@ inputSources.DogInput = function () {
     var state = "idle",
         stateHandlers = {
             idle: function () {
-                var ball = world.findEntityByType(entities.Ball);
-                var player = world.findEntityByType(entities.Player);
-                if (ball && player.pos.distanceTo(ball.pos) > 200) {
-                    that.setState("getBall");
+                if (that.entity.hasBall) {
+                    that.setState("returnBall");
+                }
+                else {
+                    var ball = world.findEntityByType(entities.Ball);
+                    var player = world.findEntityByType(entities.Player);
+                    if (ball && player.pos.distanceTo(ball.pos) > 200) {
+                        that.setState("getBall");
+                    }
                 }
             },
             getBall: function () {
-                var ball = world.findEntityByType(entities.Ball);
-                if (ball) {
-                    return that.entity.pos.vectorTo(ball.pos).normalize();
-                } else {
-                    that.setState("idle");
+                if (that.entity.hasBall) {
+                    that.setState("returnBall");
+                }
+                else {
+                    var ball = world.findEntityByType(entities.Ball);
+                    if (ball) {
+                        return { force: that.entity.pos.vectorTo(ball.pos).normalize() };
+                    } else {
+                        that.setState("idle");
+                    }
                 }
             },
             returnBall: function () {
                 var player = world.findEntityByType(entities.Player);
                 if (that.entity.pos.distanceTo(player.pos) < 100) {
-                    that.entity.dropBall();
                     that.setState("idle");
-                    return;
+                    return { action: inputSources.DogInput.actions.dropBall };
                 }
 
-                return that.entity.pos.vectorTo(player.pos).normalize();
+                return { force: that.entity.pos.vectorTo(player.pos).normalize() };
             }
         },
         that = this;
 
-    this.getCurrentAction = function () {
-        //@todo this should return an action and the code should be in Dog.js... but that would make it complicated for no good reason. Fix framework!
-        if (this.entity.hasBall) {
-            this.setState("returnBall");
-        }
-    };
-
-    this.getCurrentInputVector = function (dt) {
+    this.getCurrentInput = function () {
         return stateHandlers[state]();
     };
 
@@ -47,10 +49,15 @@ inputSources.DogInput = function () {
     };
 
     this.setState = function (newState) {
+        console.log(newState);
         if (stateHandlers[state]) {
             state = newState;
         } else {
             console.log("Unknown state: " + newState);
         }
     };
+};
+
+inputSources.DogInput.actions = {
+    dropBall: "dropBall"
 };

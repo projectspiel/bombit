@@ -39,17 +39,7 @@ entities.Player = new entities.Entity({
         height: FRAME_HEIGHT
     },
     alive: {
-        callback: function (action) {
-            switch (action) {
-                case inputSources.PlayerInput.actions.throwBall:
-                    if (this.hasBall) {
-                        this.throwBall();
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
+        // Remove me
     }
 });
 
@@ -71,6 +61,7 @@ entities.Player.prototype.catchBall = function () {
 };
 
 entities.Player.prototype.throwBall = function () {
+    if (!this.hasBall) { return; }
     var spawnVel = this.vel.clone().normalize().scalar(60),
         ball = new entities.Ball({
         position: {

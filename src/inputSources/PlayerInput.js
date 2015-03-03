@@ -16,7 +16,7 @@ inputSources.PlayerInput = function (keyMap) {
         return null;
     };
 
-    this.getCurrentInputVector = function () {
+    this.getCurrentInput = function () {
         var vector = new bombit.Vector();
 
         if (keyboardState[keyMap.left]) {
@@ -35,7 +35,10 @@ inputSources.PlayerInput = function (keyMap) {
             vector.add(impulseVectors.down);
         }
 
-        return vector.normalize();
+        return {
+            force: vector.normalize(),
+            action: this.getCurrentAction()
+        };
     };
 };
 

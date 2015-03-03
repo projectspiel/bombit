@@ -67,9 +67,7 @@ entities.Entity = function (entitySpec) {
         entity.includeMixin(mixins.HasShadow, entitySpec.shadow.width, entitySpec.shadow.height);
     }
 
-    if (entitySpec.alive !== undefined) {
-        entity.includeMixin(mixins.Alive, entitySpec.alive);
-    }
+    entity.includeMixin(mixins.Alive, entitySpec.alive);
 
     entity.includeMixin(mixins.Debuggable);
 
