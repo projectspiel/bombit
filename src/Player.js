@@ -38,9 +38,6 @@ entities.Player = new entities.Entity({
         width: FRAME_WIDTH * 1.1,
         height: FRAME_HEIGHT
     },
-    alive: {
-        // Remove me
-    }
 });
 
 entities.Player.prototype.onInit(function () {

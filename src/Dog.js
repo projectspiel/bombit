@@ -31,9 +31,6 @@ entities.Dog = new entities.Entity({
     shadow: {
         width: 32 * 1.1,
         height: 32 * 1.5
-    },
-    alive: {
-        callback: function (action) {}
     }
 });
 

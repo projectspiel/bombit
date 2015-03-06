@@ -35,8 +35,5 @@ entities.Zombie = new entities.Entity({
     shadow: {
         width: FRAME_WIDTH * 1.1,
         height: FRAME_HEIGHT
-    },
-    alive: {
-        callback: function (action) {}
     }
 });
