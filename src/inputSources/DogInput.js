@@ -49,7 +49,6 @@ inputSources.DogInput = function () {
     };
 
     this.setState = function (newState) {
-        console.log(newState);
         if (stateHandlers[state]) {
             state = newState;
         } else {
