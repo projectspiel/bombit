@@ -33,6 +33,22 @@ entities.Player = new entities.Entity({
             this.nextPos.x -= collision.overlapV.x;
             this.nextPos.y -= collision.overlapV.y;
         },
+        boundsCallback: function(side) {
+            switch(side) {
+                case 'left':
+                    this.nextPos.set(0, this.nextPos.y);
+                    break;
+                case 'right':
+                    this.nextPos.set(MAP_WIDTH, this.nextPos.y);
+                    break;
+                case 'top':
+                    this.nextPos.set(this.nextPos.x, 0);
+                    break;
+                case 'bottom':
+                    this.nextPos.set(this.nextPos.x, MAP_HEIGHT);
+                    break;
+            }
+        },
         hitAreaRadius: 36
     },
     shadow: {
