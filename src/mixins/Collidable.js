@@ -41,7 +41,7 @@ mixins.Collidable = function (options) {
         var width =  MAP_WIDTH,
             height = MAP_HEIGHT;
 
-        if(!boundsCallback instanceof Function) {
+        if(typeof boundsCallback !== 'function') {
             return;
         }
 
