@@ -18,7 +18,7 @@ entities.Dog = new entities.Entity({
         mass: 1
     },
     collidable: {
-        callback: function (collision, entity) {
+        collisionCallback: function (collision, entity) {
             if (entity instanceof entities.Ball) {
                 this.catchBall();
             }

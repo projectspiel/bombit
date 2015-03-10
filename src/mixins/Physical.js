@@ -24,7 +24,7 @@ mixins.Physical = function (options) {
         this.applyFriction(this.friction);
         this.applyGravity();
         this.move(dt);
-        this.checkBounds(this.dampFactor, MAP_WIDTH, MAP_HEIGHT);
+        this.checkFloor(this.dampFactor, MAP_WIDTH, MAP_HEIGHT);
     });
 
     this.move = function (dt) { //@todo split in applyForce and move?
@@ -52,30 +52,10 @@ mixins.Physical = function (options) {
         }
     };
 
-    this.checkBounds = function (dampFactor, width, height) {
+    this.checkFloor = function (dampFactor, width, height) {
         if (this.nextPos.z <= 0.05) {
             this.vel.z *= -1 * dampFactor;
             this.nextPos.set(this.nextPos.x, this.nextPos.y, 0);
-        }
-
-        if (this.pos.x < 0) {
-            this.nextPos.set(0, this.nextPos.y);
-            this.vel.set(0, this.vel.y);
-        }
-
-        if (this.pos.x > width) {
-            this.nextPos.set(width, this.nextPos.y);
-            this.vel.set(0, this.vel.y);
-        }
-
-        if (this.pos.y < 0) {
-            this.nextPos.set(this.nextPos.x, 0);
-            this.vel.set(this.vel.x, 0);
-        }
-
-        if (this.pos.y > height) {
-            this.nextPos.set(this.nextPos.x, height);
-            this.vel.set(this.vel.x, 0);
         }
     };
 

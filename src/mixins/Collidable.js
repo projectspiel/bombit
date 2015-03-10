@@ -6,7 +6,8 @@ mixins.Collidable = function (options) {
     }
     this.isCollidable = true;
 
-    var callback = options.callback,
+    var collisionCallback = options.collisionCallback,
+        boundsCallback = options.boundsCallback,
         hitAreaRadius = options.hitAreaRadius,
         collidables = mixins.Collidable.entities,
         response = new SAT.Response();
@@ -18,6 +19,7 @@ mixins.Collidable = function (options) {
 
     this.onSimulate(function (dt) {
         this.checkCollisions();
+        this.checkBounds();
     });
 
     this.checkCollisions = function () {
@@ -29,9 +31,34 @@ mixins.Collidable = function (options) {
                 continue;
             }
             if (SAT.testCircleCircle(this.hitArea, collidables[i].getHitArea(), response)) {
-                callback.call(this, response, collidables[i]);
+                collisionCallback.call(this, response, collidables[i]);
             }
             response.clear();
+        }
+    };
+
+    this.checkBounds = function() {
+        var width =  MAP_WIDTH,
+            height = MAP_HEIGHT;
+
+        if(!boundsCallback instanceof Function) {
+            return;
+        }
+
+        if (this.pos.x < 0) {
+            boundsCallback.call(this, 'left');
+        }
+
+        if (this.pos.x > width) {
+            boundsCallback.call(this, 'right');
+        }
+
+        if (this.pos.y < 0) {
+            boundsCallback.call(this, 'top');
+        }
+
+        if (this.pos.y > height) {
+            boundsCallback.call(this, 'bottom');
         }
     };
 

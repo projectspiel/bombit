@@ -26,7 +26,7 @@ entities.Zombie = new entities.Entity({
         inputForce: 3500
     },
     collidable: {
-        callback: function (intersection) {
+        collisionCallback: function (intersection) {
             this.nextPos.x -= intersection.overlapV.x;
             this.nextPos.y -= intersection.overlapV.y;
         },
