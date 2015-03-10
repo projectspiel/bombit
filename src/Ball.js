@@ -18,12 +18,8 @@ entities.Ball = new entities.Entity({
     },
     collidable: {
         collisionCallback: function (collision, entity) {
-            if (!(entity instanceof entities.Player || entity instanceof entities.Dog)) {
-                var vector = new bombit.Vector(-1000 * collision.overlapV.x, -1000 * collision.overlapV.y, 2000);
-                this.force.add(vector);
-            } else {
-                world.removeEntity(this);
-            }
+            var vector = new bombit.Vector(-1000 * collision.overlapV.x, -1000 * collision.overlapV.y, 2000);
+            this.force.add(vector);
         },
         boundsCallback: function(side) {
             switch(side) {

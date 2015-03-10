@@ -27,6 +27,7 @@ entities.Player = new entities.Entity({
         collisionCallback: function (collision, entity) {
             if (entity instanceof entities.Ball && !this.hasBall) {
                 this.catchBall();
+                world.removeEntity(entity);
             }
 
             this.nextPos.x -= collision.overlapV.x;

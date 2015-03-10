@@ -21,6 +21,7 @@ entities.Dog = new entities.Entity({
         collisionCallback: function (collision, entity) {
             if (entity instanceof entities.Ball) {
                 this.catchBall();
+                world.removeEntity(entity);
             }
 
             this.nextPos.x -= collision.overlapV.x;
