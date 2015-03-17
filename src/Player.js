@@ -93,3 +93,12 @@ entities.Player.prototype.throwBall = function () {
     this.removeDisplayObject(this.ballSprite);
     this.hasBall = false;
 };
+
+entities.Player.prototype.attack = function () {
+    var attackPoint = this.pos.clone().add(this.vel.clone().normalize().scalar(60)),
+        entity = mixins.Collidable.getAtPoint(attackPoint);
+
+    if (entity) {
+        console.log(entity);
+    }
+};

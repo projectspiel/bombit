@@ -3,8 +3,8 @@ var inputSources = inputSources || {};
 inputSources.DogInput = function () {
     var state = "idle",
         stateHandlers = {
-            idle: function () {
-                if (that.entity.hasBall) {
+            idle: function (entity) {
+                if (entity.hasBall) {
                     that.setState("returnBall");
                 } else {
                     var ball = world.findEntityByType(entities.Ball);
@@ -14,36 +14,32 @@ inputSources.DogInput = function () {
                     }
                 }
             },
-            getBall: function () {
-                if (that.entity.hasBall) {
+            getBall: function (entity) {
+                if (entity.hasBall) {
                     that.setState("returnBall");
                 } else {
                     var ball = world.findEntityByType(entities.Ball);
                     if (ball) {
-                        return { force: that.entity.pos.vectorTo(ball.pos).normalize() };
+                        return { force: entity.pos.vectorTo(ball.pos).normalize() };
                     } else {
                         that.setState("idle");
                     }
                 }
             },
-            returnBall: function () {
+            returnBall: function (entity) {
                 var player = world.findEntityByType(entities.Player);
-                if (that.entity.pos.distanceTo(player.pos) < 100) {
+                if (entity.pos.distanceTo(player.pos) < 100) {
                     that.setState("idle");
                     return { action: inputSources.DogInput.actions.dropBall };
                 }
 
-                return { force: that.entity.pos.vectorTo(player.pos).normalize() };
+                return { force: entity.pos.vectorTo(player.pos).normalize() };
             }
         },
         that = this;
 
-    this.getCurrentInput = function () {
-        return stateHandlers[state]();
-    };
-
-    this.setEntity = function (entity) {
-        this.entity = entity;
+    this.getCurrentInput = function (entity) {
+        return stateHandlers[state](entity);
     };
 
     this.setState = function (newState) {

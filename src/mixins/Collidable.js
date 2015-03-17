@@ -37,28 +37,28 @@ mixins.Collidable = function (options) {
         }
     };
 
-    this.checkBounds = function() {
+    this.checkBounds = function () {
         var width =  MAP_WIDTH,
             height = MAP_HEIGHT;
 
-        if(typeof boundsCallback !== 'function') {
+        if (typeof boundsCallback !== "function") {
             return;
         }
 
         if (this.pos.x < 0) {
-            boundsCallback.call(this, 'left');
+            boundsCallback.call(this, "left");
         }
 
         if (this.pos.x > width) {
-            boundsCallback.call(this, 'right');
+            boundsCallback.call(this, "right");
         }
 
         if (this.pos.y < 0) {
-            boundsCallback.call(this, 'top');
+            boundsCallback.call(this, "top");
         }
 
         if (this.pos.y > height) {
-            boundsCallback.call(this, 'bottom');
+            boundsCallback.call(this, "bottom");
         }
     };
 
@@ -75,4 +75,16 @@ mixins.Collidable.removeEntity = function (entity) {
             return;
         }
     }
+};
+
+mixins.Collidable.getAtPoint = function (point) {
+    var collidables = mixins.Collidable.entities,
+        satPoint = new SAT.Vector(point.x, point.y);
+    for (var i = 0; i < collidables.length; i++) {
+        if (SAT.pointInCircle(satPoint, collidables[i].getHitArea())) {
+            return collidables[i];
+        }
+    }
+
+    return null;
 };

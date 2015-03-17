@@ -3,17 +3,17 @@ var inputSources = inputSources || {};
 inputSources.EnemyInput = function (globalStatus) {
     var state = "getDog",
         stateHandlers = {
-            escape: function () {
+            escape: function (entity) {
                 return {
-                    force: vectorToClosestEdge()
+                    force: vectorToClosestEdge(entity)
                 };
             },
-            getDog: function () {
-                if (that.entity.hasDog) {
+            getDog: function (entity) {
+                if (entity.hasDog) {
                     that.setState("escape");
                 } else {
                     return {
-                        force: vectorToDog()
+                        force: vectorToDog(entity)
                     };
                 }
             }
@@ -34,21 +34,17 @@ inputSources.EnemyInput = function (globalStatus) {
         }
     };
 
-    this.getCurrentInput = function (dt) {
-        return stateHandlers[state]();
+    this.getCurrentInput = function (entity) {
+        return stateHandlers[state](entity);
     };
 
-    this.setEntity = function (entity) {
-        this.entity = entity;
-    };
-
-    function vectorToDog() {
+    function vectorToDog(entity) {
         var dog = world.findEntityByType(entities.Dog);
-        return that.entity.pos.vectorTo(dog.pos).normalize();
+        return entity.pos.vectorTo(dog.pos).normalize();
     }
 
-    function vectorToClosestEdge() {
-        var pos = that.entity.pos,
+    function vectorToClosestEdge(entity) {
+        var pos = entity.pos,
             distances = {
                 left: pos.x - 0,
                 top: pos.y - 0,

@@ -9,21 +9,18 @@ mixins.Alive = function () {
     this.isAlive = true;
 
     this.injectInputSource = function (inputSource) {
-        if (typeof inputSource.setEntity === "function") {
-            inputSource.setEntity(this);
-        }
         this._inputSource = inputSource;
     };
 
     this._applyInput = function () {
-        var input = this._inputSource.getCurrentInput() || {};
+        var input = this._inputSource.getCurrentInput(this) || {};
 
         if (input.force instanceof bombit.Vector) {
             this.updateSpriteState(input.force);
             this.addInputForce(input.force);
         }
 
-        if(typeof(input.action) === 'string' && typeof(this[input.action]) === 'function') {
+        if (typeof(input.action) === "string" && typeof(this[input.action]) === "function") {
             this[input.action]();
         }
     };

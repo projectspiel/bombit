@@ -9,14 +9,18 @@ inputSources.PlayerInput = function (keyMap) {
             right: new bombit.Vector(1, 0)
         };
 
-    this.getCurrentAction = function () {
+    this.getCurrentAction = function (entity) {
         if (keyboardState[keyMap.space]) {
-            return inputSources.PlayerInput.actions.throwBall;
+            if (entity.hasBall) {
+                return inputSources.PlayerInput.actions.throwBall;
+            } else {
+                return inputSources.PlayerInput.actions.attack;
+            }
         }
         return null;
     };
 
-    this.getCurrentInput = function () {
+    this.getCurrentInput = function (entity) {
         var vector = new bombit.Vector();
 
         if (keyboardState[keyMap.left]) {
@@ -37,7 +41,7 @@ inputSources.PlayerInput = function (keyMap) {
 
         return {
             force: vector.normalize(),
-            action: this.getCurrentAction()
+            action: this.getCurrentAction(entity)
         };
     };
 };
@@ -57,5 +61,6 @@ inputSources.PlayerInput.prototype.buildKeyboardStateObject = function () {
 };
 
 inputSources.PlayerInput.actions = {
-    throwBall: "throwBall"
+    throwBall: "throwBall",
+    attack: "attack"
 };
