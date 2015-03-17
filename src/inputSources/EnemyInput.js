@@ -2,57 +2,60 @@ var inputSources = inputSources || {};
 
 inputSources.EnemyInput = function (globalStatus) {
     var state = "getDog",
-        dog = null,
-        stateHandler = {
+        stateHandlers = {
             escape: function () {
-                //@OPTIMIZE by caching the vector
-                return vectorToClosestEdge();
+                return {
+                    force: vectorToClosestEdge()
+                };
             },
             getDog: function () {
-                if (!dog) {
-                    dog = world.findEntityByType(entities.Dog);
-                }
-
-                if (nearDog()) {
-                    state = "escape";
-                    return stateHandler[state]();
+                if (that.entity.hasDog) {
+                    that.setState("escape");
                 } else {
-                    return vectorToDog();
+                    return {
+                        force: vectorToDog()
+                    };
                 }
             }
         },
         vectorsToEdge = {
-            left: new Vector(-1, 0),
-            top: new Vector(0, -1),
-            right: new Vector(1, 0),
-            bottom: new Vector(0, 1)
+            left: new bombit.Vector(-1, 0),
+            top: new bombit.Vector(0, -1),
+            right: new bombit.Vector(1, 0),
+            bottom: new bombit.Vector(0, 1)
         },
         that = this;
 
+    this.setState = function (newState) {
+        if (stateHandlers[state]) {
+            state = newState;
+        } else {
+            console.log("Unknown state: " + newState);
+        }
+    };
+
+    this.getCurrentInput = function (dt) {
+        return stateHandlers[state]();
+    };
+
+    this.setEntity = function (entity) {
+        this.entity = entity;
+    };
+
     function vectorToDog() {
+        var dog = world.findEntityByType(entities.Dog);
         return that.entity.pos.vectorTo(dog.pos).normalize();
-    }
-
-    function distanceToDog() {
-        return that.entity.pos.distanceTo(dog.pos);
-    }
-
-    function nearDog() {
-        return (distanceToDog() < 75);
     }
 
     function vectorToClosestEdge() {
         var pos = that.entity.pos,
-            width = globalStatus.dimensions.width,
-            height = globalStatus.dimensions.height,
             distances = {
                 left: pos.x - 0,
                 top: pos.y - 0,
-                right: width - pos.x,
-                bottom: height - pos.y
+                right: MAP_WIDTH - pos.x,
+                bottom: MAP_HEIGHT - pos.y
             };
 
-        //@fixme should we use lowdash instead?
         var minKey;
         for (var key in distances) {
             if (distances.hasOwnProperty(key)) {
@@ -64,16 +67,4 @@ inputSources.EnemyInput = function (globalStatus) {
 
         return vectorsToEdge[minKey].clone();
     }
-
-    this.getCurrentAction = function () {
-        return null;
-    };
-
-    this.getCurrentInputVector = function (dt) {
-        return stateHandler[state]();
-    };
-
-    this.setEntity = function (entity) {
-        this.entity = entity;
-    };
 };

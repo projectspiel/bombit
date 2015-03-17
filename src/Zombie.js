@@ -26,9 +26,14 @@ entities.Zombie = new entities.Entity({
         inputForce: 3500
     },
     collidable: {
-        collisionCallback: function (intersection) {
-            this.nextPos.x -= intersection.overlapV.x;
-            this.nextPos.y -= intersection.overlapV.y;
+        collisionCallback: function (collision, entity) {
+            if (entity instanceof entities.Dog) {
+                this.catchDog();
+                world.removeEntity(entity);
+            }
+
+            this.nextPos.x -= collision.overlapV.x;
+            this.nextPos.y -= collision.overlapV.y;
         },
         hitAreaRadius: 36
     },
@@ -37,3 +42,32 @@ entities.Zombie = new entities.Entity({
         height: FRAME_HEIGHT
     }
 });
+
+entities.Zombie.prototype.onInit(function () {
+    this.hasDog = false;
+
+    this.dogSprite = new createjs.Sprite(new createjs.SpriteSheet({
+        images: [resources.dogImage],
+        frames: {width: 32, height: 32, regX: 16, regY: 25}
+    }));
+    this.dogSprite.scaleX = this.dogSprite.scaleY = 2;
+    this.dogSprite.y = -40;
+});
+
+entities.Zombie.prototype.catchDog = function () {
+    this.addDisplayObject(this.dogSprite);
+    this.hasDog = true;
+};
+
+entities.Zombie.prototype.dropDog = function () {
+    var dog = new entities.Dog({
+        position: {
+            x: this.pos.x,
+            y: this.pos.y + 50
+        }
+    });
+    world.addEntity(dog);
+
+    this.removeDisplayObject(this.dogSprite);
+    this.hasDog = false;
+};

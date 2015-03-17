@@ -47,11 +47,19 @@ entities.Dog.prototype.onInit(function () {
 });
 
 entities.Dog.prototype.catchBall = function () {
+    if (this.hasBall) {
+        return;
+    }
+
     this.addDisplayObject(this.ballSprite);
     this.hasBall = true;
 };
 
 entities.Dog.prototype.dropBall = function () {
+    if (!this.hasBall) {
+        return;
+    }
+
     var ball = new entities.Ball({
         position: {
             x: this.pos.x,
@@ -62,4 +70,8 @@ entities.Dog.prototype.dropBall = function () {
 
     this.removeDisplayObject(this.ballSprite);
     this.hasBall = false;
+};
+
+entities.Dog.prototype.destructor = function () {
+    this.dropBall();
 };

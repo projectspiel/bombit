@@ -3,18 +3,11 @@ var World = function (canvas) {
     this._stage.autoClear = true;
 
     this._entities = [];
-    this._globalStatus = {
-        entities: this._entities,
-        dimensions: {
-            width: MAP_WIDTH,
-            height: MAP_HEIGHT
-        }
-    };
 
     this.initLevel();
     this.initPlayer();
     this.initDog();
-    //this.initZombie();
+    this.initZombie();
     this.addBall(400, 500, 400);
 };
 
@@ -59,6 +52,10 @@ World.prototype = {
     removeEntity: function (entity) {
         for (var i = 0; i < this._entities.length; i++) {
             if (this._entities[i] === entity) {
+                if (typeof entity.destructor === "function") {
+                    entity.destructor();
+                }
+
                 mixins.Collidable.removeEntity(this._entities[i]);
                 this._stage.removeChild(this._entities[i].getDisplayObject());
                 this._entities.splice(i, 1);
@@ -92,7 +89,7 @@ World.prototype = {
                 x: 30,
                 y: 30
             },
-            inputSource: new inputSources.EnemyInput(this._globalStatus)
+            inputSource: new inputSources.EnemyInput()
         });
         this.addEntity(zombie);
     },
