@@ -6,8 +6,7 @@ inputSources.DogInput = function () {
             idle: function () {
                 if (that.entity.hasBall) {
                     that.setState("returnBall");
-                }
-                else {
+                } else {
                     var ball = world.findEntityByType(entities.Ball);
                     var player = world.findEntityByType(entities.Player);
                     if (ball && player.pos.distanceTo(ball.pos) > 200) {
@@ -18,8 +17,7 @@ inputSources.DogInput = function () {
             getBall: function () {
                 if (that.entity.hasBall) {
                     that.setState("returnBall");
-                }
-                else {
+                } else {
                     var ball = world.findEntityByType(entities.Ball);
                     if (ball) {
                         return { force: that.entity.pos.vectorTo(ball.pos).normalize() };
