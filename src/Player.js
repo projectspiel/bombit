@@ -33,18 +33,18 @@ entities.Player = new entities.Entity({
             this.nextPos.x -= collision.overlapV.x;
             this.nextPos.y -= collision.overlapV.y;
         },
-        boundsCallback: function(side) {
-            switch(side) {
-                case 'left':
+        boundsCallback: function (side) {
+            switch (side) {
+                case "left":
                     this.nextPos.set(0, this.nextPos.y);
                     break;
-                case 'right':
+                case "right":
                     this.nextPos.set(MAP_WIDTH, this.nextPos.y);
                     break;
-                case 'top':
+                case "top":
                     this.nextPos.set(this.nextPos.x, 0);
                     break;
-                case 'bottom':
+                case "bottom":
                     this.nextPos.set(this.nextPos.x, MAP_HEIGHT);
                     break;
             }
@@ -54,7 +54,7 @@ entities.Player = new entities.Entity({
     shadow: {
         width: FRAME_WIDTH * 1.1,
         height: FRAME_HEIGHT
-    },
+    }
 });
 
 entities.Player.prototype.onInit(function () {
