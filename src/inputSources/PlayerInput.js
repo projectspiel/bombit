@@ -2,6 +2,7 @@ var inputSources = inputSources || {};
 
 inputSources.PlayerInput = function (keyMap) {
     var keyboardState = this.buildKeyboardStateObject(),
+        actions = inputSources.PlayerInput.actions,
         impulseVectors = {
             up: new bombit.Vector(0, -1),
             down: new bombit.Vector(0, 1),
@@ -12,9 +13,9 @@ inputSources.PlayerInput = function (keyMap) {
     this.getCurrentAction = function (entity) {
         if (keyboardState[keyMap.space]) {
             if (entity.hasBall) {
-                return inputSources.PlayerInput.actions.throwBall;
+                return actions.throwBall;
             } else {
-                return inputSources.PlayerInput.actions.attack;
+                return actions.attack;
             }
         }
         return null;

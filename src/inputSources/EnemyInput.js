@@ -1,21 +1,24 @@
 var inputSources = inputSources || {};
 
 inputSources.EnemyInput = function (globalStatus) {
-    var state = "getDog",
+    var actions = inputSources.EnemyInput.actions,
+        state = "getDog",
         stateHandlers = {
             escape: function (entity) {
                 return {
                     force: vectorToClosestEdge(entity)
                 };
             },
+            runAway: function (entity) {
+                return {
+                    action: entity.hasDog ? 'dropDog' : undefined,
+                    force: vectorToClosestEdge(entity)
+                };
+            },
             getDog: function (entity) {
-                if (entity.hasDog) {
-                    that.setState("escape");
-                } else {
-                    return {
-                        force: vectorToDog(entity)
-                    };
-                }
+                return {
+                    force: vectorToDog(entity)
+                };
             }
         },
         vectorsToEdge = {
@@ -35,6 +38,7 @@ inputSources.EnemyInput = function (globalStatus) {
     };
 
     this.getCurrentInput = function (entity) {
+        updateState(entity);
         return stateHandlers[state](entity);
     };
 
@@ -63,4 +67,22 @@ inputSources.EnemyInput = function (globalStatus) {
 
         return vectorsToEdge[minKey].clone();
     }
+
+    function updateState(entity) {
+        if(state === 'escape' || state === 'getDog') {
+            if(entity.health === 0) {
+              that.setState('runAway');
+            }
+        }
+
+        if (state === 'getDog') {
+            if (entity.hasDog) {
+                that.setState("escape");
+            }
+        }
+    }
+};
+
+inputSources.EnemyInput.actions = {
+    dropDog: "dropDog"
 };

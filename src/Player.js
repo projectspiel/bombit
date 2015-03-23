@@ -98,7 +98,7 @@ entities.Player.prototype.attack = function () {
     var attackPoint = this.pos.clone().add(this.vel.clone().normalize().scalar(60)),
         entity = mixins.Collidable.getAtPoint(attackPoint);
 
-    if (entity) {
-        console.log(entity);
+    if (entity && entity.constructor === entities.Zombie) {
+        entity.takeDamage();
     }
 };

@@ -27,7 +27,7 @@ entities.Zombie = new entities.Entity({
     },
     collidable: {
         collisionCallback: function (collision, entity) {
-            if (entity instanceof entities.Dog) {
+            if (entity instanceof entities.Dog && this.health > 0) {
                 this.catchDog();
                 world.removeEntity(entity);
             }
@@ -45,6 +45,7 @@ entities.Zombie = new entities.Entity({
 
 entities.Zombie.prototype.onInit(function () {
     this.hasDog = false;
+    this.health = 3;
 
     this.dogSprite = new createjs.Sprite(new createjs.SpriteSheet({
         images: [resources.dogImage],
@@ -70,4 +71,10 @@ entities.Zombie.prototype.dropDog = function () {
 
     this.removeDisplayObject(this.dogSprite);
     this.hasDog = false;
+};
+
+entities.Zombie.prototype.takeDamage = function() {
+    if(this.health > 0) {
+        this.health--;
+    }
 };
