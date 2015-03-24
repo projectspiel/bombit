@@ -8,12 +8,12 @@ mixins.Alive = function () {
     }
     this.isAlive = true;
 
-    this.injectInputSource = function (inputSource) {
+    this.setInputSource = function (inputSource) {
         this._inputSource = inputSource;
     };
 
     this._applyInput = function () {
-        var input = this._inputSource.getCurrentInput(this) || {};
+        var input = this._inputSource.getCurrentInput() || {};
 
         if (input.force instanceof bombit.Vector) {
             this.updateSpriteState(input.force);

@@ -44,6 +44,7 @@ entities.Dog.prototype.onInit(function () {
     }));
     this.ballSprite.scaleX = this.ballSprite.scaleY = 2;
     this.ballSprite.y = -16;
+    this.setInputSource(new inputSources.DogInput(this));
 });
 
 entities.Dog.prototype.catchBall = function () {

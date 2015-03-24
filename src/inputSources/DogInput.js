@@ -1,9 +1,9 @@
 var inputSources = inputSources || {};
 
-inputSources.DogInput = function () {
+inputSources.DogInput = function (entity) {
     var state = "idle",
         stateHandlers = {
-            idle: function (entity) {
+            idle: function () {
                 if (entity.hasBall) {
                     that.setState("returnBall");
                 } else {
@@ -14,7 +14,7 @@ inputSources.DogInput = function () {
                     }
                 }
             },
-            getBall: function (entity) {
+            getBall: function () {
                 if (entity.hasBall) {
                     that.setState("returnBall");
                 } else {
@@ -26,7 +26,7 @@ inputSources.DogInput = function () {
                     }
                 }
             },
-            returnBall: function (entity) {
+            returnBall: function () {
                 var player = world.findEntityByType(entities.Player);
                 if (entity.pos.distanceTo(player.pos) < 100) {
                     that.setState("idle");
@@ -38,8 +38,8 @@ inputSources.DogInput = function () {
         },
         that = this;
 
-    this.getCurrentInput = function (entity) {
-        return stateHandlers[state](entity);
+    this.getCurrentInput = function () {
+        return stateHandlers[state]();
     };
 
     this.setState = function (newState) {

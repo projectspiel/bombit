@@ -65,20 +65,12 @@ World.prototype = {
     },
 
     initPlayer: function () {
-        var keyMap = { // Defined outside Player because it could be configurable someday
-                up: constants.KEY_UP,
-                down: constants.KEY_DOWN,
-                left: constants.KEY_LEFT,
-                right: constants.KEY_RIGHT,
-                space: constants.KEY_SPACE
-            },
-            player = new entities.Player({
-                position: {
-                    x: this._stage.canvas.width / 2,
-                    y: this._stage.canvas.height / 2
-                },
-                inputSource: new inputSources.PlayerInput(keyMap)
-            });
+        player = new entities.Player({
+            position: {
+                x: this._stage.canvas.width / 2,
+                y: this._stage.canvas.height / 2
+            }
+        });
 
         this.addEntity(player);
     },
@@ -88,8 +80,7 @@ World.prototype = {
             position: {
                 x: 30,
                 y: 30
-            },
-            inputSource: new inputSources.EnemyInput()
+            }
         });
         this.addEntity(zombie);
     },
@@ -99,8 +90,7 @@ World.prototype = {
             position: {
                 x: 600,
                 y: 800
-            },
-            inputSource: new inputSources.DogInput()
+            }
         });
         this.addEntity(dog);
     },

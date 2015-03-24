@@ -1,6 +1,6 @@
 var inputSources = inputSources || {};
 
-inputSources.PlayerInput = function (keyMap) {
+inputSources.PlayerInput = function (entity, keyMap) {
     var keyboardState = this.buildKeyboardStateObject(),
         actions = inputSources.PlayerInput.actions,
         spaceBarDown = false,
@@ -11,7 +11,7 @@ inputSources.PlayerInput = function (keyMap) {
             right: new bombit.Vector(1, 0)
         };
 
-    this.getCurrentAction = function (entity) {
+    this.getCurrentAction = function () {
 
         if (keyboardState[keyMap.space] && !spaceBarDown) {
             spaceBarDown = true;
@@ -28,7 +28,7 @@ inputSources.PlayerInput = function (keyMap) {
         return null;
     };
 
-    this.getCurrentInput = function (entity) {
+    this.getCurrentInput = function () {
         var vector = new bombit.Vector();
 
         if (keyboardState[keyMap.left]) {
@@ -49,7 +49,7 @@ inputSources.PlayerInput = function (keyMap) {
 
         return {
             force: vector.normalize(),
-            action: this.getCurrentAction(entity)
+            action: this.getCurrentAction()
         };
     };
 };

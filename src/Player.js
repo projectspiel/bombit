@@ -67,6 +67,14 @@ entities.Player.prototype.onInit(function () {
     this.ballSprite.scaleX = this.ballSprite.scaleY = 2;
     this.ballSprite.y = -42;
     this.ballSprite.x = 23;
+    var keyMap = { // Defined outside Player because it could be configurable someday
+            up: constants.KEY_UP,
+            down: constants.KEY_DOWN,
+            left: constants.KEY_LEFT,
+            right: constants.KEY_RIGHT,
+            space: constants.KEY_SPACE
+        };
+    this.setInputSource(new inputSources.PlayerInput(this, keyMap))
 });
 
 entities.Player.prototype.catchBall = function () {

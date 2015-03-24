@@ -1,23 +1,23 @@
 var inputSources = inputSources || {};
 
-inputSources.EnemyInput = function (globalStatus) {
+inputSources.EnemyInput = function (entity) {
     var actions = inputSources.EnemyInput.actions,
         state = "getDog",
         stateHandlers = {
-            escape: function (entity) {
+            escape: function () {
                 return {
-                    force: vectorToClosestEdge(entity)
+                    force: vectorToClosestEdge()
                 };
             },
-            runAway: function (entity) {
+            runAway: function () {
                 return {
                     action: entity.hasDog ? 'dropDog' : undefined,
-                    force: vectorToClosestEdge(entity)
+                    force: vectorToClosestEdge()
                 };
             },
-            getDog: function (entity) {
+            getDog: function () {
                 return {
-                    force: vectorToDog(entity)
+                    force: vectorToDog()
                 };
             }
         },
@@ -37,17 +37,17 @@ inputSources.EnemyInput = function (globalStatus) {
         }
     };
 
-    this.getCurrentInput = function (entity) {
+    this.getCurrentInput = function () {
         updateState(entity);
-        return stateHandlers[state](entity);
+        return stateHandlers[state]();
     };
 
-    function vectorToDog(entity) {
+    function vectorToDog() {
         var dog = world.findEntityByType(entities.Dog);
         return entity.pos.vectorTo(dog.pos).normalize();
     }
 
-    function vectorToClosestEdge(entity) {
+    function vectorToClosestEdge() {
         var pos = entity.pos,
             distances = {
                 left: pos.x - 0,
@@ -68,7 +68,7 @@ inputSources.EnemyInput = function (globalStatus) {
         return vectorsToEdge[minKey].clone();
     }
 
-    function updateState(entity) {
+    function updateState() {
         if(state === 'escape' || state === 'getDog') {
             if(entity.health === 0) {
               that.setState('runAway');
