@@ -23,7 +23,7 @@ entities.Zombie = new entities.Entity({
     physical: {
         friction: 20,
         mass: 1,
-        inputForce: 3500
+        inputForce: 2500
     },
     collidable: {
         collisionCallback: function (collision, entity) {

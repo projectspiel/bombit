@@ -7,7 +7,7 @@ var World = function (canvas) {
     this.initLevel();
     this.initPlayer();
     this.initDog();
-    this.initZombie();
+    this.initZombies();
     this.addBall(400, 500, 400);
 };
 
@@ -75,14 +75,11 @@ World.prototype = {
         this.addEntity(player);
     },
 
-    initZombie: function () {
-        var zombie = new entities.Zombie({
-            position: {
-                x: 30,
-                y: 30
-            }
+    initZombies: function () {
+        var that = this
+        zombieWaveGenerator.new(3, function(zombie) {
+            that.addEntity(zombie);
         });
-        this.addEntity(zombie);
     },
 
     initDog: function () {
