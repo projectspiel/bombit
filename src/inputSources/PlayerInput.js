@@ -3,6 +3,7 @@ var inputSources = inputSources || {};
 inputSources.PlayerInput = function (keyMap) {
     var keyboardState = this.buildKeyboardStateObject(),
         actions = inputSources.PlayerInput.actions,
+        spaceBarDown = false,
         impulseVectors = {
             up: new bombit.Vector(0, -1),
             down: new bombit.Vector(0, 1),
@@ -11,12 +12,18 @@ inputSources.PlayerInput = function (keyMap) {
         };
 
     this.getCurrentAction = function (entity) {
-        if (keyboardState[keyMap.space]) {
+
+        if (keyboardState[keyMap.space] && !spaceBarDown) {
+            spaceBarDown = true;
             if (entity.hasBall) {
                 return actions.throwBall;
             } else {
                 return actions.attack;
             }
+        }
+
+        if (!keyboardState[keyMap.space]) {
+            spaceBarDown = false;
         }
         return null;
     };
