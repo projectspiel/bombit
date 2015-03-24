@@ -38,7 +38,7 @@ inputSources.EnemyInput = function (entity) {
     };
 
     this.getCurrentInput = function () {
-        updateState(entity);
+        updateState();
         return stateHandlers[state]();
     };
 
