@@ -4,6 +4,11 @@ inputSources.EnemyInput = function (entity) {
     var actions = inputSources.EnemyInput.actions,
         state = "getDog",
         stateHandlers = {
+            wander: function () {
+                return {
+                  force: new bombit.Vector(0,0)
+                };
+            },
             escape: function () {
                 return {
                     force: vectorToClosestEdge()
@@ -43,8 +48,12 @@ inputSources.EnemyInput = function (entity) {
     };
 
     function vectorToDog() {
-        var dog = world.findEntityByType(entities.Dog);
+        var dog = findDog();
         return entity.pos.vectorTo(dog.pos).normalize();
+    }
+
+    function findDog() {
+        return world.findEntityByType(entities.Dog);
     }
 
     function vectorToClosestEdge() {
@@ -69,15 +78,21 @@ inputSources.EnemyInput = function (entity) {
     }
 
     function updateState() {
-        if(state === 'escape' || state === 'getDog') {
-            if(entity.health === 0) {
-              that.setState('runAway');
-            }
+        if(state !== 'runAway' && entity.health === 0) {
+            that.setState('runAway');
         }
 
         if (state === 'getDog') {
             if (entity.hasDog) {
                 that.setState("escape");
+            } else if (!findDog()) {
+                that.setState("wander");
+            }
+        }
+
+        if (state === "wander") {
+            if (findDog()) {
+                that.setState("getDog");
             }
         }
     }
