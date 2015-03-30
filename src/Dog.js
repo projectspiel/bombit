@@ -4,18 +4,23 @@ entities.Dog = new entities.Entity({
     sprite: {
         images: [resources.dogImage],
         frames: {
-            width: 32,
-            height: 32,
-            regX: 16,
-            regY: 25
+            width: 48,
+            height: 48,
+            regX: 24,
+            regY: 33
         },
         animations: {
-            idle: [0, 3, true, 0.05]
+            idle: [0, 3, true, 0.05],
+            moveDown: [4, 7, true, 0.3],
+            moveLeft: [8, 11, true, 0.3],
+            moveRight: [12, 15, true, 0.3],
+            moveUp: [16, 19, true, 0.3]
         }
     },
     physical: {
         friction: 20,
-        mass: 1
+        mass: 1,
+        inputForce: 8000
     },
     collidable: {
         collisionCallback: function (collision, entity) {

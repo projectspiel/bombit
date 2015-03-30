@@ -25,7 +25,7 @@ mixins.Sprite = function (spriteSheetData) {
     };
 
     this.updateSpriteState = function (inputVector) {
-        if (inputVector.modulo() === 0) {
+        if (!(inputVector instanceof bombit.Vector) || inputVector.modulo() == 0) {
             this.gotoAndPlay("idle");
         } else if (Math.abs(inputVector.x) > Math.abs(inputVector.y)) {
             if (inputVector.x > 0) {
