@@ -37,7 +37,11 @@ mixins.Physical = function (options) {
     };
 
     this.applyGravity = function () {
-        //@fixme FIX ME!
+        if (this.vel.z < 0.1 && this.pos.z < 0.1) {
+            this.vel.z = 0;
+            this.pos.z = 0;
+            return;
+        }
         var gravity = new bombit.Vector();
         gravity.set(0, 0, -9.8 * 50);
         this.force.add(gravity);

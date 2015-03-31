@@ -4,26 +4,18 @@ inputSources.DogInput = function (entity) {
     var state = "idle",
         stateHandlers = {
             idle: function () {
-                if (entity.hasBall) {
-                    that.setState("returnBall");
-                } else {
-                    var ball = world.findEntityByType(entities.Ball);
-                    var player = world.findEntityByType(entities.Player);
-                    if (ball && player.pos.distanceTo(ball.pos) > 200) {
-                        that.setState("getBall");
-                    }
+                var ball = world.findEntityByType(entities.Ball);
+                var player = world.findEntityByType(entities.Player);
+                if (ball && ball.vel.modulo() > 1) {
+                    that.setState("getBall");
                 }
             },
             getBall: function () {
-                if (entity.hasBall) {
-                    that.setState("returnBall");
+                var ball = world.findEntityByType(entities.Ball);
+                if (ball) {
+                    return { force: entity.pos.vectorTo(ball.pos).normalize() };
                 } else {
-                    var ball = world.findEntityByType(entities.Ball);
-                    if (ball) {
-                        return { force: entity.pos.vectorTo(ball.pos).normalize() };
-                    } else {
-                        that.setState("idle");
-                    }
+                    that.setState("idle");
                 }
             },
             returnBall: function () {
@@ -32,14 +24,20 @@ inputSources.DogInput = function (entity) {
                     that.setState("idle");
                     return { action: inputSources.DogInput.actions.dropBall };
                 }
-
                 return { force: entity.pos.vectorTo(player.pos).normalize() };
             }
         },
         that = this;
 
     this.getCurrentInput = function () {
+        this.updateState();
         return stateHandlers[state]();
+    };
+
+    this.updateState = function() {
+        if (state !== 'returnBall' && entity.hasBall) {
+            this.setState('returnBall');
+        }
     };
 
     this.setState = function (newState) {
