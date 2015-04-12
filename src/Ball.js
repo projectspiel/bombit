@@ -4,10 +4,10 @@ entities.Ball = new entities.Entity({
     sprite: {
         images: [resources.ballImage],
         frames: {
-            width: 8,
-            height: 8,
-            regX: 4,
-            regY: 8
+            width: 6,
+            height: 6,
+            regX: 3,
+            regY: 6
         }
     },
     physical: {
@@ -44,7 +44,7 @@ entities.Ball = new entities.Entity({
         hitAreaRadius: 8
     },
     shadow: {
-        width: 8 * 2,
-        height: 8 * 2
+        width: 6 * 2,
+        height: 6 * 2
     }
 });
