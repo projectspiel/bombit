@@ -2,7 +2,7 @@ var entities = entities || {};
 
 entities.Dog = new entities.Entity({
     sprite: {
-        images: [resources.dogImage],
+        images: [resources.dogImage, resources.dogWithBallImage],
         frames: {
             width: 48,
             height: 48,
@@ -10,12 +10,13 @@ entities.Dog = new entities.Entity({
             regY: 33
         },
         animations: {
-            idle: [0, 3, true, 0.05],
-            moveDown: [4, 7, true, 0.3],
-            moveLeft: [8, 11, true, 0.3],
-            moveRight: [12, 15, true, 0.3],
-            moveUp: [16, 19, true, 0.3]
-        }
+            idle: [0, 3, true, 0.1],
+            moveDown: [4, 7, true, 1],
+            moveLeft: [8, 11, true, 1],
+            moveRight: [12, 15, true, 1],
+            moveUp: [16, 19, true, 1]
+        },
+        framerate: 5
     },
     physical: {
         friction: 20,

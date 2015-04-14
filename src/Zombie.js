@@ -5,7 +5,7 @@ var FRAME_WIDTH = 48,
 
 entities.Zombie = new entities.Entity({
     sprite: {
-        images: [resources.playerImage],
+        images: [resources.pibiImage],
         frames: {
             width: FRAME_WIDTH,
             height: FRAME_HEIGHT,
@@ -13,17 +13,18 @@ entities.Zombie = new entities.Entity({
             regY: 88
         },
         animations: {
-            idle: [0, 4, true, 0.1],
-            moveDown: [8, 11, true, 0.2],
-            moveLeft: [16, 23, true, 0.3],
-            moveRight: [24, 31, true, 0.3],
-            moveUp: [32, 35, true, 0.2]
-        }
+            idle: [0, 0, true, 1],
+            moveDown: [0, 3, true, 0.2],
+            moveLeft: [4, 7, true, 0.3],
+            moveRight: [8, 11, true, 0.3],
+            moveUp: [12, 15, true, 0.2]
+        },
+        framerate: 10
     },
     physical: {
         friction: 20,
         mass: 1,
-        inputForce: 2500
+        inputForce: 500
     },
     collidable: {
         collisionCallback: function (collision, entity) {

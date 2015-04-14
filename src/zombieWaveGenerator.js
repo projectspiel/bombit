@@ -2,7 +2,6 @@ var zombieWaveGenerator = (function() {
 
     function generateZombie() {
         var position = randomStartupPosition();
-        console.log(position);
         return new entities.Zombie({
             position: position
         });

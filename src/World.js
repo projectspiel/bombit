@@ -7,7 +7,7 @@ var World = function (canvas) {
     this.initLevel();
     this.initPlayer();
     this.initDog();
-    //this.initZombies();
+    this.initZombies();
     this.addBall(400, 500, 400);
 };
 
