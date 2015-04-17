@@ -14,10 +14,10 @@ entities.Zombie = new entities.Entity({
         },
         animations: {
             idle: [0, 0, true, 1],
-            moveDown: [0, 3, true, 0.2],
+            moveDown: [0, 3, true, 0.3],
             moveLeft: [4, 7, true, 0.3],
             moveRight: [8, 11, true, 0.3],
-            moveUp: [12, 15, true, 0.2]
+            moveUp: [12, 15, true, 0.3]
         },
         framerate: 10
     },
