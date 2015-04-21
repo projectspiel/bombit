@@ -59,5 +59,21 @@ bombit.Vector.prototype = {
     },
     toString: function () {
         return "(" + this.x + ", " + this.y + ", " + this.z + ")";
+    },
+    direction: function() {
+        if (this.modulo() == 0) {
+          return null;
+        } else if (Math.abs(this.x) > Math.abs(this.y)) {
+            if (this.x > 0) {
+                return "right";
+            } else {
+                return "left";
+            }
+        } else if (this.y > 0) {
+            return "down";
+        } else {
+            return "up";
+        }
     }
+
 };

@@ -10,11 +10,16 @@ entities.Dog = new entities.Entity({
             regY: 33
         },
         animations: {
+            // index, index, loop, velocity
             idle: [0, 3, true, 0.1],
             moveDown: [4, 7, true, 1],
             moveLeft: [8, 11, true, 1],
             moveRight: [12, 15, true, 1],
-            moveUp: [16, 19, true, 1]
+            moveUp: [16, 19, true, 1],
+            moveDownWithBall: [20, 23, true, 1],
+            moveLeftWithBall: [24, 27, true, 1],
+            moveRightWithBall: [28, 31, true, 1],
+            moveUpWithBall: [16, 19, true, 1]
         },
         framerate: 5
     },
@@ -51,6 +56,7 @@ entities.Dog.prototype.onInit(function () {
     this.ballSprite.scaleX = this.ballSprite.scaleY = 2;
     this.ballSprite.y = -16;
     this.setInputSource(new inputSources.DogInput(this));
+    this.animationController = new DogAnimationController(this);
 });
 
 entities.Dog.prototype.catchBall = function () {
