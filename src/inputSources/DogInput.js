@@ -5,7 +5,6 @@ inputSources.DogInput = function (entity) {
         stateHandlers = {
             idle: function () {
                 var ball = world.findEntityByType(entities.Ball);
-                var player = world.findEntityByType(entities.Player);
                 if (ball && ball.vel.modulo() > 1) {
                     that.setState("getBall");
                 } else  {

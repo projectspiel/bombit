@@ -25,7 +25,7 @@ inputSources.WanderInput = function(entity) {
 
         if(closeToTarget()) {
             wanderTo = null;
-            stepsToWait = randomIntegerBetween(10, 20);
+            stepsToWait = randomIntegerBetween(30, 100);
             return wait();
         } else {
             return { force: entity.pos.vectorTo(wanderTo).normalize().scalar(0.5) };
