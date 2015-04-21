@@ -15,7 +15,11 @@ entities.Dog = new entities.Entity({
             moveDown: [4, 7, true, 1],
             moveLeft: [8, 11, true, 1],
             moveRight: [12, 15, true, 1],
-            moveUp: [16, 19, true, 1]
+            moveUp: [16, 19, true, 1],
+            moveDownWithBall: [20, 23, true, 1],
+            moveLeftWithBall: [24, 27, true, 1],
+            moveRightWithBall: [28, 31, true, 1],
+            moveUpWithBall: [16, 19, true, 1]
         },
         framerate: 5
     },
