@@ -8,6 +8,8 @@ inputSources.DogInput = function (entity) {
                 var player = world.findEntityByType(entities.Player);
                 if (ball && ball.vel.modulo() > 1) {
                     that.setState("getBall");
+                } else  {
+                    return wanderInput.getCurrentInput();
                 }
             },
             getBall: function () {
@@ -27,6 +29,7 @@ inputSources.DogInput = function (entity) {
                 return { force: entity.pos.vectorTo(player.pos).normalize() };
             }
         },
+        wanderInput = new inputSources.WanderInput(entity);
         that = this;
 
     this.getCurrentInput = function () {

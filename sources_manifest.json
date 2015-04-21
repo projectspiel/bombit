@@ -18,6 +18,7 @@
         {"src":"inputSources/Null.js", "id":"NullInputSource"},
         {"src":"inputSources/EnemyInput.js", "id":"EnemyInput"},
         {"src":"inputSources/DogInput.js", "id":"DogInput"},
+        {"src":"inputSources/WanderInput.js", "id":"WanderInput"},
         {"src":"World.js", "id":"world"},
         {"src":"Ball.js", "id":"ball"},
         {"src":"Player.js", "id":"player"},
