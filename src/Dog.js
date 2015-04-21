@@ -2,7 +2,7 @@ var entities = entities || {};
 
 entities.Dog = new entities.Entity({
     sprite: {
-        images: [resources.dogImage, resources.dogWithBallImage],
+        images: [resources.dogImage],
         frames: {
             width: 48,
             height: 48,

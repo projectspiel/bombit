@@ -4,7 +4,6 @@
         {"src":"img/player.png", "id":"playerImage"},
         {"src":"img/pibi.png", "id":"pibiImage"},
         {"src":"img/dog.png", "id":"dogImage"},
-        {"src":"img/dogwithball.png", "id":"dogWithBallImage"},
         {"src":"img/ball.png", "id":"ballImage"},
         {"src":"img/grass1.png", "id":"grassImage1"},
         {"src":"img/grass2.png", "id":"grassImage2"},
