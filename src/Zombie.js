@@ -55,6 +55,7 @@ entities.Zombie.prototype.onInit(function () {
     this.dogSprite.scaleX = this.dogSprite.scaleY = 2;
     this.dogSprite.y = -40;
     this.setInputSource(new inputSources.EnemyInput(this));
+    this.animationController = new ZombieAnimationController(this);
 });
 
 entities.Zombie.prototype.catchDog = function () {

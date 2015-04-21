@@ -16,10 +16,13 @@ mixins.Alive = function () {
         if (input.force instanceof bombit.Vector) {
             this.addInputForce(input.force);
         }
-        this.updateSpriteState(input.force);
 
         if (typeof(input.action) === "string" && typeof(this[input.action]) === "function") {
             this[input.action]();
+        }
+
+        if(this.animationController !== undefined) {
+            this.animationController.update(input.force)
         }
     };
 

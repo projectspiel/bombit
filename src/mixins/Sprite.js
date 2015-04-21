@@ -23,20 +23,4 @@ mixins.Sprite = function (spriteSheetData) {
             this._currentSpriteState = state;
         }
     };
-
-    this.updateSpriteState = function (inputVector) {
-        if (!(inputVector instanceof bombit.Vector) || inputVector.modulo() == 0) {
-            this.gotoAndPlay("idle");
-        } else if (Math.abs(inputVector.x) > Math.abs(inputVector.y)) {
-            if (inputVector.x > 0) {
-                this.gotoAndPlay("moveRight");
-            } else {
-                this.gotoAndPlay("moveLeft");
-            }
-        } else if (inputVector.y > 0) {
-            this.gotoAndPlay("moveDown");
-        } else {
-            this.gotoAndPlay("moveUp");
-        }
-    };
 };

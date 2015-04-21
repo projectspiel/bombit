@@ -75,6 +75,7 @@ entities.Player.prototype.onInit(function () {
             space: constants.KEY_SPACE
         };
     this.setInputSource(new inputSources.PlayerInput(this, keyMap))
+    this.animationController = new PlayerAnimationController(this);
 });
 
 entities.Player.prototype.catchBall = function () {
