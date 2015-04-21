@@ -44,6 +44,9 @@ inputSources.DogInput = function (entity) {
     };
 
     this.setState = function (newState) {
+        if(newState === 'idle') {
+            wanderInput.reset();
+        }
         if (stateHandlers[state]) {
             state = newState;
         } else {

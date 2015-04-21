@@ -8,6 +8,11 @@ inputSources.WanderInput = function(entity) {
         return (stepsToWait > 0) ? wait() : wander();
     }
 
+    this.reset = function() {
+        wanderTo = null;
+        stepsToWait = 0;
+    }
+
     function wait() {
         stepsToWait--;
         return { force: new bombit.Vector() };
@@ -23,7 +28,7 @@ inputSources.WanderInput = function(entity) {
             stepsToWait = randomIntegerBetween(10, 20);
             return wait();
         } else {
-            return { force: entity.pos.vectorTo(wanderTo).normalize() };
+            return { force: entity.pos.vectorTo(wanderTo).normalize().scalar(0.5) };
         }
     }
 
