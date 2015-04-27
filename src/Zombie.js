@@ -17,7 +17,11 @@ entities.Zombie = new entities.Entity({
             moveDown: [0, 3, true, 0.3],
             moveLeft: [4, 7, true, 0.3],
             moveRight: [8, 11, true, 0.3],
-            moveUp: [12, 15, true, 0.3]
+            moveUp: [12, 15, true, 0.3],
+            moveDownWithDog: [16, 19, true, 0.3],
+            moveLeftWithDog: [20, 23, true, 0.3],
+            moveRightWithDog: [24, 27, true, 0.3],
+            moveUpWithDog: [28, 31, true, 0.3]
         },
         framerate: 10
     },
@@ -48,18 +52,11 @@ entities.Zombie.prototype.onInit(function () {
     this.hasDog = false;
     this.health = 3;
 
-    this.dogSprite = new createjs.Sprite(new createjs.SpriteSheet({
-        images: [resources.dogImage],
-        frames: {width: 32, height: 32, regX: 16, regY: 25}
-    }));
-    this.dogSprite.scaleX = this.dogSprite.scaleY = 2;
-    this.dogSprite.y = -40;
     this.setInputSource(new inputSources.EnemyInput(this));
     this.animationController = new ZombieAnimationController(this);
 });
 
 entities.Zombie.prototype.catchDog = function () {
-    this.addDisplayObject(this.dogSprite);
     this.hasDog = true;
 };
 
@@ -71,8 +68,6 @@ entities.Zombie.prototype.dropDog = function () {
         }
     });
     world.addEntity(dog);
-
-    this.removeDisplayObject(this.dogSprite);
     this.hasDog = false;
 };
 
