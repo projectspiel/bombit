@@ -16,7 +16,12 @@ entities.Player = new entities.Entity({
             moveDown: [8, 11, true, 0.2],
             moveLeft: [16, 23, true, 0.3],
             moveRight: [24, 31, true, 0.3],
-            moveUp: [32, 35, true, 0.2]
+            moveUp: [32, 35, true, 0.2],
+            idleWithBall: [40, 44, true, 0.1],
+            moveDownWithBall: [48, 51, true, 0.2],
+            moveLeftWithBall: [16, 23, true, 0.3],
+            moveRightWithBall: [56, 63, true, 0.3],
+            moveUpWithBall: [64, 67, true, 0.2]
         }
     },
     physical: {
