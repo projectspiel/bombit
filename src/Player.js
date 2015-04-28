@@ -19,9 +19,13 @@ entities.Player = new entities.Entity({
             moveUp: [32, 35, true, 0.2],
             idleWithBall: [40, 44, true, 0.1],
             moveDownWithBall: [48, 51, true, 0.2],
-            moveLeftWithBall: [16, 23, true, 0.3],
+            moveLeftWithBall: [16, 23, true, 0.3], // same frames as moveLeft
             moveRightWithBall: [56, 63, true, 0.3],
-            moveUpWithBall: [64, 67, true, 0.2]
+            moveUpWithBall: [64, 67, true, 0.2],
+            punchDown: [72, 75, true, 0.3],
+            punchLeft: [80, 83, true, 0.3],
+            punchRight: [88, 91, true, 0.3],
+            punchUp: [96, 99, true, 0.3]
         }
     },
     physical: {
