@@ -8,6 +8,7 @@ var World = function (canvas) {
     this.initPlayer();
     this.initDog();
     this.initZombies();
+    this.initScore();
     this.addBall(400, 500, 400);
 };
 
@@ -134,5 +135,8 @@ World.prototype = {
                 return this._entities[i];
             }
         }
+    },
+    initScore: function() {
+        this._stage.addChild(Score.getDisplayObject());
     }
 };

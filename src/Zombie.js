@@ -74,5 +74,8 @@ entities.Zombie.prototype.dropDog = function () {
 entities.Zombie.prototype.takeDamage = function() {
     if(this.health > 0) {
         this.health--;
+        if (this.health == 0) {
+          Score.increment();
+        }
     }
 };
