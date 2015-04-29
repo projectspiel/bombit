@@ -23,7 +23,7 @@ entities.Player = new entities.Entity({
             moveRightWithBall: [56, 63, true, 0.3],
             moveUpWithBall: [64, 67, true, 0.2],
             punchDown: [72, 75, true, 0.3],
-            punchLeft: [80, 83, true, 0.3],
+            punchLeft: [80, 83, 'moveLeft', 0.3],
             punchRight: [88, 91, true, 0.3],
             punchUp: [96, 99, true, 0.3]
         }
@@ -68,6 +68,8 @@ entities.Player = new entities.Entity({
 
 entities.Player.prototype.onInit(function () {
     this.hasBall = false;
+    this.isAttacking = false;
+    this.attackingDirection = null;
 
     this.ballSprite = new createjs.Sprite(new createjs.SpriteSheet({
         images: [resources.ballImage],
@@ -85,7 +87,18 @@ entities.Player.prototype.onInit(function () {
         };
     this.setInputSource(new inputSources.PlayerInput(this, keyMap))
     this.animationController = new PlayerAnimationController(this);
+
+    this.onAnimationEnd(['punchDown', 'punchLeft', 'punchRight', 'punchUp'], function() {
+        this.stopAttack();
+    });
+
+    this.onSimulate(function() {
+        if(this.vel.direction() !== this.attackingDirection ) {
+            this.stopAttack();
+        }
+    })
 });
+
 
 entities.Player.prototype.catchBall = function () {
     this.addDisplayObject(this.ballSprite);
@@ -113,6 +126,11 @@ entities.Player.prototype.throwBall = function () {
 };
 
 entities.Player.prototype.attack = function () {
+    if (this.isAttacking) {
+      return;
+    }
+    this.isAttacking = true;
+    this.attackingDirection = this.vel.direction() || 'down';
     var attackPoint = this.pos.clone().add(this.vel.clone().normalize().scalar(60)),
         entity = mixins.Collidable.getAtPoint(attackPoint);
 
@@ -120,3 +138,8 @@ entities.Player.prototype.attack = function () {
         entity.takeDamage();
     }
 };
+
+entities.Player.prototype.stopAttack = function() {
+    this.isAttacking = false ;
+    this.attackingDirection = null;
+}
