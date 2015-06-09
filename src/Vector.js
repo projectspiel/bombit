@@ -61,7 +61,7 @@ bombit.Vector.prototype = {
         return "(" + this.x + ", " + this.y + ", " + this.z + ")";
     },
     direction: function() {
-        if (this.modulo() == 0) {
+        if (this.modulo() < 0.1) {
           return null;
         } else if (Math.abs(this.x) > Math.abs(this.y)) {
             if (this.x > 0) {

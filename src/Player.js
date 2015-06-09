@@ -23,7 +23,7 @@ entities.Player = new entities.Entity({
             moveRightWithBall: [56, 63, true, 0.3],
             moveUpWithBall: [64, 67, true, 0.2],
             punchDown: [72, 75, true, 0.3],
-            punchLeft: [80, 83, 'moveLeft', 0.3],
+            punchLeft: [80, 83, true, 0.3],
             punchRight: [88, 91, true, 0.3],
             punchUp: [96, 99, true, 0.3]
         }
@@ -93,7 +93,7 @@ entities.Player.prototype.onInit(function () {
     });
 
     this.onSimulate(function() {
-        if(this.vel.direction() !== this.attackingDirection ) {
+        if(this.inputVector.direction() !== this.attackingDirection ) {
             this.stopAttack();
         }
     })

@@ -5,6 +5,7 @@ mixins.Alive = function () {
         throw "Dependencies not met";
     }
     this.isAlive = true;
+    this.inputVector = null;
 
     this.setInputSource = function (inputSource) {
         this._inputSource = inputSource;
@@ -15,6 +16,7 @@ mixins.Alive = function () {
 
         if (input.force instanceof bombit.Vector) {
             this.addInputForce(input.force);
+            this.inputVector = input.force;
         }
 
         if (typeof(input.action) === "string" && typeof(this[input.action]) === "function") {
