@@ -28,6 +28,6 @@
         {"src":"Zombie.js", "id":"zombie"},
         {"src":"Dog.js", "id":"dog"},
         {"src":"Score.js", "id":"Score"},
-        {"src":"zombieWaveGenerator.js", "id":"zombieWaveGenerator"}
+        {"src":"LevelController.js", "id":"LevelController"}
     ]
 }

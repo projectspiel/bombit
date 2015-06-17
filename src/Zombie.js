@@ -51,6 +51,7 @@ entities.Zombie = new entities.Entity({
 entities.Zombie.prototype.onInit(function () {
     this.hasDog = false;
     this.health = 3;
+    this.onDieCallbacks = [];
 
     this.setInputSource(new inputSources.EnemyInput(this));
     this.animationController = new ZombieAnimationController(this);
@@ -71,11 +72,22 @@ entities.Zombie.prototype.dropDog = function () {
     this.hasDog = false;
 };
 
+entities.Zombie.prototype.onDie = function(callback) {
+    this.onDieCallbacks.push(callback);
+};
+
+entities.Zombie.prototype.die = function() {
+    for (var i = 0; i < this.onDieCallbacks.length; i++) {
+        this.onDieCallbacks[i].apply(this);
+    }
+};
+
+
 entities.Zombie.prototype.takeDamage = function() {
     if(this.health > 0) {
         this.health--;
         if (this.health == 0) {
-          Score.increment();
+            this.die();
         }
     }
 };

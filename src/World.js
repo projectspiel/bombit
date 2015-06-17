@@ -3,12 +3,9 @@ var World = function (canvas) {
     this._stage.autoClear = true;
 
     this._entities = [];
-
     this.initLevel();
     this.initPlayer();
     this.initDog();
-    this.initZombies();
-    this.initScore();
     this.addBall(400, 500, 400);
 };
 
@@ -76,9 +73,12 @@ World.prototype = {
         this.addEntity(player);
     },
 
-    initZombies: function () {
+    initLevel: function () {
+        this.initGround()
+        levelController = new LevelController(this._stage);
+
         var that = this
-        zombieWaveGenerator.new(3, function(zombie) {
+        levelController.start(function(zombie) {
             that.addEntity(zombie);
         });
     },
@@ -98,7 +98,7 @@ World.prototype = {
         this.addEntity(ball);
     },
 
-    initLevel: function () {
+    initGround: function () {
         var tileSize = 32 * 2, //@todo this is because of the creepy scaling
             tileIndex = 0, lastTileIndex = 0,
             grassTiles = [
@@ -135,8 +135,5 @@ World.prototype = {
                 return this._entities[i];
             }
         }
-    },
-    initScore: function() {
-        this._stage.addChild(Score.getDisplayObject());
     }
 };

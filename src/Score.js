@@ -1,13 +1,13 @@
 var Score = function() {
-    var zombieCount = 0,
+    var level = 0,
         text;
-    text = new createjs.Text("Dead Zombies: 0", "20px MineCrafter", "#222222");
+    text = new createjs.Text("Level 0", "20px MineCrafter", "#222222");
     text.x = 50;
     text.y = 30
     text.zindex = 1000
 
     function increment() {
-      zombieCount++;
+      level++;
       update();
     }
 
@@ -16,7 +16,7 @@ var Score = function() {
     }
 
     function update() {
-      text.text = "Dead Zombies: " + zombieCount;
+      text.text = "Level " + level;
     }
 
     return {
