@@ -33,6 +33,8 @@ window.onload = function () {
         canvas = window.document.getElementById("dasCanvas"),
         context = canvas.getContext("2d");
 
+    preloader.installPlugin(createjs.Sound);
+
     // @fixme
     CANVAS_HEIGHT = canvas.height;
     CANVAS_WIDTH = canvas.width;

@@ -40,6 +40,8 @@ World.prototype = {
         createjs.Ticker.addEventListener("tick", this.simulate.bind(this));
         createjs.Ticker.addEventListener("tick", this.update.bind(this));
         createjs.Ticker.setFPS(30);
+
+        createjs.Sound.play('menuSound');
     },
 
     addEntity: function (entity) {

@@ -10,6 +10,7 @@
         {"src":"img/grass3.png", "id":"grassImage3"},
         {"src":"img/grass4.png", "id":"grassImage4"},
         {"src":"img/grass5.png", "id":"grassImage5"},
-        {"src":"img/grass6.png", "id":"grassImage6"}
+        {"src":"img/grass6.png", "id":"grassImage6"},
+        {"src":"snd/menu.ogg", "id":"menuSound"}
     ]
 }
