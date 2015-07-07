@@ -26,7 +26,7 @@ Debug = {
 /* global resources:true */
 resources = {};
 /* global world:true */
-world = null;
+var world = null;
 
 window.onload = function () {
     var preloader = new createjs.LoadQueue(false),
@@ -78,13 +78,21 @@ window.onload = function () {
     preloader.loadManifest("sources_manifest.json");
 };
 
+window.onblur = function() {
+    world.pause();
+};
+
+window.onfocus = function() {
+    world.resume();
+};
+
 window.log = function () {
     for (var i = 0; i < arguments.length; i++) {
         console.log(arguments[i].toString ? arguments[i].toString() : arguments[i]);
     }
 };
 
-Function.prototype.includeMixin = function (mixin) {
+Function.prototype.includeMixin = function (mixin ) {
     mixin.apply(this.prototype, Array.prototype.slice.call(arguments, 1));
     return this;
 };

@@ -11,7 +11,11 @@ var World = function (canvas) {
 
 World.prototype = {
     update: function (event) {
-        this._stage.sortChildren(function (obj1, obj2, options) {
+        if (event.paused) {
+            return;
+        }
+
+        this._stage.sortChildren(function (obj1, obj2) {
             var obj1zindex = obj1.zindex ? obj1.zindex : obj1.y;
             var obj2zindex = obj2.zindex ? obj2.zindex : obj2.y;
 
@@ -31,6 +35,10 @@ World.prototype = {
     },
 
     simulate: function (event) {
+        if (event.paused) {
+            return;
+        }
+
         for (var i = 0; i < this._entities.length; i++) {
             this._entities[i].simulate(event.delta);
         }
@@ -137,5 +145,24 @@ World.prototype = {
                 return this._entities[i];
             }
         }
+    },
+
+    pause: function() {
+        var pauseMessage = new createjs.Text("Paused", "48px MineCrafter", "#222222");
+        pauseMessage.name = 'pauseMessage';
+        pauseMessage.x = CANVAS_WIDTH / 2 - pauseMessage.getBounds().width / 2;
+        pauseMessage.y = CANVAS_HEIGHT / 2 - pauseMessage.getBounds().height / 2;
+        pauseMessage.zindex = 1000;
+        this._stage.addChild(pauseMessage);
+        this._stage.update();
+
+        createjs.Ticker.setPaused(true);
+    },
+
+    resume: function() {
+        var pauseMessage = this._stage.getChildByName('pauseMessage');
+        this._stage.removeChild(pauseMessage);
+
+        createjs.Ticker.setPaused(false);
     }
 };
