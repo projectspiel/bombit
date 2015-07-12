@@ -85,20 +85,19 @@ entities.Player.prototype.onInit(function () {
             right: constants.KEY_RIGHT,
             space: constants.KEY_SPACE
         };
-    this.setInputSource(new inputSources.PlayerInput(this, keyMap))
+    this.setInputSource(new inputSources.PlayerInput(this, keyMap));
     this.animationController = new PlayerAnimationController(this);
 
-    this.onAnimationEnd(['punchDown', 'punchLeft', 'punchRight', 'punchUp'], function() {
+    this.onAnimationEnd(["punchDown", "punchLeft", "punchRight", "punchUp"], function () {
         this.stopAttack();
     });
 
-    this.onSimulate(function() {
-        if(this.inputVector.direction() !== this.attackingDirection ) {
+    this.onSimulate(function () {
+        if (this.inputVector.direction() !== this.attackingDirection) {
             this.stopAttack();
         }
     })
 });
-
 
 entities.Player.prototype.catchBall = function () {
     this.addDisplayObject(this.ballSprite);
@@ -130,7 +129,7 @@ entities.Player.prototype.attack = function () {
       return;
     }
     this.isAttacking = true;
-    this.attackingDirection = this.vel.direction() || 'down';
+    this.attackingDirection = this.vel.direction() || "down";
     var attackPoint = this.pos.clone().add(this.vel.clone().normalize().scalar(60)),
         entity = mixins.Collidable.getAtPoint(attackPoint);
 
@@ -139,7 +138,7 @@ entities.Player.prototype.attack = function () {
     }
 };
 
-entities.Player.prototype.stopAttack = function() {
+entities.Player.prototype.stopAttack = function () {
     this.isAttacking = false ;
     this.attackingDirection = null;
-}
+};

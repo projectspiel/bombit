@@ -1,8 +1,6 @@
 var mixins = mixins || {};
 
 mixins.Debuggable = function () {
-    this.isDebuggable = true;
-
     if (Debug.positionable) {
         this.afterInit(function () {
             this.debugPositionDisplayObject = (function () {
@@ -48,7 +46,6 @@ mixins.Debuggable = function () {
 
     if (Debug.physical) {
         this.afterInit(function () {
-            var that = this;
             this.debugVelocityDisplayObject = new createjs.Shape();
             this.addDisplayObject(this.debugVelocityDisplayObject);
         });

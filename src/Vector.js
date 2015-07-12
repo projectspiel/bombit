@@ -14,30 +14,36 @@ bombit.Vector.prototype = {
             this.z = z1;
         }
     },
+
     reset: function () {
         this.set(0, 0, 0);
     },
+
     clone: function () {
         return new bombit.Vector(this.x, this.y, this.z);
     },
+
     add: function (v) {
         this.x += v.x;
         this.y += v.y;
         this.z += v.z;
         return this;
     },
+
     substract: function (v) {
         this.x -= v.x;
         this.y -= v.y;
         this.z -= v.z;
         return this;
     },
+
     scalar: function (scalar) {
         this.x *= scalar;
         this.y *= scalar;
         this.z *= scalar;
         return this;
     },
+
     normalize: function () {
         var aux = this.x * this.x + this.y * this.y + this.z * this.z;
         if (Math.abs(aux - 1.0) > 0.0001 && aux > 0) {	// Don't normalize if it's not needed
@@ -48,19 +54,24 @@ bombit.Vector.prototype = {
         }
         return this;
     },
+
     vectorTo: function (v) {
         return v.clone().substract(this);
     },
+
     modulo: function () {
         return Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
     },
+
     distanceTo: function (v) {
         return Math.sqrt(Math.pow(this.x - v.x, 2) + Math.pow(this.y - v.y, 2) + Math.pow(this.z - v.z, 2));
     },
+
     toString: function () {
         return "(" + this.x + ", " + this.y + ", " + this.z + ")";
     },
-    direction: function() {
+
+    direction: function () {
         if (this.modulo() < 0.1) {
           return null;
         } else if (Math.abs(this.x) > Math.abs(this.y)) {
@@ -75,5 +86,4 @@ bombit.Vector.prototype = {
             return "up";
         }
     }
-
 };

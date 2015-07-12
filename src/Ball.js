@@ -17,7 +17,7 @@ entities.Ball = new entities.Entity({
         inputForce: 100 //@todo this hacks around the fact that there is no good way of adding a force on construction to a Physical (like when the player makes a Ball to throw), so we use Physical.addInputForce for now
     },
     collidable: {
-        collisionCallback: function (collision, entity) {
+        collisionCallback: function (collision) {
             var vector = new bombit.Vector(-1000 * collision.overlapV.x, -1000 * collision.overlapV.y, 2000);
             this.force.add(vector);
         },

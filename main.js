@@ -78,25 +78,28 @@ window.onload = function () {
     preloader.loadManifest("sources_manifest.json");
 };
 
-window.onblur = function() {
+window.onblur = function () {
     world.pause();
 };
 
-window.onfocus = function() {
+window.onfocus = function () {
     world.resume();
 };
 
 window.log = function () {
     for (var i = 0; i < arguments.length; i++) {
+        if (!arguments[i]) {
+            console.log("Invalid argument for logging");
+        }
         console.log(arguments[i].toString ? arguments[i].toString() : arguments[i]);
     }
 };
 
-Function.prototype.includeMixin = function (mixin ) {
+Function.prototype.includeMixin = function (mixin) {
     mixin.apply(this.prototype, Array.prototype.slice.call(arguments, 1));
     return this;
 };
 
 String.prototype.capitalizeFirstLetter = function () {
     return this.charAt(0).toUpperCase() + this.slice(1);
-}
+};

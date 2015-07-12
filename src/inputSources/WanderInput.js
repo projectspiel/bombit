@@ -1,46 +1,48 @@
 var inputSources = inputSources || {};
 
-inputSources.WanderInput = function(entity) {
+inputSources.WanderInput = function (entity) {
     var wanderTo = null,
         stepsToWait = 0;
 
     this.getCurrentInput = function () {
-        return (stepsToWait > 0) ? wait() : wander();
-    }
+        return (stepsToWait > 0) ? this.wait() : this.wander();
+    };
 
-    this.reset = function() {
+    this.reset = function () {
         wanderTo = null;
         stepsToWait = 0;
-    }
+    };
 
-    function wait() {
+    this.wait = function () {
         stepsToWait--;
-        return { force: new bombit.Vector() };
-    }
+        return {
+            force: new bombit.Vector()
+        };
+    };
 
-    function wander() {
-        if(!wanderTo) {
-          wanderTo = newWanderToVector();
+    this.wander = function () {
+        if (!wanderTo) {
+          wanderTo = this.newWanderToVector();
         }
 
-        if(closeToTarget()) {
+        if (closeToTarget()) {
             wanderTo = null;
-            stepsToWait = randomIntegerBetween(30, 100);
-            return wait();
+            stepsToWait = this.randomIntegerBetween(30, 100);
+            return this.wait();
         } else {
             return { force: entity.pos.vectorTo(wanderTo).normalize().scalar(0.5) };
         }
-    }
+    };
 
-    function randomIntegerBetween(min, max) {
+    this.randomIntegerBetween = function (min, max) {
         return Math.random() * (max - min) + min;
-    }
+    };
 
-    function newWanderToVector() {
+    this.newWanderToVector = function () {
       var vector = entity.pos.clone().add(
           new bombit.Vector(
-            randomIntegerBetween(-200, 200),
-            randomIntegerBetween(-200, 200)
+            this.randomIntegerBetween(-200, 200),
+            this.randomIntegerBetween(-200, 200)
           )
       );
 
@@ -48,8 +50,8 @@ inputSources.WanderInput = function(entity) {
         return vector;
       }
 
-      return newWanderToVector();
-    }
+      return this.newWanderToVector();
+    };
 
     function pointInsideMap(point) {
         return (point.x > 0 && point.x < MAP_WIDTH && point.y > 0 && point.y < MAP_HEIGHT);

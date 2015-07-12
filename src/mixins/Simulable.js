@@ -1,16 +1,12 @@
 var mixins = mixins || {};
 
-mixins.Simulable = function (callback) {
+mixins.Simulable = function () {
     this.isSimulable = true;
 
     var callbacks = [];
 
     this.onSimulate = function (callable) {
         callbacks.push(callable);
-    };
-
-    this.prependOnSimulate = function (callable) {
-        callbacks.unshift(callable);
     };
 
     this.simulate = function (dt) {

@@ -5,7 +5,6 @@ mixins.HasShadow = function (objectWidth, objectHeight) {
     if (!this.isRenderable) {
         throw "Dependencies not met";
     }
-    this.hasShadow = true;
 
     this.onInit(function () {
         this.shadowDisplayObject = (function () {

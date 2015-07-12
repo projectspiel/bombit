@@ -1,6 +1,6 @@
 var mixins = mixins || {};
 
-mixins.Updateable = function (callback) {
+mixins.Updateable = function () {
     this.isUpdateable = true;
 
     var callbacks = [];

@@ -4,7 +4,6 @@ mixins.Collidable = function (options) {
     if (!this.isInitializable || !this.isSimulable || !this.isPositionable || !this.isSprite) {
         throw "Dependencies not met";
     }
-    this.isCollidable = true;
 
     var collisionCallback = options.collisionCallback,
         boundsCallback = options.boundsCallback,
@@ -17,7 +16,7 @@ mixins.Collidable = function (options) {
         collidables.push(this);
     });
 
-    this.onSimulate(function (dt) {
+    this.onSimulate(function () {
         this.checkCollisions();
         this.checkBounds();
     });

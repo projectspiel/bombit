@@ -4,7 +4,7 @@ mixins.Alive = function () {
     if (!this.isInitializable || !this.isSimulable || !this.isSprite) {
         throw "Dependencies not met";
     }
-    this.isAlive = true;
+
     this.inputVector = null;
 
     this.setInputSource = function (inputSource) {
@@ -23,7 +23,7 @@ mixins.Alive = function () {
             this[input.action]();
         }
 
-        if(this.animationController !== undefined) {
+        if (this.animationController !== undefined) {
             this.animationController.update(input.force)
         }
     };

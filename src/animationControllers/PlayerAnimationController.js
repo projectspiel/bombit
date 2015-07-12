@@ -9,7 +9,7 @@ var PlayerAnimationController = function(entity) {
                 entity.gotoAndPlay("idle");
             }
         } else if (entity.hasBall){
-            entity.gotoAndPlay("move" + inputVector.direction().capitalizeFirstLetter() + "WithBall")
+            entity.gotoAndPlay("move" + inputVector.direction().capitalizeFirstLetter() + "WithBall");
         } else if (entity.isAttacking) {
             entity.gotoAndPlay("punch" + inputVector.direction().capitalizeFirstLetter());
         } else {

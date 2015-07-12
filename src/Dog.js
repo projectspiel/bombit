@@ -10,7 +10,6 @@ entities.Dog = new entities.Entity({
             regY: 33
         },
         animations: {
-            // index, index, loop, velocity
             idle: [0, 3, true, 0.1],
             moveDown: [4, 7, true, 1],
             moveLeft: [8, 11, true, 1],

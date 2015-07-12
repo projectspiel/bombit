@@ -1,12 +1,11 @@
 var inputSources = inputSources || {};
 
 inputSources.EnemyInput = function (entity) {
-    var actions = inputSources.EnemyInput.actions,
-        state = "getDog",
+    var state = "getDog",
         stateHandlers = {
             wander: function () {
                 return {
-                  force: new bombit.Vector(0,0)
+                  force: new bombit.Vector(0, 0)
                 };
             },
             escape: function () {
@@ -16,7 +15,7 @@ inputSources.EnemyInput = function (entity) {
             },
             runAway: function () {
                 return {
-                    action: entity.hasDog ? 'dropDog' : undefined,
+                    action: entity.hasDog ? "dropDog" : undefined,
                     force: vectorToClosestEdge()
                 };
             },
@@ -78,11 +77,11 @@ inputSources.EnemyInput = function (entity) {
     }
 
     function updateState() {
-        if(state !== 'runAway' && entity.health === 0) {
-            that.setState('runAway');
+        if (state !== "runAway" && entity.health === 0) {
+            that.setState("runAway");
         }
 
-        if (state === 'getDog') {
+        if (state === "getDog") {
             if (entity.hasDog) {
                 that.setState("escape");
             } else if (!findDog()) {

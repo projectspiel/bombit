@@ -10,7 +10,6 @@ mixins.Physical = function (options) {
     if (!this.isInitializable || !this.isSimulable || !this.isPositionable) {
         throw "Dependencies not met";
     }
-    this.isPhysical = true;
 
     this.onInit(function () {
         this.vel = new bombit.Vector();
@@ -48,7 +47,6 @@ mixins.Physical = function (options) {
     };
 
     this.applyFriction = function (factor) {
-        //@fixme FIX ME!
         if (this.pos.z === 0) {
             var friction = new bombit.Vector();
             friction.set(this.vel.x * -factor, this.vel.y * -factor, this.vel.z);
@@ -56,7 +54,7 @@ mixins.Physical = function (options) {
         }
     };
 
-    this.checkFloor = function (dampFactor, width, height) {
+    this.checkFloor = function (dampFactor) {
         if (this.nextPos.z <= 0.05) {
             this.vel.z *= -1 * dampFactor;
             this.nextPos.set(this.nextPos.x, this.nextPos.y, 0);

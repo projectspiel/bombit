@@ -65,13 +65,13 @@ inputSources.PlayerInput.prototype.buildKeyboardStateObject = function () {
         delete obj[e.keyCode];
     };
 
-    // If window loses focus while a key is pressed, the keyup event is missed and that input gets stuck.
+    // If window loses focus while a key is pressed, the subsequent keyup event is missed and that input gets stuck.
     // The currentOnFocus thing is a horrible hack to avoid overwriting the previously set onfocus handler used for unpausing.
     // I'm too lazy to do it properly.
     var currentOnFocus = window.onfocus;
-    window.onfocus = function() {
+    window.onfocus = function () {
         currentOnFocus();
-        for(var i in obj) {
+        for (var i in obj) {
             if (obj.hasOwnProperty(i)) {
                 delete obj[i];
             }

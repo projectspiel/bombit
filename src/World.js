@@ -49,7 +49,7 @@ World.prototype = {
         createjs.Ticker.addEventListener("tick", this.update.bind(this));
         createjs.Ticker.setFPS(30);
 
-        createjs.Sound.play('menuSound');
+        createjs.Sound.play("menuSound");
     },
 
     addEntity: function (entity) {
@@ -73,7 +73,7 @@ World.prototype = {
     },
 
     initPlayer: function () {
-        player = new entities.Player({
+        var player = new entities.Player({
             position: {
                 x: this._stage.canvas.width / 2,
                 y: this._stage.canvas.height / 2
@@ -84,11 +84,9 @@ World.prototype = {
     },
 
     initLevel: function () {
-        this.initGround()
-        levelController = new LevelController(this._stage);
-
-        var that = this
-        levelController.start(function(zombie) {
+        this.initBackground();
+        var that = this;
+        new LevelController(this._stage).start(function (zombie) {
             that.addEntity(zombie);
         });
     },
@@ -108,7 +106,7 @@ World.prototype = {
         this.addEntity(ball);
     },
 
-    initGround: function () {
+    initBackground: function () {
         var tileSize = 32 * 2, //@todo this is because of the creepy scaling
             tileIndex = 0, lastTileIndex = 0,
             grassTiles = [
@@ -147,9 +145,9 @@ World.prototype = {
         }
     },
 
-    pause: function() {
+    pause: function () {
         var pauseMessage = new createjs.Text("Paused", "48px MineCrafter", "#222222");
-        pauseMessage.name = 'pauseMessage';
+        pauseMessage.name = "pauseMessage";
         pauseMessage.x = CANVAS_WIDTH / 2 - pauseMessage.getBounds().width / 2;
         pauseMessage.y = CANVAS_HEIGHT / 2 - pauseMessage.getBounds().height / 2;
         pauseMessage.zindex = 1000;
@@ -159,8 +157,8 @@ World.prototype = {
         createjs.Ticker.setPaused(true);
     },
 
-    resume: function() {
-        var pauseMessage = this._stage.getChildByName('pauseMessage');
+    resume: function () {
+        var pauseMessage = this._stage.getChildByName("pauseMessage");
         this._stage.removeChild(pauseMessage);
 
         createjs.Ticker.setPaused(false);

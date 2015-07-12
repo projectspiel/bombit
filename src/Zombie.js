@@ -72,19 +72,18 @@ entities.Zombie.prototype.dropDog = function () {
     this.hasDog = false;
 };
 
-entities.Zombie.prototype.onDie = function(callback) {
+entities.Zombie.prototype.onDie = function (callback) {
     this.onDieCallbacks.push(callback);
 };
 
-entities.Zombie.prototype.die = function() {
+entities.Zombie.prototype.die = function () {
     for (var i = 0; i < this.onDieCallbacks.length; i++) {
         this.onDieCallbacks[i].apply(this);
     }
 };
 
-
-entities.Zombie.prototype.takeDamage = function() {
-    if(this.health > 0) {
+entities.Zombie.prototype.takeDamage = function () {
+    if (this.health > 0) {
         this.health--;
         if (this.health == 0) {
             this.die();

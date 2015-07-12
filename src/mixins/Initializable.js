@@ -1,7 +1,5 @@
 var mixins = mixins || {};
 
-// @DUP eventable
-// @fixme extract logic into eventable mixin
 mixins.Initializable = function () {
     this.isInitializable = true;
 

@@ -27,8 +27,8 @@ mixins.Sprite = function (spriteSheetData) {
     this.onAnimationEnd = function(animationNames, callback) {
         var that = this;
         this.sprite.addEventListener("animationend", function(event) {
-            for(var i=0; i < animationNames.length; i++) {
-                if(event.name === animationNames[i]) {
+            for (var i = 0; i < animationNames.length; i++) {
+                if (event.name === animationNames[i]) {
                     callback.apply(that);
                 }
             }

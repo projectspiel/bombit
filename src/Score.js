@@ -1,10 +1,11 @@
-var Score = function() {
+var Score = (function () {
     var level = 0,
         text;
+
     text = new createjs.Text("Level 0", "20px MineCrafter", "#222222");
     text.x = 50;
-    text.y = 30
-    text.zindex = 1000
+    text.y = 30;
+    text.zindex = 1000;
 
     function increment() {
       level++;
@@ -23,4 +24,4 @@ var Score = function() {
       increment: increment,
       getDisplayObject: getDisplayObject
     };
-}();
+})();

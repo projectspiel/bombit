@@ -3,7 +3,7 @@ var ZombieAnimationController = function(entity) {
         if(!(inputVector instanceof bombit.Vector) || inputVector.direction() === null) {
             entity.gotoAndPlay("idle");
         } else if (entity.hasDog){
-            entity.gotoAndPlay("move" + inputVector.direction().capitalizeFirstLetter() + "WithDog")
+            entity.gotoAndPlay("move" + inputVector.direction().capitalizeFirstLetter() + "WithDog");
         } else {
             entity.gotoAndPlay("move" + inputVector.direction().capitalizeFirstLetter());
         }

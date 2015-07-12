@@ -41,7 +41,7 @@ entities.Entity = function (entitySpec) {
         }
 
         //Updateable
-        this.onUpdate(function (dt) {
+        this.onUpdate(function () {
             this.render();
         });
     };
