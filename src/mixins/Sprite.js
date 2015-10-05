@@ -10,10 +10,17 @@ mixins.Sprite = function (spriteSheetData) {
     this.isSprite = true;
 
     this.onInit(function () {
+        this.cacheSprite = false;
         this.sprite = new createjs.Sprite(new createjs.SpriteSheet(spriteSheetData));
         this.sprite.scaleX = this.sprite.scaleY = 2;
         this.addDisplayObject(this.sprite);
         this._currentSpriteState = "idle";
+    });
+
+    this.onRender(function() {
+        if(this.cacheSprite) {
+            this.sprite.cache(-50,-100,100, 200);
+        }
     });
 
     //@TODO Make private after removing all uses
@@ -33,5 +40,23 @@ mixins.Sprite = function (spriteSheetData) {
                 }
             }
         })
-    }
+    };
+
+    this.blink = function() {
+        this.cacheSprite = true;
+        var that = this;
+        (function b(i) {
+            var m = 1 - i * 0.1;
+            var p = i * 255 / 10;
+            that.sprite.filters = [
+                new createjs.ColorFilter(m,m,m,1,p,0,0,0)
+            ];
+            if (i > 0) {
+                window.setTimeout(b, 20, --i)
+            } else {
+                that.sprite.filters = [];
+                that.cacheSprite = false;
+            }
+        })(10);
+    };
 };

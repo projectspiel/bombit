@@ -85,6 +85,7 @@ entities.Zombie.prototype.die = function () {
 entities.Zombie.prototype.takeDamage = function () {
     if (this.health > 0) {
         this.health--;
+        this.blink();
         if (this.health == 0) {
             this.die();
         }
