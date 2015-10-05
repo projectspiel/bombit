@@ -10,16 +10,16 @@ mixins.Sprite = function (spriteSheetData) {
     this.isSprite = true;
 
     this.onInit(function () {
-        this.cacheSprite = false;
+        this.isCached = false;
         this.sprite = new createjs.Sprite(new createjs.SpriteSheet(spriteSheetData));
         this.sprite.scaleX = this.sprite.scaleY = 2;
         this.addDisplayObject(this.sprite);
         this._currentSpriteState = "idle";
     });
 
-    this.onRender(function() {
-        if(this.cacheSprite) {
-            this.sprite.cache(-50,-100,100, 200);
+    this.onRender(function () {
+        if (this.isCached) {
+            this.sprite.cache(-50, -100, 100, 200);
         }
     });
 
@@ -31,7 +31,7 @@ mixins.Sprite = function (spriteSheetData) {
         }
     };
 
-    this.onAnimationEnd = function(animationNames, callback) {
+    this.onAnimationEnd = function (animationNames, callback) {
         var that = this;
         this.sprite.addEventListener("animationend", function(event) {
             for (var i = 0; i < animationNames.length; i++) {
@@ -42,20 +42,24 @@ mixins.Sprite = function (spriteSheetData) {
         })
     };
 
-    this.blink = function() {
-        this.cacheSprite = true;
+    this.blink = function () {
+        this.isCached = true;
+
         var that = this;
         (function b(i) {
             var m = 1 - i * 0.1;
             var p = i * 255 / 10;
+
             that.sprite.filters = [
-                new createjs.ColorFilter(m,m,m,1,p,0,0,0)
+                new createjs.ColorFilter(m, m, m, 1, p, 0, 0, 0)
             ];
+
             if (i > 0) {
-                window.setTimeout(b, 20, --i)
+                window.setTimeout(b, 15, --i);
             } else {
                 that.sprite.filters = [];
-                that.cacheSprite = false;
+                that.isCached = false;
+                that.sprite.uncache();
             }
         })(10);
     };
