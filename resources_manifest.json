@@ -11,6 +11,9 @@
         {"src":"img/grass4.png", "id":"grassImage4"},
         {"src":"img/grass5.png", "id":"grassImage5"},
         {"src":"img/grass6.png", "id":"grassImage6"},
-        {"src":"snd/menu.ogg", "id":"menuSound"}
+        {"src":"snd/menu.ogg", "id":"menuSound"},
+        {"src":"snd/hit1.ogg", "id":"zombieHitSound1"},
+        {"src":"snd/hit2.ogg", "id":"zombieHitSound2"},
+        {"src":"snd/throw.ogg", "id":"ballThrowSound"}
     ]
 }

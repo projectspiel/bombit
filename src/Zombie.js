@@ -86,6 +86,10 @@ entities.Zombie.prototype.takeDamage = function () {
     if (this.health > 0) {
         this.health--;
         this.blink();
+
+        var hitSounds = ["zombieHitSound1", "zombieHitSound2"];
+        createjs.Sound.play(hitSounds[Math.floor(Math.random() * hitSounds.length)]);
+
         if (this.health == 0) {
             this.die();
         }

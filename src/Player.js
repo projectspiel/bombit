@@ -120,6 +120,8 @@ entities.Player.prototype.throwBall = function () {
     });
     world.addEntity(ball);
 
+    createjs.Sound.play("ballThrowSound");
+
     this.removeDisplayObject(this.ballSprite);
     this.hasBall = false;
 };
