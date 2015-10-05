@@ -6,7 +6,7 @@ var World = function (canvas) {
     this.initLevel();
     this.initPlayer();
     this.initDog();
-    this.addBall(400, 500, 400);
+    this.initBall();
 };
 
 World.prototype = {
@@ -94,15 +94,20 @@ World.prototype = {
     initDog: function () {
         var dog = new entities.Dog({
             position: {
-                x: 600,
-                y: 800
+                x: this._stage.canvas.width / 2 + 200,
+                y: this._stage.canvas.height / 2 + 100
             }
         });
         this.addEntity(dog);
     },
 
-    addBall: function (x, y, z) {
-        var ball = new entities.Ball({position: {x: x, y: y, z: z}});
+    initBall: function () {
+        var ball = new entities.Ball({
+            position: {
+                x: this._stage.canvas.width / 2 - 20,
+                y: this._stage.canvas.height / 2 + 50
+            }
+        });
         this.addEntity(ball);
     },
 
