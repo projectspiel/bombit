@@ -28,7 +28,7 @@ entities.Zombie = new entities.Entity({
     physical: {
         friction: 20,
         mass: 1,
-        inputForce: 500
+        inputForce: 1000
     },
     collidable: {
         collisionCallback: function (collision, entity) {
@@ -52,6 +52,7 @@ entities.Zombie.prototype.onInit(function () {
     this.hasDog = false;
     this.health = 3;
     this.onDieCallbacks = [];
+    this.onDie( () => this.greyOut() );
 
     this.setInputSource(new inputSources.EnemyInput(this));
     this.animationController = new ZombieAnimationController(this);
@@ -90,7 +91,7 @@ entities.Zombie.prototype.takeDamage = function () {
         var hitSounds = ["zombieHitSound1", "zombieHitSound2"];
         createjs.Sound.play(hitSounds[Math.floor(Math.random() * hitSounds.length)]);
 
-        if (this.health == 0) {
+        if (this.health === 0) {
             this.die();
         }
     }

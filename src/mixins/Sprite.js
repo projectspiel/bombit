@@ -18,7 +18,7 @@ mixins.Sprite = function (spriteSheetData) {
     });
 
     this.onRender(function () {
-        if (this.isCached) {
+        if (this.sprite.filters && this.sprite.filters.length > 0) {
             this.sprite.cache(-50, -100, 100, 200);
         }
     });
@@ -39,28 +39,30 @@ mixins.Sprite = function (spriteSheetData) {
                     callback.apply(that);
                 }
             }
-        })
+        });
     };
 
     this.blink = function () {
-        this.isCached = true;
-
         var that = this;
         (function b(i) {
             var m = 1 - i * 0.1;
             var p = i * 255 / 10;
 
-            that.sprite.filters = [
-                new createjs.ColorFilter(m, m, m, 1, p, 0, 0, 0)
-            ];
+            that.setFilter('blink', new createjs.ColorFilter(m, m, m, 1, p, 0, 0, 0));
 
             if (i > 0) {
                 window.setTimeout(b, 15, --i);
             } else {
-                that.sprite.filters = [];
-                that.isCached = false;
+                that.removeFilter('blink');
                 that.sprite.uncache();
             }
         })(10);
     };
+
+    this.greyOut = function() {
+        var matrix = new createjs.ColorMatrix().adjustSaturation(-128);
+        var filter = new createjs.ColorMatrixFilter(matrix);
+        this.setFilter('greyed', filter);
+    };
+
 };

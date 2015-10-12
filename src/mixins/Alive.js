@@ -24,7 +24,7 @@ mixins.Alive = function () {
         }
 
         if (this.animationController !== undefined) {
-            this.animationController.update(input.force)
+            this.animationController.update(input.force);
         }
     };
 
