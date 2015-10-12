@@ -4,7 +4,7 @@ inputSources.WanderInput = function (entity, options) {
     var wanderTo = null,
         framesToWait = 0;
 
-    if (!options.minWait || !options.maxWait || !options.range) {
+    if (typeof options.minWait === "undefined" || typeof options.maxWait === "undefined" || typeof options.range === "undefined") {
         log("WanderInput options not properly set");
     }
 
