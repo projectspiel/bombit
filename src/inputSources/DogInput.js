@@ -1,32 +1,22 @@
 var inputSources = inputSources || {};
 
 inputSources.DogInput = function (entity) {
-    var state = "idle",
+    var state = "wander",
         that = this,
         wanderInput = new inputSources.WanderInput(entity),
         stateHandlers = {
-            idle: function () {
-                var ball = world.findEntityByType(entities.Ball);
-                if (ball && ball.vel.modulo() > 1) {
-                    that.setState("getBall");
-                } else {
-                    return wanderInput.getCurrentInput();
-                }
+            wander: function () {
+                return wanderInput.getCurrentInput();
             },
             getBall: function () {
-                var ball = world.findEntityByType(entities.Ball);
-                if (ball) {
-                    return {
-                        force: entity.pos.vectorTo(ball.pos).normalize()
-                    };
-                } else {
-                    that.setState("idle");
-                }
+                var ball = that.findBall();
+                return {
+                    force: entity.pos.vectorTo(ball.pos).normalize()
+                };
             },
             returnBall: function () {
-                var player = world.findEntityByType(entities.Player);
+                var player = that.findPlayer();
                 if (entity.pos.distanceTo(player.pos) < 100) {
-                    that.setState("idle");
                     return { action: inputSources.DogInput.actions.dropBall };
                 }
                 return { force: entity.pos.vectorTo(player.pos).normalize() };
@@ -38,14 +28,39 @@ inputSources.DogInput = function (entity) {
         return stateHandlers[state]();
     };
 
+    this.findBall = function () {
+        return world.findEntityByType(entities.Ball);
+    };
+
+    this.findPlayer = function () {
+        return world.findEntityByType(entities.Player);
+    };
+
     this.updateState = function () {
         if (state !== "returnBall" && entity.hasBall) {
             this.setState("returnBall");
         }
+
+        if (state === "returnBall" && !entity.hasBall) {
+            this.setState("wander");
+        }
+
+        if (state === "wander") {
+            var ball = this.findBall();
+            if (ball && ball.vel.modulo() > 1) {
+                that.setState("getBall");
+            }
+        }
+
+        if (state === "getBall") {
+            if (!this.findBall()) {
+                that.setState("wander");
+            }
+        }
     };
 
     this.setState = function (newState) {
-        if (newState === "idle") {
+        if (newState === "wander") {
             wanderInput.reset();
         }
         if (stateHandlers[state]) {
