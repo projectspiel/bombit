@@ -85,10 +85,17 @@ World.prototype = {
 
     initLevel: function () {
         this.initBackground();
-        var that = this;
-        new LevelController(this._stage).start(function (zombie) {
-            that.addEntity(zombie);
+
+        var levelController = new LevelController({
+            stage: this._stage,
+            addEntityCallback: (entity) => {
+                this.addEntity(entity);
+            },
+            removeEntityCallback: (entity) => {
+                this.removeEntity(entity)
+            }
         });
+        levelController.start();
     },
 
     initDog: function () {

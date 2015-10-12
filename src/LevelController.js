@@ -1,11 +1,14 @@
-var LevelController = function (stage) {
+var LevelController = function (config) {
+
+    if (!config.stage || !config.addEntityCallback || !config.removeEntityCallback) {
+        log("LevelController config not properly set");
+    }
 
     var currentWave = 0,
-        newZombieCallback,
         currentWaveZombieCount,
         that = this;
 
-    stage.addChild(Score.getDisplayObject());
+    config.stage.addChild(Score.getDisplayObject());
 
     this.generateZombie = function () {
         var position = this.randomStartupPosition(),
@@ -13,10 +16,22 @@ var LevelController = function (stage) {
                 position: position
             });
 
-        zombie.onDie(function () {
+        zombie.onDie(() => {
             currentWaveZombieCount--;
             if (currentWaveZombieCount == 0) {
                 that.nextWave();
+            }
+        });
+
+        zombie.onUpdate(() => {
+            if (!zombie.isOutOfScreen()) {
+                return;
+            }
+
+            if (zombie.hasDog) {
+                that.gameOver();
+            } else if (zombie.isDead) {
+                config.removeEntityCallback(zombie);
             }
         });
 
@@ -45,7 +60,7 @@ var LevelController = function (stage) {
     this.newWave = function () {
         for (var i = 0; i < currentWaveZombieCount; i++) {
             window.setTimeout(function () {
-                newZombieCallback(that.generateZombie());
+                config.addEntityCallback(that.generateZombie());
             }, Math.random() * 5000 * currentWaveZombieCount)
         }
     };
@@ -57,9 +72,12 @@ var LevelController = function (stage) {
         this.newWave();
     };
 
+    this.gameOver = function () {
+        log("Game Over!");
+    };
+
     return {
-        start: function (callback) {
-            newZombieCallback = callback;
+        start: function () {
             that.nextWave();
         }
     };

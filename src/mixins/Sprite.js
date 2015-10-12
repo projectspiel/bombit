@@ -29,6 +29,11 @@ mixins.Sprite = function (spriteSheetData) {
         }
     });
 
+    this.isOutOfScreen = function () {
+        // @todo Fill me in!
+        return false;
+    };
+
     this.gotoAndPlay = function (state) {
         if (this._currentSpriteState !== state) {
             this.sprite.gotoAndPlay(state);
