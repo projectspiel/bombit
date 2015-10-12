@@ -52,7 +52,7 @@ entities.Zombie.prototype.onInit(function () {
     this.hasDog = false;
     this.health = 3;
     this.onDieCallbacks = [];
-    this.onDie( () => this.greyOut() );
+    this.onDie(() => this.greyOut());
 
     this.setInputSource(new inputSources.EnemyInput(this));
     this.animationController = new ZombieAnimationController(this);
