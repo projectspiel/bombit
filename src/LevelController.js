@@ -14,8 +14,8 @@ var LevelController = function (stage) {
             });
 
         zombie.onDie(function () {
-            that.currentWaveZombieCount--;
-            if (that.currentWaveZombieCount == 0) {
+            currentWaveZombieCount--;
+            if (currentWaveZombieCount == 0) {
                 that.nextWave();
             }
         });
@@ -54,6 +54,7 @@ var LevelController = function (stage) {
         Score.increment();
         currentWave++;
         currentWaveZombieCount = this.getZombieCount(currentWave);
+        log(currentWaveZombieCount);
         this.newWave();
     };
 
