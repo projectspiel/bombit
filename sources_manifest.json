@@ -4,7 +4,6 @@
         {"src":"Vector.js", "id":"vector"},
         {"src":"Entity.js", "id":"Entity"},
         {"src":"mixins/Sprite.js", "id":"Sprite"},
-        {"src":"mixins/HasFilters.js", "id":"HasFilters"},
         {"src":"mixins/Updateable.js", "id":"Updateable"},
         {"src":"mixins/Simulable.js", "id":"Simulable"},
         {"src":"mixins/Positionable.js", "id":"Positionable"},

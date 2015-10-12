@@ -52,7 +52,6 @@ entities.Entity = function (entitySpec) {
         includeMixin(mixins.Positionable).
         includeMixin(mixins.Renderable).
         includeMixin(mixins.Sprite, entitySpec.sprite).
-        includeMixin(mixins.HasFilters).
         includeMixin(mixins.Physical, entitySpec.physical);
 
     if (entitySpec.collidable !== undefined) {

@@ -4,14 +4,16 @@ mixins.Sprite = function (spriteSheetData) {
     if (!this.isInitializable || !this.isRenderable) {
         throw "Dependencies not met";
     }
+
     if (this.isSprite === true) {
         return;
     }
+
     this.isSprite = true;
 
     this.onInit(function () {
-        this.isCached = false;
         this.sprite = new createjs.Sprite(new createjs.SpriteSheet(spriteSheetData));
+        this.sprite.filters = [];
         this.sprite.scaleX = this.sprite.scaleY = 2;
         this.addDisplayObject(this.sprite);
         this._currentSpriteState = "idle";
@@ -29,6 +31,20 @@ mixins.Sprite = function (spriteSheetData) {
             this.sprite.gotoAndPlay(state);
             this._currentSpriteState = state;
         }
+    };
+
+    this.setFilter = function (name, filter) {
+        filter.name = name;
+        this.removeFilter(name);
+        this.sprite.filters.push(filter);
+    };
+
+    this.removeFilter = function (name) {
+        this.sprite.filters.forEach((filter, index) => {
+            if (filter.name === name) {
+                this.sprite.filters.splice(index, 1);
+            }
+        });
     };
 
     this.onAnimationEnd = function (animationNames, callback) {
@@ -64,5 +80,4 @@ mixins.Sprite = function (spriteSheetData) {
         var filter = new createjs.ColorMatrixFilter(matrix);
         this.setFilter("greyed", filter);
     };
-
 };
