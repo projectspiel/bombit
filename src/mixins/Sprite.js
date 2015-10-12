@@ -17,15 +17,18 @@ mixins.Sprite = function (spriteSheetData) {
         this.sprite.scaleX = this.sprite.scaleY = 2;
         this.addDisplayObject(this.sprite);
         this._currentSpriteState = "idle";
+        this._bounds = {
+            width: this.sprite.getBounds().width,
+            height: this.sprite.getBounds().height
+        };
     });
 
     this.onRender(function () {
         if (this.sprite.filters && this.sprite.filters.length > 0) {
-            this.sprite.cache(-50, -100, 100, 200);
+            this.sprite.cache(-this._bounds.width / 2, -this._bounds.height, this._bounds.width, this._bounds.height);
         }
     });
 
-    //@TODO Make private after removing all uses
     this.gotoAndPlay = function (state) {
         if (this._currentSpriteState !== state) {
             this.sprite.gotoAndPlay(state);
