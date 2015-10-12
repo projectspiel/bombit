@@ -50,6 +50,7 @@ entities.Zombie = new entities.Entity({
 
 entities.Zombie.prototype.onInit(function () {
     this.hasDog = false;
+    this.isDead = false;
     this.health = 3;
     this.onDieCallbacks = [];
     this.onDie(this.greyOut.bind(this));
@@ -78,6 +79,7 @@ entities.Zombie.prototype.onDie = function (callback) {
 };
 
 entities.Zombie.prototype.die = function () {
+    this.isDead = true;
     for (var i = 0; i < this.onDieCallbacks.length; i++) {
         this.onDieCallbacks[i].apply(this);
     }
