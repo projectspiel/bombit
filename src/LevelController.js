@@ -54,7 +54,6 @@ var LevelController = function (stage) {
         Score.increment();
         currentWave++;
         currentWaveZombieCount = this.getZombieCount(currentWave);
-        log(currentWaveZombieCount);
         this.newWave();
     };
 

@@ -2,11 +2,10 @@ var inputSources = inputSources || {};
 
 inputSources.EnemyInput = function (entity) {
     var state = "getDog",
+        wanderInput = new inputSources.WanderInput(entity, {minWait: 0, maxWait: 0, range: 150}),
         stateHandlers = {
             wander: function () {
-                return {
-                  force: new bombit.Vector(0, 0)
-                };
+                return wanderInput.getCurrentInput();
             },
             escape: function () {
                 return {
@@ -34,6 +33,10 @@ inputSources.EnemyInput = function (entity) {
         that = this;
 
     this.setState = function (newState) {
+        if (newState === "wander") {
+            wanderInput.reset();
+        }
+
         if (stateHandlers[state]) {
             state = newState;
         } else {

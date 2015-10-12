@@ -3,7 +3,7 @@ var inputSources = inputSources || {};
 inputSources.DogInput = function (entity) {
     var state = "wander",
         that = this,
-        wanderInput = new inputSources.WanderInput(entity),
+        wanderInput = new inputSources.WanderInput(entity, {minWait: 30, maxWait: 200, range: 200}),
         stateHandlers = {
             wander: function () {
                 return wanderInput.getCurrentInput();

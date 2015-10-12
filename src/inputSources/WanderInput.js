@@ -1,20 +1,24 @@
 var inputSources = inputSources || {};
 
-inputSources.WanderInput = function (entity) {
+inputSources.WanderInput = function (entity, options) {
     var wanderTo = null,
-        stepsToWait = 0;
+        framesToWait = 0;
+
+    if (!options.minWait || !options.maxWait || !options.range) {
+        log("WanderInput options not properly set");
+    }
 
     this.getCurrentInput = function () {
-        return (stepsToWait > 0) ? this.wait() : this.wander();
+        return (framesToWait > 0) ? this.wait() : this.wander();
     };
 
     this.reset = function () {
         wanderTo = null;
-        stepsToWait = 0;
+        framesToWait = 0;
     };
 
     this.wait = function () {
-        stepsToWait--;
+        framesToWait--;
         return {
             force: new bombit.Vector()
         };
@@ -27,22 +31,22 @@ inputSources.WanderInput = function (entity) {
 
         if (closeToTarget()) {
             wanderTo = null;
-            stepsToWait = this.randomIntegerBetween(30, 100);
-            return this.wait();
+            framesToWait = this.getRandomIntegerBetween(options.minWait, options.maxWait);
+            return this.getCurrentInput();
         } else {
             return { force: entity.pos.vectorTo(wanderTo).normalize().scalar(0.5) };
         }
     };
 
-    this.randomIntegerBetween = function (min, max) {
+    this.getRandomIntegerBetween = function (min, max) {
         return Math.random() * (max - min) + min;
     };
 
     this.newWanderToVector = function () {
       var vector = entity.pos.clone().add(
           new bombit.Vector(
-            this.randomIntegerBetween(-200, 200),
-            this.randomIntegerBetween(-200, 200)
+            this.getRandomIntegerBetween(-options.range, options.range),
+            this.getRandomIntegerBetween(-options.range, options.range)
           )
       );
 
