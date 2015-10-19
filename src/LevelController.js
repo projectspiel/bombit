@@ -79,6 +79,7 @@ var LevelController = function (config) {
     return {
         start: function () {
             that.nextWave();
+            createjs.Sound.play("menuSound");
         }
     };
 };

@@ -45,11 +45,36 @@ World.prototype = {
     },
 
     start: function () {
-        createjs.Ticker.addEventListener("tick", this.simulate.bind(this));
-        createjs.Ticker.addEventListener("tick", this.update.bind(this));
-        createjs.Ticker.setFPS(30);
+      this.addTickerListeners();
+      this.showSplash();
+    },
 
-        createjs.Sound.play("menuSound");
+    showSplash: function () {
+        var splashMessage = new createjs.Text("Pichicho Defender", "48px MineCrafter", "#222222");
+        splashMessage.name = "splashMessage";
+        splashMessage.x = CANVAS_WIDTH / 2 - splashMessage.getBounds().width / 2;
+        splashMessage.y = CANVAS_HEIGHT / 2 - splashMessage.getBounds().height / 2;
+        splashMessage.zindex = 1000;
+        this._stage.addChild(splashMessage);
+        this._stage.update();
+        var keyupCallback = (e) => {
+            if (e.keyCode === 13) {
+                this.startLevel();
+                document.removeEventListener("keyup", keyupCallback);
+                this._stage.removeChild(splashMessage);
+            }
+        };
+        document.addEventListener("keyup", keyupCallback);
+    },
+
+    startLevel: function () {
+        this.levelController.start();
+    },
+
+    addTickerListeners: function () {
+      createjs.Ticker.addEventListener("tick", this.simulate.bind(this));
+      createjs.Ticker.addEventListener("tick", this.update.bind(this));
+      createjs.Ticker.setFPS(30);
     },
 
     addEntity: function (entity) {
@@ -79,14 +104,13 @@ World.prototype = {
                 y: this._stage.canvas.height / 2
             }
         });
-
         this.addEntity(player);
     },
 
     initLevel: function () {
         this.initBackground();
 
-        var levelController = new LevelController({
+        this.levelController = new LevelController({
             stage: this._stage,
             addEntityCallback: (entity) => {
                 this.addEntity(entity);
@@ -95,7 +119,6 @@ World.prototype = {
                 this.removeEntity(entity)
             }
         });
-        levelController.start();
     },
 
     initDog: function () {
