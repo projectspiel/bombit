@@ -31,7 +31,14 @@ mixins.Sprite = function (spriteSheetData) {
 
     this.isOutOfScreen = function () {
         // @todo Fill me in!
-        return false;
+        var height = MAP_HEIGHT;
+        var width = MAP_WIDTH;
+        var offset = 50;
+
+        return (this.pos.x > width + offset ||
+                this.pos.y > height + offset ||
+                this.pos.x < -offset ||
+                this.pos.y < -offset);
     };
 
     this.gotoAndPlay = function (state) {
