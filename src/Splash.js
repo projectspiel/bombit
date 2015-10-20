@@ -5,20 +5,23 @@ var Splash = function (config) {
 
     var splashMessage = createSplashMessage(),
         shown = false,
-        onHideCallback;
+        promiseCallback;
 
     addEventListener();
 
-    function show(callback) {
+    function start() {
         config.stage.addChild(splashMessage);
-        onHideCallback = callback;
         shown = true;
+
+        return new Promise((resolve, reject) => {
+            promiseCallback = resolve;
+        });
     };
 
     function hide() {
         if (!shown) { return; }
         config.stage.removeChild(splashMessage);
-        onHideCallback && onHideCallback();
+        promiseCallback && promiseCallback();
         shown = false;
     }
 
@@ -41,7 +44,6 @@ var Splash = function (config) {
     }
 
     return {
-        show: show,
-        hide: hide
+        start: start,
     };
 };

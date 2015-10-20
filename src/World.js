@@ -47,7 +47,7 @@ World.prototype = {
 
     start: function () {
         this.addTickerListeners();
-        this.splash.show(() => { this.startLevel(); });
+        this.splash.start().then(() => { this.startLevel(); });
     },
 
     startLevel: function () {
