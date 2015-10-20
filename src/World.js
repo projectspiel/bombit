@@ -7,6 +7,7 @@ var World = function (canvas) {
     this.initPlayer();
     this.initDog();
     this.initBall();
+    this.initSplash();
 };
 
 World.prototype = {
@@ -45,26 +46,8 @@ World.prototype = {
     },
 
     start: function () {
-      this.addTickerListeners();
-      this.showSplash();
-    },
-
-    showSplash: function () {
-        var splashMessage = new createjs.Text("Pichicho Defender", "48px MineCrafter", "#222222");
-        splashMessage.name = "splashMessage";
-        splashMessage.x = CANVAS_WIDTH / 2 - splashMessage.getBounds().width / 2;
-        splashMessage.y = CANVAS_HEIGHT / 2 - splashMessage.getBounds().height / 2;
-        splashMessage.zindex = 1000;
-        this._stage.addChild(splashMessage);
-        this._stage.update();
-        var keyupCallback = (e) => {
-            if (e.keyCode === 13) {
-                this.startLevel();
-                document.removeEventListener("keyup", keyupCallback);
-                this._stage.removeChild(splashMessage);
-            }
-        };
-        document.addEventListener("keyup", keyupCallback);
+        this.addTickerListeners();
+        this.splash.show(() => { this.startLevel(); });
     },
 
     startLevel: function () {
@@ -171,6 +154,11 @@ World.prototype = {
             }
         }
     },
+
+    initSplash: function () {
+        this.splash = new Splash({ stage: this._stage });
+    },
+
 
     findEntityByType: function (type) {
         for (var i = 0; i < this._entities.length; i++) {
