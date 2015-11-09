@@ -29,6 +29,7 @@
         {"src":"Dog.js", "id":"dog"},
         {"src":"Score.js", "id":"Score"},
         {"src":"LevelController.js", "id":"LevelController"},
-        {"src":"Splash.js", "id":"Splash"}
+        {"src":"Splash.js", "id":"Splash"},
+        {"src":"GameOver.js", "id":"GameOver"}
     ]
 }

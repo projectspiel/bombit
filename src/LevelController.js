@@ -1,6 +1,6 @@
 var LevelController = function (config) {
 
-    if (!config.stage || !config.addEntityCallback || !config.removeEntityCallback) {
+    if (!config.stage || !config.addEntityCallback || !config.removeEntityCallback || !config.gameOverCallback) {
         log("LevelController config not properly set");
     }
 
@@ -30,6 +30,7 @@ var LevelController = function (config) {
 
             if (zombie.hasDog) {
                 that.gameOver();
+                debugger;
             } else if (zombie.isDead) {
                 config.removeEntityCallback(zombie);
             }
@@ -73,11 +74,18 @@ var LevelController = function (config) {
     };
 
     this.gameOver = function () {
-        log("Game Over!");
+        var zombie = null;
+        while (zombie = world.findEntityByType(entities.Zombie)) {
+            config.removeEntityCallback(zombie);
+        }
+
+        config.gameOverCallback();
     };
 
     return {
         start: function () {
+            currentWave = 0;
+
             that.nextWave();
             createjs.Sound.play("menuSound");
         }

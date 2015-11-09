@@ -8,6 +8,9 @@ var World = function (canvas) {
     this.initDog();
     this.initBall();
     this.initSplash();
+    this.initGameOver();
+
+    this.addTickerListeners();
 };
 
 World.prototype = {
@@ -46,7 +49,6 @@ World.prototype = {
     },
 
     start: function () {
-        this.addTickerListeners();
         this.splash.start().then(() => { this.startLevel(); });
     },
 
@@ -55,9 +57,9 @@ World.prototype = {
     },
 
     addTickerListeners: function () {
-      createjs.Ticker.addEventListener("tick", this.simulate.bind(this));
-      createjs.Ticker.addEventListener("tick", this.update.bind(this));
-      createjs.Ticker.setFPS(30);
+        createjs.Ticker.addEventListener("tick", this.simulate.bind(this));
+        createjs.Ticker.addEventListener("tick", this.update.bind(this));
+        createjs.Ticker.setFPS(30);
     },
 
     addEntity: function (entity) {
@@ -95,7 +97,13 @@ World.prototype = {
 
         this.levelController = new LevelController({
             stage: this._stage,
+            gameOverCallback: () => {
+                this.gameOver.show().then(() => {
+                    this.reset();
+                })
+            },
             addEntityCallback: (entity) => {
+                console.log(entity);
                 this.addEntity(entity);
             },
             removeEntityCallback: (entity) => {
@@ -159,6 +167,9 @@ World.prototype = {
         this.splash = new Splash({ stage: this._stage });
     },
 
+    initGameOver: function () {
+        this.gameOver = new GameOver({ stage: this._stage });
+    },
 
     findEntityByType: function (type) {
         for (var i = 0; i < this._entities.length; i++) {
@@ -166,6 +177,22 @@ World.prototype = {
                 return this._entities[i];
             }
         }
+        return null;
+    },
+
+    countZombies: function () {
+        var count = 0;
+        for (var i = 0; i < this._entities.length; i++) {
+            if (this._entities[i] instanceof entities.Zombie) {
+                count++;
+            }
+        }
+        return count;
+    },
+
+    reset: function () {
+        this.initDog();
+        this.start();
     },
 
     pause: function () {

@@ -16,7 +16,7 @@ var Splash = function (config) {
         return new Promise((resolve, reject) => {
             promiseCallback = resolve;
         });
-    };
+    }
 
     function hide() {
         if (!shown) { return; }
@@ -44,6 +44,6 @@ var Splash = function (config) {
     }
 
     return {
-        start: start,
+        start: start
     };
 };
