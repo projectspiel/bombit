@@ -59,7 +59,8 @@ World.prototype = {
     addTickerListeners: function () {
         createjs.Ticker.addEventListener("tick", this.simulate.bind(this));
         createjs.Ticker.addEventListener("tick", this.update.bind(this));
-        createjs.Ticker.setFPS(30);
+        createjs.Ticker.addEventListener("tick", this.levelController.tick);
+        createjs.Ticker.setFPS(FRAME_RATE);
     },
 
     addEntity: function (entity) {

@@ -28,7 +28,7 @@ entities.Zombie = new entities.Entity({
     physical: {
         friction: 20,
         mass: 1,
-        inputForce: 5000
+        inputForce: 1000
     },
     collidable: {
         collisionCallback: function (collision, entity) {
@@ -102,4 +102,3 @@ entities.Zombie.prototype.takeDamage = function () {
 entities.Zombie.prototype.destructor = function () {
     console.log(this);
 };
-

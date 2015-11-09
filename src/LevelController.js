@@ -6,6 +6,7 @@ var LevelController = function (config) {
 
     var currentWave = 0,
         currentWaveZombieCount,
+        currentWaveTickArray = [],
         that = this;
 
     config.stage.addChild(Score.getDisplayObject());
@@ -30,7 +31,6 @@ var LevelController = function (config) {
 
             if (zombie.hasDog) {
                 that.gameOver();
-                debugger;
             } else if (zombie.isDead) {
                 config.removeEntityCallback(zombie);
             }
@@ -54,24 +54,39 @@ var LevelController = function (config) {
         return Math.floor(Math.random() * (max - min)) + min;
     };
 
-    this.getZombieCount = function (waveNumber) {
-        return waveNumber * 2;
+    this.getZombieCount = function () {
+        return currentWave * 2;
     };
 
-    this.newWave = function () {
-        for (var i = 0; i < currentWaveZombieCount; i++) {
-            window.setTimeout(function () {
-                config.addEntityCallback(that.generateZombie());
-            }, Math.random() * 5000 * currentWaveZombieCount)
+    this.tick = (event) => {
+        if (event.paused) {
+            return;
+        }
+
+        for (var i = 0; i < currentWaveTickArray.length; i++) {
+            currentWaveTickArray[i]--;
+
+            if (currentWaveTickArray[i] <= 0) {
+                config.addEntityCallback(this.generateZombie());
+                currentWaveTickArray.shift();
+            }
         }
     };
 
     this.nextWave = function () {
         Score.increment();
         currentWave++;
-        currentWaveZombieCount = this.getZombieCount(currentWave);
-        this.newWave();
+        currentWaveZombieCount = this.getZombieCount();
+        currentWaveTickArray = this.generateTickArray(currentWaveZombieCount);
     };
+
+    this.generateTickArray = function (count) {
+        var res = [];
+        for (var i = 0; i < count; i++) {
+            res.push(Math.floor(Math.random() * 149));
+        }
+        return res;
+    }
 
     this.gameOver = function () {
         var zombie = null;
@@ -84,10 +99,11 @@ var LevelController = function (config) {
 
     return {
         start: function () {
-            currentWave = 0;
+            that.currentWave = 0;
 
             that.nextWave();
             createjs.Sound.play("menuSound");
-        }
+        },
+        tick: this.tick
     };
 };
