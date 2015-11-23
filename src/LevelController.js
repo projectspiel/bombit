@@ -86,7 +86,7 @@ var LevelController = function (config) {
             res.push(Math.floor(Math.random() * 149));
         }
         return res;
-    }
+    };
 
     this.gameOver = function () {
         var zombie = null;

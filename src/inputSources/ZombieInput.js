@@ -1,26 +1,32 @@
 var inputSources = inputSources || {};
 
-inputSources.EnemyInput = function (entity) {
+inputSources.ZombieInput = function (entity, stopFrames) {
+    if (!entity || !stopFrames) {
+        throw "ZombieInput parameter missing.";
+    }
+
     var state = "getDog",
         wanderInput = new inputSources.WanderInput(entity, {minWait: 0, maxWait: 0, range: 150}),
         stateHandlers = {
-            wander: function () {
-                return wanderInput.getCurrentInput();
-            },
-            escape: function () {
+            wander: () => {
                 return {
-                    force: vectorToClosestEdge()
+                    force: wanderInput.getCurrentInput().force.scalar(this.getForceMultiplier())
                 };
             },
-            runAway: function () {
+            stealDog: () => {
+                return {
+                    force: vectorToClosestEdge().scalar(this.getForceMultiplier())
+                };
+            },
+            runAway: () => {
                 return {
                     action: entity.hasDog ? "dropDog" : undefined,
-                    force: vectorToClosestEdge()
+                    force: vectorToClosestEdge().scalar(this.getForceMultiplier())
                 };
             },
-            getDog: function () {
+            getDog: () => {
                 return {
-                    force: vectorToDog()
+                    force: vectorToDog().scalar(this.getForceMultiplier())
                 };
             }
         },
@@ -31,6 +37,14 @@ inputSources.EnemyInput = function (entity) {
             bottom: new bombit.Vector(0, 1)
         },
         that = this;
+
+    this.getForceMultiplier = function () {
+        if (stopFrames.indexOf(entity.sprite.currentFrame) >= 0) {
+            return 0.01;
+        } else {
+            return 1;
+        }
+    };
 
     this.setState = function (newState) {
         if (newState === "wander") {
@@ -86,7 +100,7 @@ inputSources.EnemyInput = function (entity) {
 
         if (state === "getDog") {
             if (entity.hasDog) {
-                that.setState("escape");
+                that.setState("stealDog");
             } else if (!findDog()) {
                 that.setState("wander");
             }
@@ -100,6 +114,6 @@ inputSources.EnemyInput = function (entity) {
     }
 };
 
-inputSources.EnemyInput.actions = {
+inputSources.ZombieInput.actions = {
     dropDog: "dropDog"
 };

@@ -16,7 +16,7 @@
         {"src":"mixins/Debuggable.js", "id":"Debuggable"},
         {"src":"inputSources/PlayerInput.js", "id":"PlayerInput"},
         {"src":"inputSources/Null.js", "id":"NullInputSource"},
-        {"src":"inputSources/EnemyInput.js", "id":"EnemyInput"},
+        {"src":"inputSources/ZombieInput.js", "id":"ZombieInput"},
         {"src":"inputSources/DogInput.js", "id":"DogInput"},
         {"src":"inputSources/WanderInput.js", "id":"WanderInput"},
         {"src":"animationControllers/PlayerAnimationController.js", "id":"PlayerAnimationController"},

@@ -104,7 +104,6 @@ World.prototype = {
                 })
             },
             addEntityCallback: (entity) => {
-                console.log(entity);
                 this.addEntity(entity);
             },
             removeEntityCallback: (entity) => {
@@ -179,16 +178,6 @@ World.prototype = {
             }
         }
         return null;
-    },
-
-    countZombies: function () {
-        var count = 0;
-        for (var i = 0; i < this._entities.length; i++) {
-            if (this._entities[i] instanceof entities.Zombie) {
-                count++;
-            }
-        }
-        return count;
     },
 
     reset: function () {
