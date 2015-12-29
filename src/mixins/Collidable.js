@@ -5,6 +5,10 @@ mixins.Collidable = function (options) {
         throw "Dependencies not met";
     }
 
+    if (options.collisionCallback === undefined) {
+        console.log(this);
+    }
+
     var collisionCallback = options.collisionCallback,
         boundsCallback = options.boundsCallback,
         hitAreaRadius = options.hitAreaRadius,

@@ -13,7 +13,7 @@ var LevelController = function (config) {
 
     this.generateZombie = function () {
         var position = this.randomStartupPosition(),
-            zombie = new entities.Zombie({
+            zombie = new (this.randomZombie())({
                 position: position
             });
 
@@ -90,11 +90,15 @@ var LevelController = function (config) {
 
     this.gameOver = function () {
         var zombie = null;
-        while (zombie = world.findEntityByType(entities.Zombie)) {
+        while (zombie = (world.findEntityByType(entities.ZombieOzzo) || world.findEntityByType(entities.ZombiePibi))) {
             config.removeEntityCallback(zombie);
         }
 
         config.gameOverCallback();
+    };
+
+    this.randomZombie = function () {
+        return (Math.random() > 0.5) ? entities.ZombieOzzo : entities.ZombiePibi;
     };
 
     return {
