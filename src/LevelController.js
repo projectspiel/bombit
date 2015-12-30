@@ -19,7 +19,7 @@ var LevelController = function (config) {
 
         zombie.onDie(() => {
             currentWaveZombieCount--;
-            if (currentWaveZombieCount == 0) {
+            if (currentWaveZombieCount === 0) {
                 that.nextWave();
             }
         });
@@ -90,7 +90,7 @@ var LevelController = function (config) {
 
     this.gameOver = function () {
         var zombie = null;
-        while (zombie = (world.findEntityByType(entities.ZombieOzzo) || world.findEntityByType(entities.ZombiePibi))) {
+        while (zombie = world.findEntityByType('zombie')) {
             config.removeEntityCallback(zombie);
         }
 
@@ -98,7 +98,7 @@ var LevelController = function (config) {
     };
 
     this.randomZombie = function () {
-        return (Math.random() > 0.5) ? entities.ZombieOzzo : entities.ZombiePibi;
+        return (Math.random() > 0.5) ? entities.zombieOzzo : entities.zombiePibi;
     };
 
     return {

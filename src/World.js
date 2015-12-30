@@ -84,7 +84,7 @@ World.prototype = {
     },
 
     initPlayer: function () {
-        var player = new entities.Player({
+        var player = entities.player({
             position: {
                 x: this._stage.canvas.width / 2,
                 y: this._stage.canvas.height / 2
@@ -101,19 +101,19 @@ World.prototype = {
             gameOverCallback: () => {
                 this.gameOver.show().then(() => {
                     this.reset();
-                })
+                });
             },
             addEntityCallback: (entity) => {
                 this.addEntity(entity);
             },
             removeEntityCallback: (entity) => {
-                this.removeEntity(entity)
+                this.removeEntity(entity);
             }
         });
     },
 
     initDog: function () {
-        var dog = new entities.Dog({
+        var dog = entities.dog({
             position: {
                 x: this._stage.canvas.width / 2 + 200,
                 y: this._stage.canvas.height / 2 + 100
@@ -123,7 +123,7 @@ World.prototype = {
     },
 
     initBall: function () {
-        var ball = new entities.Ball({
+        var ball = entities.ball({
             position: {
                 x: this._stage.canvas.width / 2 - 20,
                 y: this._stage.canvas.height / 2 + 50
@@ -173,7 +173,7 @@ World.prototype = {
 
     findEntityByType: function (type) {
         for (var i = 0; i < this._entities.length; i++) {
-            if (this._entities[i] instanceof type) {
+            if (this._entities[i].isOfType(type)) {
                 return this._entities[i];
             }
         }

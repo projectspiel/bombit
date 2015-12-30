@@ -96,11 +96,6 @@ window.log = function () {
     }
 };
 
-Function.prototype.includeMixin = function (mixin) {
-    mixin.apply(this.prototype, Array.prototype.slice.call(arguments, 1));
-    return this;
-};
-
 String.prototype.capitalizeFirstLetter = function () {
     return this.charAt(0).toUpperCase() + this.slice(1);
 };

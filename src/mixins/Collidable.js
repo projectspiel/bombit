@@ -5,15 +5,12 @@ mixins.Collidable = function (options) {
         throw "Dependencies not met";
     }
 
-    if (options.collisionCallback === undefined) {
-        console.log(this);
-    }
-
     var collisionCallback = options.collisionCallback,
         boundsCallback = options.boundsCallback,
         hitAreaRadius = options.hitAreaRadius,
         collidables = mixins.Collidable.entities,
         response = new SAT.Response();
+
 
     this.onInit(function () {
         this.hitArea = new SAT.Circle(new SAT.Vector(this.pos.x, this.pos.y), hitAreaRadius);

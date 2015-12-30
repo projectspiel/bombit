@@ -1,70 +1,85 @@
 var entities = entities || {};
 
-/*
-how about not using "new entities.Entity" to make the constructors of the subclasses? (i.e. of Player)
-what could be a better functional pattern for this?
+entities.base = function (spec, my) {
+    my = my || {};
 
-can we have mixins declare what their instance constructor functions are, and some compositer that makes the general instance constructor?
-seems better than having this thing know about the init procedures for all the mixins it applies
+    // Workaround needed since constructors are not being used,
+    // hence instanceof is not applicable
+    my.declareType = declareType;
 
-should this really be called EntityMixinApplier?
- */
+    var entity = {
+            includeMixin: includeMixin,
+            isOfType:     isOfType
+        },
+        types = [];
 
-entities.Entity = function (entitySpec) {
-    if (entitySpec.sprite === undefined) {
-        throw "sprite can't be undefined";
-    }
-    if (entitySpec.physical === undefined) {
-        throw "physical can't be undefined";
-    }
+    validateSpec();
+    declareType('base');
 
-    var entity = function (instanceSpec) {
-        //Initializable
-        this.init();
+    includeMixin(mixins.Initializable);
+    includeMixin(mixins.Updateable);
+    includeMixin(mixins.Simulable);
+    includeMixin(mixins.Positionable, spec.position);
+    includeMixin(mixins.Renderable);
+    includeMixin(mixins.Sprite, spec.sprite);
+    includeMixin(mixins.Physical, spec.physical);
 
-        //Positionable
-        if (instanceSpec.position !== undefined) {
-            this.initPosition(
-                instanceSpec.position.x,
-                instanceSpec.position.y,
-                instanceSpec.position.z
-            );
-        }
 
-        //Physical
-        if (instanceSpec.force !== undefined) {
-            this.addInputForce(new bombit.Vector(
-                instanceSpec.force.x,
-                instanceSpec.force.y,
-                instanceSpec.force.z
-            ));
-        }
+    //Updateable
+    entity.onUpdate(function () {
+        this.render();
+    });
 
-        //Updateable
-        this.onUpdate(function () {
-            this.render();
-        });
-    };
-
-    entity.includeMixin(mixins.Initializable).
-        includeMixin(mixins.Updateable).
-        includeMixin(mixins.Simulable).
-        includeMixin(mixins.Positionable).
-        includeMixin(mixins.Renderable).
-        includeMixin(mixins.Sprite, entitySpec.sprite).
-        includeMixin(mixins.Physical, entitySpec.physical);
-
-    if (entitySpec.collidable !== undefined) {
-        entity.includeMixin(mixins.Collidable, entitySpec.collidable);
+    if (spec.collidable !== undefined) {
+        includeMixin(mixins.Collidable, spec.collidable);
     }
 
-    if (entitySpec.shadow !== undefined) {
-        entity.includeMixin(mixins.HasShadow, entitySpec.shadow.width, entitySpec.shadow.height);
+    if (spec.shadow !== undefined) {
+        includeMixin(mixins.HasShadow, spec.shadow.width, spec.shadow.height);
     }
 
-    entity.includeMixin(mixins.Alive);
+    includeMixin(mixins.Alive);
+    includeMixin(mixins.Debuggable);
 
-    entity.includeMixin(mixins.Debuggable);
+    //Initializable
+    entity.init();
+
+    //Physical
+    if (spec.force !== undefined) {
+        //TODO: move as option of Physical mixin
+        entity.addInputForce(new bombit.Vector(
+            spec.force.x,
+            spec.force.y,
+            spec.force.z
+        ));
+    }
 
     return entity;
+
+    // ----------- Functions ------------- //
+
+    function validateSpec() {
+        if (spec.sprite === undefined) {
+            throw "sprite can't be undefined";
+        }
+        if (spec.physical === undefined) {
+            throw "physical can't be undefined";
+        }
+    }
+
+    function includeMixin(mixin) {
+        mixin.apply(entity, Array.prototype.slice.call(arguments, 1));
+        return entity;
+    }
+
+    function declareType(type) {
+        types.push(type);
+    }
+
+    function isOfType(type) {
+        return _.any(types, function(t) {
+            return t === type;
+        });
+    }
+
 };
