@@ -71,7 +71,7 @@ window.onload = function () {
     });
 
     preloader.on("complete", function () {
-        world = worldFactory(canvas);
+        world = bombit.world(canvas);
         world.start();
     });
 

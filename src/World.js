@@ -1,4 +1,6 @@
-var worldFactory = function (canvas) {
+var bombit = bombit || {};
+
+bombit.world = function (canvas) {
     "use strict";
 
     var stage = new createjs.Stage(canvas),
