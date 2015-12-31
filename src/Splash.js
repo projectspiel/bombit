@@ -1,4 +1,6 @@
 var Splash = function (config) {
+    "use strict";
+
     if (!config.stage) {
         log("Splash config not properly set");
     }

@@ -1,6 +1,8 @@
 var mixins = mixins || {};
 
 mixins.Sprite = function (spriteSheetData) {
+    "use strict";
+
     if (!this.isInitializable || !this.isRenderable) {
         throw "Dependencies not met";
     }

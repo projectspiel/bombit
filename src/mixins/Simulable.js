@@ -1,6 +1,8 @@
 var mixins = mixins || {};
 
 mixins.Simulable = function () {
+    "use strict";
+
     this.isSimulable = true;
 
     var callbacks = [];

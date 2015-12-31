@@ -1,6 +1,7 @@
 var entities = entities || {};
 
 entities.dog = function (spec, my) {
+    "use strict";
     my = my || {};
 
     var dog = entities.base(

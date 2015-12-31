@@ -1,4 +1,5 @@
 var Score = (function () {
+    "use strict";
     var level = 0,
         text;
 
@@ -6,6 +7,11 @@ var Score = (function () {
     text.x = 50;
     text.y = 30;
     text.zindex = 1000;
+
+    return {
+      increment: increment,
+      getDisplayObject: getDisplayObject
+    };
 
     function increment() {
       level++;
@@ -20,8 +26,4 @@ var Score = (function () {
       text.text = "Level " + level;
     }
 
-    return {
-      increment: increment,
-      getDisplayObject: getDisplayObject
-    };
 })();

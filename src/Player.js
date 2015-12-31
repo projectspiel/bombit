@@ -3,6 +3,8 @@ var entities = entities || {},
     FRAME_HEIGHT = 96;
 
 entities.player = function (spec, my) {
+    "use strict";
+
     my = my || {};
 
     var player = entities.base(

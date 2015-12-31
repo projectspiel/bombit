@@ -1,4 +1,6 @@
 var worldFactory = function (canvas) {
+    "use strict";
+
     var stage = new createjs.Stage(canvas),
         _entities = [],
         levelController,

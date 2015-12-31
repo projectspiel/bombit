@@ -1,4 +1,5 @@
 var GameOver = function (config) {
+    "use strict";
     if (!config.stage) {
         log("GameOver config not properly set");
     }

@@ -1,6 +1,8 @@
 var mixins = mixins || {};
 
 mixins.Positionable = function (position) {
+    "use strict";
+
     if (!this.isInitializable || !this.isUpdateable) {
         throw "Dependencies not met";
     }

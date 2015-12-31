@@ -1,6 +1,8 @@
 var mixins = mixins || {};
 
 mixins.Collidable = function (options) {
+    "use strict";
+
     if (!this.isInitializable || !this.isSimulable || !this.isPositionable || !this.isSprite) {
         throw "Dependencies not met";
     }

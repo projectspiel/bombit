@@ -3,6 +3,8 @@ var mixins = mixins || {};
 // @DUP eventable
 // @fixme extract logic into eventable mixin
 mixins.Renderable = function () {
+    "use strict";
+
     if (!this.isInitializable || !this.isPositionable) {
         throw "Dependencies not met";
     }

@@ -1,4 +1,5 @@
 var LevelController = function (config) {
+    "use strict";
 
     if (!config.stage || !config.addEntityCallback || !config.removeEntityCallback || !config.gameOverCallback) {
         log("LevelController config not properly set");

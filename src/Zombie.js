@@ -4,6 +4,8 @@ var FRAME_WIDTH = 48,
     FRAME_HEIGHT = 96;
 
 entities.zombie = function (spec, my) {
+    "use strict";
+
     my = my || {};
 
     if (spec.sprite === undefined) {

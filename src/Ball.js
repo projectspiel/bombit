@@ -1,6 +1,7 @@
 var entities = entities || {};
 
 entities.ball = function (spec, my) {
+    "use strict";
     my = my || {};
 
     var ball = entities.base({
