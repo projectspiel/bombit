@@ -34,7 +34,7 @@ entities.dog = function (spec, my) {
             },
             collidable: {
                 collisionCallback: function (collision, entity) {
-                    if (entity.isOfType('ball')) {
+                    if (entity.isOfType("ball")) {
                         this.catchBall();
                         world.removeEntity(entity);
                     }
@@ -58,16 +58,16 @@ entities.dog = function (spec, my) {
     dog.dropBall = dropBall;
     dog.destructor = destructor;
 
-    my.declareType('dog');
+    my.declareType("dog");
 
     initBallSprite();
     dog.hasBall = false;
     dog.setInputSource(new inputSources.DogInput(dog));
-    dog.animationController = new DogAnimationController(dog);
+    dog.animationController = new animationControllers.DogAnimationController(dog);
 
     return dog;
 
-    function initBallSprite () {
+    function initBallSprite() {
         dog.ballSprite = new createjs.Sprite(new createjs.SpriteSheet({
             images: [resources.ballImage],
             frames: {width: 8, height: 8, regX: 4, regY: 8}
@@ -76,7 +76,7 @@ entities.dog = function (spec, my) {
         dog.ballSprite.y = -16;
     }
 
-    function catchBall () {
+    function catchBall() {
         if (dog.hasBall) {
             return;
         }
@@ -85,7 +85,7 @@ entities.dog = function (spec, my) {
         dog.hasBall = true;
     }
 
-    function dropBall () {
+    function dropBall() {
         if (!dog.hasBall) {
             return;
         }
@@ -102,7 +102,7 @@ entities.dog = function (spec, my) {
         dog.hasBall = false;
     }
 
-    function destructor () {
+    function destructor() {
         dog.dropBall();
     }
 };

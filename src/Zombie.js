@@ -9,7 +9,7 @@ entities.zombie = function (spec, my) {
     my = my || {};
 
     if (spec.sprite === undefined) {
-        throw "zombie(): sprite is cant be undefined";
+        throw "zombie(): sprite can't be undefined";
     }
 
     var zombie = entities.base(
@@ -22,7 +22,7 @@ entities.zombie = function (spec, my) {
             },
             collidable: {
                 collisionCallback: function (collision, entity) {
-                    if (entity.isOfType('dog') && this.health > 0) {
+                    if (entity.isOfType("dog") && this.health > 0) {
                         this.catchDog();
                         world.removeEntity(entity);
                     }
@@ -42,7 +42,7 @@ entities.zombie = function (spec, my) {
         my
     );
 
-    my.declareType('zombie');
+    my.declareType("zombie");
 
     zombie.catchDog = catchDog;
     zombie.dropDog = dropDog;
@@ -54,7 +54,7 @@ entities.zombie = function (spec, my) {
 
     return zombie;
 
-    function init () {
+    function init() {
         zombie.hasDog = false;
         zombie.isDead = false;
         zombie.health = 3;
@@ -62,14 +62,14 @@ entities.zombie = function (spec, my) {
         zombie.onDie(zombie.greyOut.bind(zombie));
 
         zombie.setInputSource(new inputSources.ZombieInput(zombie, [0, 3, 5, 6, 10, 11, 15]));
-        zombie.animationController = new ZombieAnimationController(zombie);
+        zombie.animationController = new animationControllers.ZombieAnimationController(zombie);
     }
 
-    function catchDog () {
+    function catchDog() {
         zombie.hasDog = true;
     }
 
-    function dropDog () {
+    function dropDog() {
         var dog = entities.dog({
             position: {
                 x: zombie.pos.x,
@@ -80,18 +80,18 @@ entities.zombie = function (spec, my) {
         zombie.hasDog = false;
     }
 
-    function onDie (callback) {
+    function onDie(callback) {
         zombie.onDieCallbacks.push(callback);
     }
 
-    function die () {
+    function die() {
         zombie.isDead = true;
         for (var i = 0; i < zombie.onDieCallbacks.length; i++) {
             zombie.onDieCallbacks[i].apply(zombie);
         }
     }
 
-    function takeDamage () {
+    function takeDamage() {
         if (zombie.health > 0) {
             zombie.health--;
             zombie.blink();
@@ -106,7 +106,7 @@ entities.zombie = function (spec, my) {
     }
 };
 
-entities.zombieOzzo = function(spec, my) {
+entities.zombieOzzo = function (spec, my) {
     my = my || {};
 
     var zombie = entities.zombie(
@@ -137,12 +137,12 @@ entities.zombieOzzo = function(spec, my) {
         my
     );
 
-    my.declareType('zombie_ozzo');
+    my.declareType("zombie_ozzo");
 
     return zombie;
 };
 
-entities.zombiePibi = function(spec, my) {
+entities.zombiePibi = function (spec, my) {
     my = my || {};
 
     var zombie = entities.zombie(
@@ -173,7 +173,7 @@ entities.zombiePibi = function(spec, my) {
         my
     );
 
-    my.declareType('zombie_pibi');
+    my.declareType("zombie_pibi");
 
     return zombie;
 };

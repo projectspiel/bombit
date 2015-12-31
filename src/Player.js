@@ -40,7 +40,7 @@ entities.player = function (spec, my) {
             },
             collidable: {
                 collisionCallback: function (collision, entity) {
-                    if (entity.isOfType('ball') && !this.hasBall) {
+                    if (entity.isOfType("ball") && !this.hasBall) {
                         this.catchBall();
                         world.removeEntity(entity);
                     }
@@ -77,7 +77,7 @@ entities.player = function (spec, my) {
         my
     );
 
-    my.declareType('player');
+    my.declareType("player");
 
     player.catchBall = catchBall;
     player.throwBall = throwBall;
@@ -107,7 +107,7 @@ entities.player = function (spec, my) {
             space: constants.KEY_SPACE
         };
         player.setInputSource(new inputSources.PlayerInput(player, keyMap));
-        player.animationController = new PlayerAnimationController(player);
+        player.animationController = new animationControllers.PlayerAnimationController(player);
 
         player.onAnimationEnd(["punchDown", "punchLeft", "punchRight", "punchUp"], function () {
             player.stopAttack();
@@ -125,7 +125,7 @@ entities.player = function (spec, my) {
         player.hasBall = true;
     }
 
-    function throwBall () {
+    function throwBall() {
         if (!player.hasBall) { return; }
         var spawnVel = player.vel.clone().normalize().scalar(60),
             ball = entities.ball({
@@ -156,7 +156,7 @@ entities.player = function (spec, my) {
         var attackPoint = player.pos.clone().add(player.vel.clone().normalize().scalar(60)),
             entity = mixins.Collidable.getAtPoint(attackPoint);
 
-            if (entity && entity.isOfType('zombie')) {
+            if (entity && entity.isOfType("zombie")) {
                 entity.takeDamage();
             }
     }

@@ -21,7 +21,7 @@ var LevelController = function (config) {
         tick: tick
     };
 
-    function generateZombie () {
+    function generateZombie() {
         var position = randomStartupPosition(),
             zombie = new (randomZombie())({
                 position: position
@@ -49,7 +49,7 @@ var LevelController = function (config) {
         return zombie;
     }
 
-    function randomStartupPosition () {
+    function randomStartupPosition() {
         var startUpPositions = [
             { x: getRandomInt(0, MAP_WIDTH), y: -20 },
             { x: MAP_WIDTH + 20, y: getRandomInt(0, MAP_HEIGHT) },
@@ -60,15 +60,15 @@ var LevelController = function (config) {
         return startUpPositions[getRandomInt(0, 4)];
     }
 
-    function getRandomInt (min, max) {
+    function getRandomInt(min, max) {
         return Math.floor(Math.random() * (max - min)) + min;
     }
 
-    function getZombieCount () {
+    function getZombieCount() {
         return currentWave * 2;
     }
 
-    function tick (event) {
+    function tick(event) {
         if (event.paused) {
             return;
         }
@@ -83,14 +83,14 @@ var LevelController = function (config) {
         }
     }
 
-    function nextWave () {
+    function nextWave() {
         Score.increment();
         currentWave++;
         currentWaveZombieCount = getZombieCount();
         currentWaveTickArray = generateTickArray(currentWaveZombieCount);
     }
 
-    function generateTickArray (count) {
+    function generateTickArray(count) {
         var res = [];
         for (var i = 0; i < count; i++) {
             res.push(Math.floor(Math.random() * 149));
@@ -98,16 +98,16 @@ var LevelController = function (config) {
         return res;
     }
 
-    function gameOver () {
+    function gameOver() {
         var zombie = null;
-        while (zombie = world.findEntityByType('zombie')) {
+        while (zombie = world.findEntityByType("zombie")) {
             config.removeEntityCallback(zombie);
         }
 
         config.gameOverCallback();
     }
 
-    function randomZombie () {
+    function randomZombie() {
         return (Math.random() > 0.5) ? entities.zombieOzzo : entities.zombiePibi;
     }
 

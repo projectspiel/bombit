@@ -1,4 +1,6 @@
-var ZombieAnimationController = function (entity) {
+var animationControllers = animationControllers || {};
+
+animationControllers.ZombieAnimationController = function (entity) {
     this.update = function (inputVector) {
         if (!(inputVector instanceof bombit.Vector) || inputVector.direction() === null) {
             entity.gotoAndPlay("idle");

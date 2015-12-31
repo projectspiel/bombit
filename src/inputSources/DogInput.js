@@ -29,11 +29,11 @@ inputSources.DogInput = function (entity) {
     };
 
     this.findBall = function () {
-        return world.findEntityByType('ball');
+        return world.findEntityByType("ball");
     };
 
     this.findPlayer = function () {
-        return world.findEntityByType('player');
+        return world.findEntityByType("player");
     };
 
     this.updateState = function () {

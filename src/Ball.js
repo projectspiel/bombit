@@ -56,7 +56,7 @@ entities.ball = function (spec, my) {
         force:    spec.force
     }, my);
 
-    my.declareType('ball');
+    my.declareType("ball");
 
     return ball;
 };

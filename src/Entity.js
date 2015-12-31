@@ -14,7 +14,7 @@ entities.base = function (spec, my) {
         types = [];
 
     validateSpec();
-    declareType('base');
+    declareType("base");
 
     includeMixin(mixins.Initializable);
     includeMixin(mixins.Updateable);
@@ -23,7 +23,6 @@ entities.base = function (spec, my) {
     includeMixin(mixins.Renderable);
     includeMixin(mixins.Sprite, spec.sprite);
     includeMixin(mixins.Physical, spec.physical);
-
 
     //Updateable
     entity.onUpdate(function () {
@@ -77,7 +76,7 @@ entities.base = function (spec, my) {
     }
 
     function isOfType(type) {
-        return _.any(types, function(t) {
+        return _.any(types, function (t) {
             return t === type;
         });
     }

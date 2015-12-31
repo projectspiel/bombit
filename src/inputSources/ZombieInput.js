@@ -69,7 +69,7 @@ inputSources.ZombieInput = function (entity, stopFrames) {
     }
 
     function findDog() {
-        return world.findEntityByType('dog');
+        return world.findEntityByType("dog");
     }
 
     function vectorToClosestEdge() {

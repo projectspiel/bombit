@@ -15,7 +15,7 @@ var Splash = function (config) {
         config.stage.addChild(splashMessage);
         shown = true;
 
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             promiseCallback = resolve;
         });
     }

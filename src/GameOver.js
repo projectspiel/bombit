@@ -23,7 +23,7 @@ var GameOver = function (config) {
             }
         }, 5000);
 
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             promiseCallback = resolve;
         });
     }

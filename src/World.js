@@ -28,7 +28,7 @@ var worldFactory = function (canvas) {
         addEntity: addEntity
     };
 
-    function update (event) {
+    function update(event) {
         if (event.paused) {
             return;
         }
@@ -52,7 +52,7 @@ var worldFactory = function (canvas) {
         stage.update(event, event.delta);
     }
 
-    function simulate (event) {
+    function simulate(event) {
         if (event.paused) {
             return;
         }
@@ -62,27 +62,27 @@ var worldFactory = function (canvas) {
         }
     }
 
-    function start () {
+    function start() {
         splash.start().then(() => { startLevel(); });
     }
 
-    function startLevel () {
+    function startLevel() {
         levelController.start();
     }
 
-    function addTickerListeners () {
+    function addTickerListeners() {
         createjs.Ticker.addEventListener("tick", simulate);
         createjs.Ticker.addEventListener("tick", update);
         createjs.Ticker.addEventListener("tick", levelController.tick);
         createjs.Ticker.setFPS(FRAME_RATE);
     }
 
-    function addEntity (entity) {
+    function addEntity(entity) {
         _entities.push(entity);
         stage.addChild(entity.getDisplayObject());
     }
 
-    function removeEntity (entity) {
+    function removeEntity(entity) {
         for (var i = 0; i < _entities.length; i++) {
             if (_entities[i] === entity) {
                 if (typeof entity.destructor === "function") {
@@ -97,7 +97,7 @@ var worldFactory = function (canvas) {
         }
     }
 
-    function initPlayer () {
+    function initPlayer() {
         var player = entities.player({
             position: {
                 x: stage.canvas.width / 2,
@@ -107,7 +107,7 @@ var worldFactory = function (canvas) {
         addEntity(player);
     }
 
-    function initLevel () {
+    function initLevel() {
         initBackground();
 
         levelController = new LevelController({
@@ -126,7 +126,7 @@ var worldFactory = function (canvas) {
         });
     }
 
-    function initDog () {
+    function initDog() {
         var dog = entities.dog({
             position: {
                 x: stage.canvas.width / 2 + 200,
@@ -136,7 +136,7 @@ var worldFactory = function (canvas) {
         addEntity(dog);
     }
 
-    function initBall () {
+    function initBall() {
         var ball = entities.ball({
             position: {
                 x: stage.canvas.width / 2 - 20,
@@ -146,7 +146,7 @@ var worldFactory = function (canvas) {
         addEntity(ball);
     }
 
-    function initBackground () {
+    function initBackground() {
         var tileSize = 32 * 2, //@todo this is because of the creepy scaling
             tileIndex = 0, lastTileIndex = 0,
             grassTiles = [
@@ -177,15 +177,15 @@ var worldFactory = function (canvas) {
         }
     }
 
-    function initSplash () {
+    function initSplash() {
         splash = new Splash({ stage: stage });
     }
 
-    function initGameOver () {
+    function initGameOver() {
         gameOver = new GameOver({ stage: stage });
     }
 
-    function findEntityByType (type) {
+    function findEntityByType(type) {
         for (var i = 0; i < _entities.length; i++) {
             if (_entities[i].isOfType(type)) {
                 return _entities[i];
@@ -194,12 +194,12 @@ var worldFactory = function (canvas) {
         return null;
     }
 
-    function reset () {
+    function reset() {
         initDog();
         start();
     }
 
-    function pause () {
+    function pause() {
         var pauseMessage = new createjs.Text("Paused", "48px MineCrafter", "#222222");
         pauseMessage.name = "pauseMessage";
         pauseMessage.x = CANVAS_WIDTH / 2 - pauseMessage.getBounds().width / 2;
@@ -211,7 +211,7 @@ var worldFactory = function (canvas) {
         createjs.Ticker.setPaused(true);
     }
 
-    function resume () {
+    function resume() {
         var pauseMessage = stage.getChildByName("pauseMessage");
         stage.removeChild(pauseMessage);
 

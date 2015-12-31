@@ -1,4 +1,6 @@
-var PlayerAnimationController = function(entity) {
+var animationControllers = animationControllers || {};
+
+animationControllers.PlayerAnimationController = function(entity) {
     this.update = function (inputVector) {
         if(!(inputVector instanceof bombit.Vector) || inputVector.direction() === null) {
             if (entity.hasBall) {
