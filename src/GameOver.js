@@ -7,13 +7,19 @@ var GameOver = function (config) {
         shown = false,
         promiseCallback;
 
+    return {
+        show: show
+    };
+
     function show() {
         config.stage.addChild(gameOverMessage);
         shown = true;
 
         window.setTimeout(() => {
             hide();
-            promiseCallback && promiseCallback();
+            if (typeof promiseCallback === 'function') {
+                promiseCallback();
+            }
         }, 5000);
 
         return new Promise((resolve, reject) => {
@@ -36,7 +42,4 @@ var GameOver = function (config) {
         return gameOverMessage;
     }
 
-    return {
-        show: show
-    };
 };
