@@ -154,7 +154,7 @@ entities.player = function (spec, my) {
         var attackPoint = player.pos.clone().add(player.vel.clone().normalize().scalar(60)),
             entity = mixins.Collidable.getAtPoint(attackPoint);
 
-            if (entity.isOfType('zombie')) {
+            if (entity && entity.isOfType('zombie')) {
                 entity.takeDamage();
             }
     }
