@@ -1,25 +1,37 @@
-var World = function (canvas) {
-    this._stage = new createjs.Stage(canvas);
-    this._stage.autoClear = true;
+var worldFactory = function (canvas) {
+    var stage = new createjs.Stage(canvas),
+        _entities = [],
+        levelController,
+        splash,
+        gameOver
+        ;
 
-    this._entities = [];
-    this.initLevel();
-    this.initPlayer();
-    this.initDog();
-    this.initBall();
-    this.initSplash();
-    this.initGameOver();
+    stage.autoClear = true;
 
-    this.addTickerListeners();
-};
+    initLevel();
+    initPlayer();
+    initDog();
+    initBall();
+    initSplash();
+    initGameOver();
 
-World.prototype = {
-    update: function (event) {
+    addTickerListeners();
+
+    return {
+        start: start,
+        pause: pause,
+        resume: resume,
+        findEntityByType: findEntityByType,
+        removeEntity: removeEntity,
+        addEntity: addEntity
+    };
+
+    function update (event) {
         if (event.paused) {
             return;
         }
 
-        this._stage.sortChildren(function (obj1, obj2) {
+        stage.sortChildren(function (obj1, obj2) {
             var obj1zindex = obj1.zindex ? obj1.zindex : obj1.y;
             var obj2zindex = obj2.zindex ? obj2.zindex : obj2.y;
 
@@ -32,107 +44,107 @@ World.prototype = {
             return 0;
         });
 
-        for (var i = 0; i < this._entities.length; i++) {
-            this._entities[i].update(event.delta);
+        for (var i = 0; i < _entities.length; i++) {
+            _entities[i].update(event.delta);
         }
-        this._stage.update(event, event.delta);
-    },
+        stage.update(event, event.delta);
+    }
 
-    simulate: function (event) {
+    function simulate (event) {
         if (event.paused) {
             return;
         }
 
-        for (var i = 0; i < this._entities.length; i++) {
-            this._entities[i].simulate(event.delta);
+        for (var i = 0; i < _entities.length; i++) {
+            _entities[i].simulate(event.delta);
         }
-    },
+    }
 
-    start: function () {
-        this.splash.start().then(() => { this.startLevel(); });
-    },
+    function start () {
+        splash.start().then(() => { startLevel(); });
+    }
 
-    startLevel: function () {
-        this.levelController.start();
-    },
+    function startLevel () {
+        levelController.start();
+    }
 
-    addTickerListeners: function () {
-        createjs.Ticker.addEventListener("tick", this.simulate.bind(this));
-        createjs.Ticker.addEventListener("tick", this.update.bind(this));
-        createjs.Ticker.addEventListener("tick", this.levelController.tick);
+    function addTickerListeners () {
+        createjs.Ticker.addEventListener("tick", simulate);
+        createjs.Ticker.addEventListener("tick", update);
+        createjs.Ticker.addEventListener("tick", levelController.tick);
         createjs.Ticker.setFPS(FRAME_RATE);
-    },
+    }
 
-    addEntity: function (entity) {
-        this._entities.push(entity);
-        this._stage.addChild(entity.getDisplayObject());
-    },
+    function addEntity (entity) {
+        _entities.push(entity);
+        stage.addChild(entity.getDisplayObject());
+    }
 
-    removeEntity: function (entity) {
-        for (var i = 0; i < this._entities.length; i++) {
-            if (this._entities[i] === entity) {
+    function removeEntity (entity) {
+        for (var i = 0; i < _entities.length; i++) {
+            if (_entities[i] === entity) {
                 if (typeof entity.destructor === "function") {
                     entity.destructor();
                 }
 
-                mixins.Collidable.removeEntity(this._entities[i]);
-                this._stage.removeChild(this._entities[i].getDisplayObject());
-                this._entities.splice(i, 1);
+                mixins.Collidable.removeEntity(_entities[i]);
+                stage.removeChild(_entities[i].getDisplayObject());
+                _entities.splice(i, 1);
                 return;
             }
         }
-    },
+    }
 
-    initPlayer: function () {
+    function initPlayer () {
         var player = entities.player({
             position: {
-                x: this._stage.canvas.width / 2,
-                y: this._stage.canvas.height / 2
+                x: stage.canvas.width / 2,
+                y: stage.canvas.height / 2
             }
         });
-        this.addEntity(player);
-    },
+        addEntity(player);
+    }
 
-    initLevel: function () {
-        this.initBackground();
+    function initLevel () {
+        initBackground();
 
-        this.levelController = new LevelController({
-            stage: this._stage,
+        levelController = new LevelController({
+            stage: stage,
             gameOverCallback: () => {
-                this.gameOver.show().then(() => {
-                    this.reset();
+                gameOver.show().then(() => {
+                    reset();
                 });
             },
             addEntityCallback: (entity) => {
-                this.addEntity(entity);
+                addEntity(entity);
             },
             removeEntityCallback: (entity) => {
-                this.removeEntity(entity);
+                removeEntity(entity);
             }
         });
-    },
+    }
 
-    initDog: function () {
+    function initDog () {
         var dog = entities.dog({
             position: {
-                x: this._stage.canvas.width / 2 + 200,
-                y: this._stage.canvas.height / 2 + 100
+                x: stage.canvas.width / 2 + 200,
+                y: stage.canvas.height / 2 + 100
             }
         });
-        this.addEntity(dog);
-    },
+        addEntity(dog);
+    }
 
-    initBall: function () {
+    function initBall () {
         var ball = entities.ball({
             position: {
-                x: this._stage.canvas.width / 2 - 20,
-                y: this._stage.canvas.height / 2 + 50
+                x: stage.canvas.width / 2 - 20,
+                y: stage.canvas.height / 2 + 50
             }
         });
-        this.addEntity(ball);
-    },
+        addEntity(ball);
+    }
 
-    initBackground: function () {
+    function initBackground () {
         var tileSize = 32 * 2, //@todo this is because of the creepy scaling
             tileIndex = 0, lastTileIndex = 0,
             grassTiles = [
@@ -144,8 +156,8 @@ World.prototype = {
                 resources.grassImage6
             ];
 
-        for (var y = -10; y < this._stage.canvas.height; y += tileSize) {
-            for (var x = -10; x < this._stage.canvas.width; x += tileSize) {
+        for (var y = -10; y < stage.canvas.height; y += tileSize) {
+            for (var x = -10; x < stage.canvas.width; x += tileSize) {
                 tileIndex = Math.floor(Math.random() * grassTiles.length);
                 if (tileIndex === lastTileIndex) {
                     tileIndex++; // Avoid using the same tile twice in a row
@@ -158,48 +170,48 @@ World.prototype = {
                 grass.scaleX = grass.scaleY = 2;
                 grass.zindex = -10;
 
-                this._stage.addChild(grass);
+                stage.addChild(grass);
             }
         }
-    },
+    }
 
-    initSplash: function () {
-        this.splash = new Splash({ stage: this._stage });
-    },
+    function initSplash () {
+        splash = new Splash({ stage: stage });
+    }
 
-    initGameOver: function () {
-        this.gameOver = new GameOver({ stage: this._stage });
-    },
+    function initGameOver () {
+        gameOver = new GameOver({ stage: stage });
+    }
 
-    findEntityByType: function (type) {
-        for (var i = 0; i < this._entities.length; i++) {
-            if (this._entities[i].isOfType(type)) {
-                return this._entities[i];
+    function findEntityByType (type) {
+        for (var i = 0; i < _entities.length; i++) {
+            if (_entities[i].isOfType(type)) {
+                return _entities[i];
             }
         }
         return null;
-    },
+    }
 
-    reset: function () {
-        this.initDog();
-        this.start();
-    },
+    function reset () {
+        initDog();
+        start();
+    }
 
-    pause: function () {
+    function pause () {
         var pauseMessage = new createjs.Text("Paused", "48px MineCrafter", "#222222");
         pauseMessage.name = "pauseMessage";
         pauseMessage.x = CANVAS_WIDTH / 2 - pauseMessage.getBounds().width / 2;
         pauseMessage.y = CANVAS_HEIGHT / 2 - pauseMessage.getBounds().height / 2;
         pauseMessage.zindex = 1000;
-        this._stage.addChild(pauseMessage);
-        this._stage.update();
+        stage.addChild(pauseMessage);
+        stage.update();
 
         createjs.Ticker.setPaused(true);
-    },
+    }
 
-    resume: function () {
-        var pauseMessage = this._stage.getChildByName("pauseMessage");
-        this._stage.removeChild(pauseMessage);
+    function resume () {
+        var pauseMessage = stage.getChildByName("pauseMessage");
+        stage.removeChild(pauseMessage);
 
         createjs.Ticker.setPaused(false);
     }

@@ -71,7 +71,7 @@ window.onload = function () {
     });
 
     preloader.on("complete", function () {
-        world = new World(canvas);
+        world = worldFactory(canvas);
         world.start();
     });
 
