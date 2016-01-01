@@ -1,4 +1,5 @@
 var LevelController = function (config) {
+    "use strict";
 
     if (!config.stage || !config.addEntityCallback || !config.removeEntityCallback || !config.gameOverCallback) {
         log("LevelController config not properly set");
@@ -6,21 +7,30 @@ var LevelController = function (config) {
 
     var currentWave = 0,
         currentWaveZombieCount,
-        currentWaveTickArray = [],
-        that = this;
+        currentWaveTickArray = [];
 
     config.stage.addChild(Score.getDisplayObject());
 
-    this.generateZombie = function () {
-        var position = this.randomStartupPosition(),
-            zombie = new (this.randomZombie())({
+    return {
+        start: function () {
+            currentWave = 0;
+
+            nextWave();
+            createjs.Sound.play("menuSound");
+        },
+        tick: tick
+    };
+
+    function generateZombie() {
+        var position = randomStartupPosition(),
+            zombie = new (randomZombie())({
                 position: position
             });
 
         zombie.onDie(() => {
             currentWaveZombieCount--;
-            if (currentWaveZombieCount == 0) {
-                that.nextWave();
+            if (currentWaveZombieCount === 0) {
+                nextWave();
             }
         });
 
@@ -30,35 +40,35 @@ var LevelController = function (config) {
             }
 
             if (zombie.hasDog) {
-                that.gameOver();
+                gameOver();
             } else if (zombie.isDead) {
                 config.removeEntityCallback(zombie);
             }
         });
 
         return zombie;
-    };
+    }
 
-    this.randomStartupPosition = function () {
+    function randomStartupPosition() {
         var startUpPositions = [
-            { x: this.getRandomInt(0, MAP_WIDTH), y: -20 },
-            { x: MAP_WIDTH + 20, y: this.getRandomInt(0, MAP_HEIGHT) },
-            { x: this.getRandomInt(0, MAP_WIDTH), y: MAP_HEIGHT + 200 },
-            { x: -20, y: this.getRandomInt(0, MAP_HEIGHT) }
+            { x: getRandomInt(0, MAP_WIDTH), y: -20 },
+            { x: MAP_WIDTH + 20, y: getRandomInt(0, MAP_HEIGHT) },
+            { x: getRandomInt(0, MAP_WIDTH), y: MAP_HEIGHT + 200 },
+            { x: -20, y: getRandomInt(0, MAP_HEIGHT) }
         ];
 
-        return startUpPositions[this.getRandomInt(0, 4)];
-    };
+        return startUpPositions[getRandomInt(0, 4)];
+    }
 
-    this.getRandomInt = function (min, max) {
+    function getRandomInt(min, max) {
         return Math.floor(Math.random() * (max - min)) + min;
-    };
+    }
 
-    this.getZombieCount = function () {
+    function getZombieCount() {
         return currentWave * 2;
-    };
+    }
 
-    this.tick = (event) => {
+    function tick(event) {
         if (event.paused) {
             return;
         }
@@ -67,47 +77,38 @@ var LevelController = function (config) {
             currentWaveTickArray[i]--;
 
             if (currentWaveTickArray[i] <= 0) {
-                config.addEntityCallback(this.generateZombie());
+                config.addEntityCallback(generateZombie());
                 currentWaveTickArray.shift();
             }
         }
-    };
+    }
 
-    this.nextWave = function () {
+    function nextWave() {
         Score.increment();
         currentWave++;
-        currentWaveZombieCount = this.getZombieCount();
-        currentWaveTickArray = this.generateTickArray(currentWaveZombieCount);
-    };
+        currentWaveZombieCount = getZombieCount();
+        currentWaveTickArray = generateTickArray(currentWaveZombieCount);
+    }
 
-    this.generateTickArray = function (count) {
+    function generateTickArray(count) {
         var res = [];
         for (var i = 0; i < count; i++) {
             res.push(Math.floor(Math.random() * 149));
         }
         return res;
-    };
+    }
 
-    this.gameOver = function () {
+    function gameOver() {
         var zombie = null;
-        while (zombie = (world.findEntityByType(entities.ZombieOzzo) || world.findEntityByType(entities.ZombiePibi))) {
+        while (zombie = world.findEntityByType("zombie")) {
             config.removeEntityCallback(zombie);
         }
 
         config.gameOverCallback();
-    };
+    }
 
-    this.randomZombie = function () {
-        return (Math.random() > 0.5) ? entities.ZombieOzzo : entities.ZombiePibi;
-    };
+    function randomZombie() {
+        return (Math.random() > 0.5) ? entities.zombieOzzo : entities.zombiePibi;
+    }
 
-    return {
-        start: function () {
-            that.currentWave = 0;
-
-            that.nextWave();
-            createjs.Sound.play("menuSound");
-        },
-        tick: this.tick
-    };
 };

@@ -1,6 +1,8 @@
 var mixins = mixins || {};
 
 mixins.Sprite = function (spriteSheetData) {
+    "use strict";
+
     if (!this.isInitializable || !this.isRenderable) {
         throw "Dependencies not met";
     }
@@ -91,8 +93,10 @@ mixins.Sprite = function (spriteSheetData) {
     };
 
     this.greyOut = function () {
-        var matrix = new createjs.ColorMatrix().adjustSaturation(-128);
-        var filter = new createjs.ColorMatrixFilter(matrix);
+        //var matrix = new createjs.ColorMatrix().adjustSaturation(-128);
+        //var filter = new createjs.ColorMatrixFilter(matrix);
+        var filter = new createjs.ColorFilter(0.3,0.3,0.3,1, 0,0,0,0);
         this.setFilter("greyed", filter);
     };
+
 };

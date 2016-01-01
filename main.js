@@ -71,7 +71,7 @@ window.onload = function () {
     });
 
     preloader.on("complete", function () {
-        world = new World(canvas);
+        world = bombit.world(canvas);
         world.start();
     });
 
@@ -94,11 +94,6 @@ window.log = function () {
         }
         console.log(arguments[i].toString ? arguments[i].toString() : arguments[i]);
     }
-};
-
-Function.prototype.includeMixin = function (mixin) {
-    mixin.apply(this.prototype, Array.prototype.slice.call(arguments, 1));
-    return this;
 };
 
 String.prototype.capitalizeFirstLetter = function () {

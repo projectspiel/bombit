@@ -1,6 +1,8 @@
 var mixins = mixins || {};
 
 mixins.Debuggable = function () {
+    "use strict";
+
     if (Debug.positionable) {
         this.afterInit(function () {
             this.debugPositionDisplayObject = (function () {

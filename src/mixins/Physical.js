@@ -1,6 +1,8 @@
 var mixins = mixins || {};
 
 mixins.Physical = function (options) {
+    "use strict";
+
     //@fixme use `var` local variables instead of adding attrs to this
     this.friction = options.friction;
     this.mass = options.mass;

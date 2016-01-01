@@ -1,6 +1,8 @@
 var mixins = mixins || {};
 
 mixins.Initializable = function () {
+    "use strict";
+
     this.isInitializable = true;
 
     var initCallbacks = [],

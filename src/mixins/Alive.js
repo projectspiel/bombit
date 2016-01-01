@@ -1,6 +1,7 @@
 var mixins = mixins || {};
 
 mixins.Alive = function () {
+    "use strict";
     if (!this.isInitializable || !this.isSimulable || !this.isSprite) {
         throw "Dependencies not met";
     }

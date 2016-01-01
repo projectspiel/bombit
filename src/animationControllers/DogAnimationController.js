@@ -1,6 +1,8 @@
-var DogAnimationController = function(entity) {
+var animationControllers = animationControllers || {};
+
+animationControllers.DogAnimationController = function(entity) {
     this.update = function (inputVector) {
-        if(!(inputVector instanceof bombit.Vector) || inputVector.direction() === null) {
+        if (!(inputVector instanceof bombit.Vector) || inputVector.direction() === null) {
             entity.gotoAndPlay("idle");
         } else if (entity.hasBall){
             entity.gotoAndPlay("move" + inputVector.direction().capitalizeFirstLetter() + "WithBall");
