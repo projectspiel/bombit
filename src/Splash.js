@@ -26,10 +26,10 @@ var Splash = function (config) {
     }
 
     function createSplashMessage() {
-        var splashMessage = new createjs.Text("Pichicho Defender", "48px MineCrafter", "#222222");
+        var splashMessage = new createjs.Bitmap(resources.splashImage);
         splashMessage.name = "splashMessage";
         splashMessage.x = CANVAS_WIDTH / 2 - splashMessage.getBounds().width / 2;
-        splashMessage.y = CANVAS_HEIGHT / 2 - splashMessage.getBounds().height / 2;
+        splashMessage.y = CANVAS_HEIGHT / 2 - splashMessage.getBounds().height / 2 - 150;
         splashMessage.zindex = 1000;
         return splashMessage;
     }

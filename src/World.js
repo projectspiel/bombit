@@ -87,7 +87,7 @@ World.prototype = {
         var player = new entities.Player({
             position: {
                 x: this._stage.canvas.width / 2,
-                y: this._stage.canvas.height / 2
+                y: this._stage.canvas.height / 2 + 300
             }
         });
         this.addEntity(player);
@@ -115,8 +115,8 @@ World.prototype = {
     initDog: function () {
         var dog = new entities.Dog({
             position: {
-                x: this._stage.canvas.width / 2 + 200,
-                y: this._stage.canvas.height / 2 + 100
+                x: this._stage.canvas.width / 2 + 100,
+                y: this._stage.canvas.height / 2 + 300
             }
         });
         this.addEntity(dog);
@@ -125,8 +125,8 @@ World.prototype = {
     initBall: function () {
         var ball = new entities.Ball({
             position: {
-                x: this._stage.canvas.width / 2 - 20,
-                y: this._stage.canvas.height / 2 + 50
+                x: this._stage.canvas.width / 2 - 75,
+                y: this._stage.canvas.height / 2 + 300
             }
         });
         this.addEntity(ball);

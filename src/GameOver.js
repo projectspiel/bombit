@@ -28,10 +28,10 @@ var GameOver = function (config) {
     }
 
     function createGameOverMessage() {
-        var gameOverMessage = new createjs.Text("Game Over", "48px MineCrafter", "#222222");
+        var gameOverMessage = new createjs.Bitmap(resources.gameOverImage);
         gameOverMessage.name = "gameOverMessage";
         gameOverMessage.x = CANVAS_WIDTH / 2 - gameOverMessage.getBounds().width / 2;
-        gameOverMessage.y = CANVAS_HEIGHT / 2 - gameOverMessage.getBounds().height / 2;
+        gameOverMessage.y = CANVAS_HEIGHT / 2 - gameOverMessage.getBounds().height / 2 - 150;
         gameOverMessage.zindex = 1000;
         return gameOverMessage;
     }
