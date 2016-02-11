@@ -85,5 +85,12 @@ bombit.Vector.prototype = {
         } else {
             return "up";
         }
+    },
+
+    draw: function () {
+        var coords = world.mapToCanvas(this);
+        var shape = new createjs.Shape();
+        shape.graphics.beginFill("rgba(255,0,0,1)").drawCircle(coords.x, coords.y, 2);
+        world._stage.addChild(shape);
     }
 };
