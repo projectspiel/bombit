@@ -8,6 +8,10 @@ inputSources.WanderInput = function (entity, options) {
         log("WanderInput options not properly set");
     }
 
+    if (typeof options.bufferDistance === "undefined") {
+        options.bufferDistance = 0;
+    }
+
     this.getCurrentInput = function () {
         return (framesToWait > 0) ? this.wait() : this.wander();
     };
@@ -26,7 +30,7 @@ inputSources.WanderInput = function (entity, options) {
 
     this.wander = function () {
         if (!wanderTo) {
-          wanderTo = this.newWanderToVector();
+            wanderTo = this.newWanderToVector();
         }
 
         if (closeToTarget()) {
@@ -43,22 +47,21 @@ inputSources.WanderInput = function (entity, options) {
     };
 
     this.newWanderToVector = function () {
-      var vector = entity.pos.clone().add(
-          new bombit.Vector(
-            this.getRandomIntegerBetween(-options.range, options.range),
-            this.getRandomIntegerBetween(-options.range, options.range)
-          )
-      );
+        var vector = entity.pos.clone().add(
+            new bombit.Vector(
+                this.getRandomIntegerBetween(-options.range, options.range),
+                this.getRandomIntegerBetween(-options.range, options.range)
+            )
+        );
 
-      if (pointInsideMap(vector)) {
-        return vector;
-      }
-
-      return this.newWanderToVector();
+        return pointInsideMap(vector) ? vector : this.newWanderToVector();
     };
 
     function pointInsideMap(point) {
-        return (point.x > 0 && point.x < MAP_WIDTH && point.y > 0 && point.y < MAP_HEIGHT);
+        return (point.x > options.bufferDistance &&
+                point.x < MAP_WIDTH - options.bufferDistance &&
+                point.y > options.bufferDistance &&
+                point.y < MAP_HEIGHT - options.bufferDistance);
     }
 
     function closeToTarget() {
