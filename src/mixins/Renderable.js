@@ -53,21 +53,8 @@ mixins.Renderable = function () {
         this.container.y = displayVector.y;
     };
 
-    this._mapToCanvas = function (vector) {
-        var newVector = new bombit.Vector(
-            vector.x * CANVAS_WIDTH / MAP_WIDTH,
-            vector.y * CANVAS_HEIGHT / MAP_HEIGHT
-        );
-
-        if (typeof vector.z === "number" && !isNaN(vector.z)) {
-            newVector.y -= vector.z;
-        }
-
-        return newVector;
-    };
-
     // Transforms 2D map position to visual position on the map
     this.getDisplayPosition = function () {
-        return this._mapToCanvas(this.pos);
+        return world.mapToCanvas(this.pos);
     };
 };

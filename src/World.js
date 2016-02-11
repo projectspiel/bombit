@@ -202,5 +202,18 @@ World.prototype = {
         this._stage.removeChild(pauseMessage);
 
         createjs.Ticker.setPaused(false);
+    },
+
+    mapToCanvas: function (vector) {
+        var newVector = new bombit.Vector(
+            vector.x * CANVAS_WIDTH / MAP_WIDTH,
+            vector.y * CANVAS_HEIGHT / MAP_HEIGHT
+        );
+
+        if (typeof vector.z === "number" && !isNaN(vector.z)) {
+            newVector.y -= vector.z;
+        }
+
+        return newVector;
     }
 };
