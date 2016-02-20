@@ -12,7 +12,7 @@ entities.Player = new entities.Entity({
             regY: 88
         },
         animations: {
-            idle: [0, 4, true, 0.1],
+            idle: [0, 4, true, 0.03],
             moveDown: [8, 11, true, 0.2],
             moveLeft: [16, 23, true, 0.3],
             moveRight: [24, 31, true, 0.3],
