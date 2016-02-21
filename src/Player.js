@@ -110,7 +110,8 @@ entities.Player.prototype.throwBall = function () {
         ball = new entities.Ball({
         position: {
             x: this.pos.x + spawnVel.x,
-            y: this.pos.y + spawnVel.y
+            y: this.pos.y + spawnVel.y,
+            z: 70
         },
         force: {
             x: this.vel.x,
