@@ -39,11 +39,6 @@ entities.Entity = function (entitySpec) {
                 instanceSpec.force.z
             ));
         }
-
-        //Updateable
-        this.onUpdate(function () {
-            this.render();
-        });
     };
 
     entity.includeMixin(mixins.Initializable).

@@ -1,17 +1,23 @@
 var mixins = mixins || {};
 
 mixins.Updateable = function () {
+    if (!this.isInitializable) {
+        throw "Dependencies not met";
+    }
+
     this.isUpdateable = true;
 
-    var callbacks = [];
+    this.onInit(function () {
+        this.callbacks = [];
+    });
 
     this.onUpdate = function (callable) {
-        callbacks.push(callable);
+        this.callbacks.push(callable);
     };
 
     this.update = function (dt) {
-        for (var i = 0; i < callbacks.length; i++) {
-            callbacks[i].apply(this, [dt]);
+        for (var i = 0; i < this.callbacks.length; i++) {
+            this.callbacks[i].apply(this, [dt]);
         }
     };
 };

@@ -6,8 +6,7 @@ var LevelController = function (config) {
 
     var currentWave = 0,
         currentWaveZombieCount,
-        currentWaveTickArray = [],
-        that = this;
+        currentWaveTickArray = [];
 
     config.stage.addChild(Score.getDisplayObject());
 
@@ -20,7 +19,7 @@ var LevelController = function (config) {
         zombie.onDie(() => {
             currentWaveZombieCount--;
             if (currentWaveZombieCount == 0) {
-                that.nextWave();
+                this.nextWave();
             }
         });
 
@@ -30,7 +29,8 @@ var LevelController = function (config) {
             }
 
             if (zombie.hasDog) {
-                that.gameOver();
+                config.removeEntityCallback(zombie);
+                this.gameOver();
             } else if (zombie.isDead) {
                 config.removeEntityCallback(zombie);
             }
@@ -101,11 +101,15 @@ var LevelController = function (config) {
         return (Math.random() > 0.5) ? entities.ZombieOzzo : entities.ZombiePibi;
     };
 
-    return {
-        start: function () {
-            that.currentWave = 0;
+    this.reset = function () {
+        currentWave = 0;
+    };
 
-            that.nextWave();
+    return {
+        start: () => {
+            Score.reset();
+            this.reset();
+            this.nextWave();
             createjs.Sound.play("menuSound");
         },
         tick: this.tick

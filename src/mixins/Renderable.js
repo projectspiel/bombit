@@ -1,7 +1,5 @@
 var mixins = mixins || {};
 
-// @DUP eventable
-// @fixme extract logic into eventable mixin
 mixins.Renderable = function () {
     if (!this.isInitializable || !this.isPositionable) {
         throw "Dependencies not met";
@@ -12,6 +10,10 @@ mixins.Renderable = function () {
 
     this.onInit(function () {
         this.container = new createjs.Container();
+
+        this.onUpdate(function () {
+            this.render();
+        });
     });
 
     this.addDisplayObject = function (displayObject) {

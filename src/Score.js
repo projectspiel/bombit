@@ -20,8 +20,14 @@ var Score = (function () {
       text.text = "Level " + level;
     }
 
+    function reset() {
+        level = 0;
+        update();
+    }
+
     return {
-      increment: increment,
-      getDisplayObject: getDisplayObject
+        increment: increment,
+        reset: reset,
+        getDisplayObject: getDisplayObject
     };
 })();
