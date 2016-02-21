@@ -5,7 +5,7 @@ mixins.Physical = function (options) {
     this.friction = options.friction;
     this.mass = options.mass;
     this.dampFactor = options.dampFactor;
-    this.inputForce = options.inputForce || 5000;
+    this.inputForce = options.inputForce || 2500;
 
     if (!this.isInitializable || !this.isSimulable || !this.isPositionable) {
         throw "Dependencies not met";
@@ -17,13 +17,13 @@ mixins.Physical = function (options) {
         if (this.mass === undefined) {
             this.mass = 1;
         }
-    });
 
-    this.onSimulate(function (dt) {
-        this.applyFriction(this.friction);
-        this.applyGravity();
-        this.move(dt);
-        this.checkFloor(this.dampFactor, MAP_WIDTH, MAP_HEIGHT);
+        this.onSimulate(function (dt) {
+            this.applyFriction(this.friction);
+            this.applyGravity();
+            this.move(dt);
+            this.checkFloor(this.dampFactor, MAP_WIDTH, MAP_HEIGHT);
+        });
     });
 
     this.move = function (dt) { //@todo split in applyForce and move?
@@ -42,7 +42,7 @@ mixins.Physical = function (options) {
             return;
         }
         var gravity = new bombit.Vector();
-        gravity.set(0, 0, -9.8 * 50);
+        gravity.set(0, 0, -9.8 * 25);
         this.force.add(gravity);
     };
 

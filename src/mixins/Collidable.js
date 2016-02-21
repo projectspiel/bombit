@@ -18,11 +18,11 @@ mixins.Collidable = function (options) {
     this.onInit(function () {
         this.hitArea = new SAT.Circle(new SAT.Vector(this.pos.x, this.pos.y), hitAreaRadius);
         collidables.push(this);
-    });
 
-    this.onSimulate(function () {
-        this.checkCollisions();
-        this.checkBounds();
+        this.onSimulate(function () {
+            this.checkCollisions();
+            this.checkBounds();
+        });
     });
 
     this.checkCollisions = function () {

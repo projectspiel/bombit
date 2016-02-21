@@ -7,7 +7,7 @@ var genericZombieSpec = {
     physical: {
         friction: 20,
         mass: 1,
-        inputForce: 1000
+        inputForce: 500
     },
     collidable: {
         collisionCallback: function (collision, entity) {
@@ -38,14 +38,14 @@ zombieOzzoSpec.sprite = {
     },
     animations: {
         idle: [0, 0, true, 1],
-        moveDown: [0, 3, true, 0.4],
-        moveLeft: [5, 9, true, 0.4],
-        moveRight: [10, 14, true, 0.4],
-        moveUp: [15, 18, true, 0.4],
-        moveDownWithDog: [20, 23, true, 0.4],
-        moveLeftWithDog: [25, 29, true, 0.4],
-        moveRightWithDog: [30, 34, true, 0.4],
-        moveUpWithDog: [35, 38, true, 0.4]
+        moveDown: [0, 3, true, 0.2],
+        moveLeft: [5, 9, true, 0.2],
+        moveRight: [10, 14, true, 0.2],
+        moveUp: [15, 18, true, 0.2],
+        moveDownWithDog: [20, 23, true, 0.2],
+        moveLeftWithDog: [25, 29, true, 0.2],
+        moveRightWithDog: [30, 34, true, 0.2],
+        moveUpWithDog: [35, 38, true, 0.2]
     },
     framerate: 10
 };

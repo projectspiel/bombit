@@ -25,7 +25,7 @@ entities.Dog = new entities.Entity({
     physical: {
         friction: 20,
         mass: 1,
-        inputForce: 8000
+        inputForce: 4000
     },
     collidable: {
         collisionCallback: function (collision, entity) {

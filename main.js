@@ -15,7 +15,7 @@ var CANVAS_HEIGHT,
     CANVAS_WIDTH,
     MAP_HEIGHT = 1000,
     MAP_WIDTH = 1000,
-    FRAME_RATE = 30;
+    FRAME_RATE = 60;
 
 // Debugging
 Debug = {

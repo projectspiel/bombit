@@ -12,7 +12,6 @@ inputSources.PlayerInput = function (entity, keyMap) {
         };
 
     this.getCurrentAction = function () {
-
         if (keyboardState[keyMap.space] && !spaceBarDown) {
             spaceBarDown = true;
             if (entity.hasBall) {

@@ -30,7 +30,7 @@ mixins.Alive = function () {
 
     this.onInit(function () {
         this._inputSource = this._inputSource || new inputSources.Null();
-    });
 
-    this.onSimulate(this._applyInput);
+        this.onSimulate(this._applyInput);
+    });
 };
