@@ -17,6 +17,7 @@
         {"src":"snd/menu.ogg", "id":"menuSound"},
         {"src":"snd/hit1.ogg", "id":"zombieHitSound1"},
         {"src":"snd/hit2.ogg", "id":"zombieHitSound2"},
-        {"src":"snd/throw.ogg", "id":"ballThrowSound"}
+        {"src":"snd/throw.ogg", "id":"ballThrowSound"},
+        {"src":"snd/music.ogg", "id":"musicSound"}
     ]
 }

@@ -11,6 +11,8 @@ var World = function (canvas) {
     this.initGameOver();
 
     this.addTickerListeners();
+
+    this.musicSoundInstance = createjs.Sound.createInstance("musicSound");
 };
 
 World.prototype = {
@@ -49,11 +51,16 @@ World.prototype = {
     },
 
     start: function () {
-        this.splash.start().then(() => { this.startLevel(); });
+        this.splash.start().then(() => {
+            this.startLevel();
+        });
     },
 
     startLevel: function () {
         this.levelController.start();
+
+        var ppc = new createjs.PlayPropsConfig().set({loop: -1, volume: 0.5})
+        this.musicSoundInstance.play(ppc);
     },
 
     addTickerListeners: function () {
@@ -101,7 +108,8 @@ World.prototype = {
             gameOverCallback: () => {
                 this.gameOver.show().then(() => {
                     this.reset();
-                })
+                });
+                this.musicSoundInstance.stop();
             },
             addEntityCallback: (entity) => {
                 this.addEntity(entity);
@@ -195,6 +203,8 @@ World.prototype = {
         this._stage.update();
 
         createjs.Ticker.setPaused(true);
+
+        this.musicSoundInstance.paused = true;
     },
 
     resume: function () {
@@ -202,6 +212,8 @@ World.prototype = {
         this._stage.removeChild(pauseMessage);
 
         createjs.Ticker.setPaused(false);
+
+        this.musicSoundInstance.paused = false;
     },
 
     mapToCanvas: function (vector) {
