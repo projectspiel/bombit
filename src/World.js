@@ -59,7 +59,7 @@ World.prototype = {
     startLevel: function () {
         this.levelController.start();
 
-        var ppc = new createjs.PlayPropsConfig().set({loop: -1, volume: 0.5})
+        var ppc = new createjs.PlayPropsConfig().set({loop: -1, volume: 0.5});
         this.musicSoundInstance.play(ppc);
     },
 
