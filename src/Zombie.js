@@ -13,6 +13,10 @@ var genericZombieSpec = {
         collisionCallback: function (collision, entity) {
             if (entity instanceof entities.Dog && this.health > 0) {
                 this.catchDog();
+
+                var barkSounds = ["barkSound1", "barkSound2"];
+                createjs.Sound.play(barkSounds[Math.floor(Math.random() * barkSounds.length)]);
+
                 world.removeEntity(entity);
             }
 

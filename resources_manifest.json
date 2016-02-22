@@ -14,10 +14,12 @@
         {"src":"img/grass6.png", "id":"grassImage6"},
         {"src":"img/splash.png", "id":"splashImage"},
         {"src":"img/gameover.png", "id":"gameOverImage"},
-        {"src":"snd/menu.ogg", "id":"menuSound"},
         {"src":"snd/hit1.ogg", "id":"zombieHitSound1"},
         {"src":"snd/hit2.ogg", "id":"zombieHitSound2"},
         {"src":"snd/throw.ogg", "id":"ballThrowSound"},
-        {"src":"snd/music.ogg", "id":"musicSound"}
+        {"src":"snd/music.ogg", "id":"musicSound"},
+        {"src":"snd/gameover.ogg", "id":"gameOverSound"},
+        {"src":"snd/bark1.ogg", "id":"barkSound1"},
+        {"src":"snd/bark2.ogg", "id":"barkSound2"}
     ]
 }

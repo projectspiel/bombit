@@ -8,8 +8,10 @@ var GameOver = function (config) {
         promiseCallback;
 
     function show() {
-        config.stage.addChild(gameOverMessage);
         shown = true;
+        config.stage.addChild(gameOverMessage);
+
+        createjs.Sound.play("gameOverSound");
 
         window.setTimeout(() => {
             hide();

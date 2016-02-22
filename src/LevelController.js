@@ -110,7 +110,6 @@ var LevelController = function (config) {
             Score.reset();
             this.reset();
             this.nextWave();
-            createjs.Sound.play("menuSound");
         },
         tick: this.tick
     };
