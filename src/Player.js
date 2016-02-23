@@ -133,7 +133,7 @@ entities.Player.prototype.attack = function () {
     }
     this.isAttacking = true;
     this.attackingDirection = this.vel.direction() || "down";
-    var attackPoint = this.pos.clone().add(this.vel.clone().normalize().scalar(60)),
+    var attackPoint = this.pos.clone().add(this.vel.clone().normalize().scalar(100)),
         entity = mixins.Collidable.getAtPoint(attackPoint);
 
     if (entity instanceof entities.ZombieOzzo || entity instanceof entities.ZombiePibi) {
