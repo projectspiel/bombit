@@ -23,9 +23,7 @@ entities.Dog = new entities.Entity({
         framerate: 5
     },
     physical: {
-        friction: 20,
-        mass: 1,
-        inputForce: 4000
+        forceMultiplier: 4000
     },
     collidable: {
         collisionCallback: function (collision, entity) {

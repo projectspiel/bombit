@@ -5,9 +5,7 @@ var FRAME_WIDTH = 48,
 
 var genericZombieSpec = {
     physical: {
-        friction: 20,
-        mass: 1,
-        inputForce: 500
+        forceMultiplier: 500
     },
     collidable: {
         collisionCallback: function (collision, entity) {

@@ -2,10 +2,10 @@ var mixins = mixins || {};
 
 mixins.Physical = function (options) {
     //@fixme use `var` local variables instead of adding attrs to this
-    this.friction = options.friction;
-    this.mass = options.mass;
+    this.friction = options.friction || 20;
+    this.mass = options.mass || 1;
     this.dampFactor = options.dampFactor;
-    this.inputForce = options.inputForce || 2500;
+    this.forceMultiplier = options.forceMultiplier || 1;
 
     if (!this.isInitializable || !this.isSimulable || !this.isPositionable) {
         throw "Dependencies not met";
@@ -14,15 +14,12 @@ mixins.Physical = function (options) {
     this.onInit(function () {
         this.vel = new bombit.Vector();
         this.force = new bombit.Vector();
-        if (this.mass === undefined) {
-            this.mass = 1;
-        }
 
         this.onSimulate(function (dt) {
             this.applyFriction(this.friction);
             this.applyGravity();
             this.move(dt);
-            this.checkFloor(this.dampFactor, MAP_WIDTH, MAP_HEIGHT);
+            this.checkFloor(this.dampFactor);
         });
     });
 
@@ -61,8 +58,12 @@ mixins.Physical = function (options) {
         }
     };
 
-    this.addInputForce = function (force) {
-        force.scalar(this.inputForce);
+    this.addForce = function (force) {
+        force.scalar(this.forceMultiplier);
         this.force.add(force);
     };
+
+    this.setForceMultiplier = function (forceMultiplier) {
+        this.forceMultiplier = forceMultiplier;
+    }
 };

@@ -10,23 +10,23 @@ inputSources.ZombieInput = function (entity, stopFrames) {
         stateHandlers = {
             wander: () => {
                 return {
-                    force: wanderInput.getCurrentInput().force.scalar(this.getForceMultiplier())
+                    force: wanderInput.getCurrentInput().force.scalar(this.getForceFactor())
                 };
             },
             stealDog: () => {
                 return {
-                    force: vectorToClosestEdge().scalar(this.getForceMultiplier())
+                    force: vectorToClosestEdge().scalar(this.getForceFactor())
                 };
             },
             runAway: () => {
                 return {
                     action: entity.hasDog ? "dropDog" : undefined,
-                    force: vectorToClosestEdge().scalar(this.getForceMultiplier())
+                    force: vectorToClosestEdge().scalar(this.getForceFactor())
                 };
             },
             getDog: () => {
                 return {
-                    force: vectorToDog().scalar(this.getForceMultiplier())
+                    force: vectorToDog().scalar(this.getForceFactor())
                 };
             }
         },
@@ -38,7 +38,7 @@ inputSources.ZombieInput = function (entity, stopFrames) {
         },
         that = this;
 
-    this.getForceMultiplier = function () {
+    this.getForceFactor = function () {
         if (stopFrames.indexOf(entity.sprite.currentFrame) >= 0) {
             return 0.01;
         } else {

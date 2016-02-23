@@ -32,12 +32,16 @@ entities.Entity = function (entitySpec) {
         }
 
         //Physical
-        if (instanceSpec.force !== undefined) {
-            this.addInputForce(new bombit.Vector(
-                instanceSpec.force.x,
-                instanceSpec.force.y,
-                instanceSpec.force.z
+        if (instanceSpec.initialForce !== undefined) {
+            this.addForce(new bombit.Vector(
+                instanceSpec.initialForce.x,
+                instanceSpec.initialForce.y,
+                instanceSpec.initialForce.z
             ));
+        }
+
+        if (instanceSpec.forceMultiplier !== undefined) {
+            this.setForceMultiplier(instanceSpec.forceMultiplier);
         }
     };
 

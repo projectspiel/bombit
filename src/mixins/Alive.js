@@ -15,7 +15,7 @@ mixins.Alive = function () {
         var input = this._inputSource.getCurrentInput() || {};
 
         if (input.force instanceof bombit.Vector) {
-            this.addInputForce(input.force);
+            this.addForce(input.force);
             this.inputVector = input.force;
         }
 

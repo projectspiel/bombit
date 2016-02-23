@@ -29,8 +29,7 @@ entities.Player = new entities.Entity({
         }
     },
     physical: {
-        friction: 20,
-        mass: 1
+        forceMultiplier: 2500
     },
     collidable: {
         collisionCallback: function (collision, entity) {
@@ -71,13 +70,6 @@ entities.Player.prototype.onInit(function () {
     this.isAttacking = false;
     this.attackingDirection = null;
 
-    this.ballSprite = new createjs.Sprite(new createjs.SpriteSheet({
-        images: [resources.ballImage],
-        frames: {width: 8, height: 8, regX: 4, regY: 8}
-    }));
-    this.ballSprite.scaleX = this.ballSprite.scaleY = 2;
-    this.ballSprite.y = -42;
-    this.ballSprite.x = 23;
     var keyMap = { // Defined outside Player because it could be configurable someday
             up: constants.KEY_UP,
             down: constants.KEY_DOWN,
@@ -100,30 +92,31 @@ entities.Player.prototype.onInit(function () {
 });
 
 entities.Player.prototype.catchBall = function () {
-    this.addDisplayObject(this.ballSprite);
     this.hasBall = true;
 };
 
 entities.Player.prototype.throwBall = function () {
-    if (!this.hasBall) { return; }
-    var spawnVel = this.vel.clone().normalize().scalar(60),
+    if (!this.hasBall) {
+        return;
+    }
+
+    var spawnVel = this.vel.clone().normalize(),
+        spawnForce = spawnVel.clone().scalar(15000),
         ball = new entities.Ball({
         position: {
-            x: this.pos.x + spawnVel.x,
-            y: this.pos.y + spawnVel.y,
+            x: this.pos.x + spawnVel.x * 60,
+            y: this.pos.y + spawnVel.y * 60,
             z: 70
         },
-        force: {
-            x: this.vel.x,
-            y: this.vel.y,
-            z: 100
+        initialForce: {
+            x: spawnForce.x,
+            y: spawnForce.y,
+            z: 5000
         }
     });
+
     world.addEntity(ball);
-
     createjs.Sound.play("ballThrowSound");
-
-    this.removeDisplayObject(this.ballSprite);
     this.hasBall = false;
 };
 

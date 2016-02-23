@@ -13,7 +13,8 @@ var LevelController = function (config) {
     this.generateZombie = function () {
         var position = this.randomStartupPosition(),
             zombie = new (this.randomZombie())({
-                position: position
+                position: position,
+                forceMultiplier: this.getRandomInt(300, 700)
             });
 
         zombie.onDie(() => {
