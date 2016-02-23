@@ -11,7 +11,7 @@ entities.Ball = new entities.Entity({
         }
     },
     physical: {
-        friction: 10,
+        friction: 30,
         dampFactor: 0.6
     },
     collidable: {
