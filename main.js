@@ -34,25 +34,16 @@ window.onload = function () {
         canvas = window.document.getElementById("dasCanvas"),
         context = canvas.getContext("2d");
 
-    preloader.installPlugin(createjs.Sound);
-
-    // @fixme
     CANVAS_HEIGHT = canvas.height;
     CANVAS_WIDTH = canvas.width;
+    context.imageSmoothingEnabled = false;
 
-    context.webkitImageSmoothingEnabled = context.imageSmoothingEnabled = context.mozImageSmoothingEnabled = context.oImageSmoothingEnabled = false;
-
-    preloader.on("progress", function (event) {
-        var ctx = canvas.getContext("2d"),
-            angle = Math.PI * 2 * event.loaded;
-
-        ctx.strokeStyle = "white";
-        ctx.beginPath();
-        ctx.arc(canvas.width / 2, canvas.height / 2, 100, 0, angle, true);
-        ctx.stroke();
+    drawProgressbarContainer(canvas);
+    preloader.on("progress", (event) => {
+        updateProgressbar(canvas, event.loaded);
     });
 
-    preloader.on("fileload", function (event) {
+    preloader.on("fileload", (event) => {
         var item = event.item;
         switch (item.type) {
             case createjs.LoadQueue.IMAGE:
@@ -70,24 +61,25 @@ window.onload = function () {
         }
     });
 
-    preloader.on("complete", function () {
+    preloader.on("complete", () => {
         world = new World(canvas);
         world.start();
     });
 
+    preloader.installPlugin(createjs.Sound);
     preloader.loadManifest("resources_manifest.json");
     preloader.loadManifest("sources_manifest.json");
 };
 
-window.onblur = function () {
+window.onblur = () => {
     world.pause();
 };
 
-window.onfocus = function () {
+window.onfocus = () => {
     world.resume();
 };
 
-window.log = function () {
+window.log = () => {
     for (var i = 0; i < arguments.length; i++) {
         if (!arguments[i]) {
             console.log("Invalid argument for logging");
@@ -104,3 +96,41 @@ Function.prototype.includeMixin = function (mixin) {
 String.prototype.capitalizeFirstLetter = function () {
     return this.charAt(0).toUpperCase() + this.slice(1);
 };
+
+function drawProgressbarContainer(canvas) {
+    var context = canvas.getContext("2d");
+    context.strokeStyle = "white";
+    context.lineWidth = 5;
+
+    context.beginPath();
+    context.arc(canvas.width / 2, canvas.height / 2, 100, 0, 2 * Math.PI);
+    context.stroke();
+
+    context.beginPath();
+    context.arc(canvas.width / 2, canvas.height / 2, 120, 0, 2 * Math.PI);
+    context.stroke();
+
+    context.fillStyle = "white";
+    context.font = "18px monospace";
+    context.textAlign = "center";
+    context.fillText("Loading...", canvas.width / 2 + 10, canvas.height / 2);
+}
+
+function updateProgressbar(canvas, loaded) {
+    var context = canvas.getContext("2d"),
+        angle = Math.PI * 2 * loaded;
+
+    var gradient = context.createRadialGradient(
+        canvas.width / 2, canvas.height / 2, 100,
+        canvas.width / 2, canvas.height / 2, 120
+    );
+    gradient.addColorStop(0,"white");
+    gradient.addColorStop(0.5,"#5F9F9F");
+    gradient.addColorStop(1,"white");
+    context.strokeStyle = gradient;
+    context.lineWidth = 15;
+
+    context.beginPath();
+    context.arc(canvas.width / 2, canvas.height / 2, 110, 0, angle);
+    context.stroke();
+}

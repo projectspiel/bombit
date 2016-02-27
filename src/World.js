@@ -152,6 +152,7 @@ World.prototype = {
                 resources.grassImage6
             ];
 
+        this._stage.canvas.style.backgroundColor = "#70ab4d";
         for (var y = -10; y < this._stage.canvas.height; y += tileSize) {
             for (var x = -10; x < this._stage.canvas.width; x += tileSize) {
                 tileIndex = Math.floor(Math.random() * grassTiles.length);
