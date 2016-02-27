@@ -74,20 +74,20 @@ mixins.Sprite = function (spriteSheetData) {
     };
 
     this.blink = function () {
-        var that = this;
-        (function b(i) {
+        var i = 15;
+        this.sprite.on("tick", (e) => {
             var m = 1 - i * 0.1;
             var p = i * 255 / 10;
 
-            that.setFilter("blink", new createjs.ColorFilter(m, m, m, 1, p, 0, 0, 0));
+            this.setFilter("blink", new createjs.ColorFilter(m, m, m, 1, p, 0, 0, 0));
 
-            if (i > 0) {
-                window.setTimeout(b, 15, --i);
-            } else {
-                that.removeFilter("blink");
-                that.sprite.uncache();
+            if (i <= 0) {
+                this.removeFilter("blink");
+                this.sprite.uncache();
+                e.remove();
             }
-        })(10);
+            i--;
+        });
     };
 
     this.greyOut = function () {
