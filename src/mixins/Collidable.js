@@ -91,3 +91,17 @@ mixins.Collidable.getAtPoint = function (point) {
 
     return null;
 };
+
+mixins.Collidable.getInCircle = function (point, r) {
+    var collidables = mixins.Collidable.entities,
+        satPoint = new SAT.Vector(point.x, point.y),
+        satCircle = new SAT.Circle(satPoint, r);
+
+    for (var i = 0; i < collidables.length; i++) {
+        if (SAT.testCircleCircle(satCircle, collidables[i].getHitArea())) {
+            return collidables[i];
+        }
+    }
+
+    return null;
+};

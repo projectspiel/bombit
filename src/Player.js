@@ -127,7 +127,7 @@ entities.Player.prototype.attack = function () {
     this.isAttacking = true;
     this.attackingDirection = this.vel.direction() || "down";
     var attackPoint = this.pos.clone().add(this.vel.clone().normalize().scalar(100)),
-        entity = mixins.Collidable.getAtPoint(attackPoint);
+        entity = mixins.Collidable.getInCircle(attackPoint, 20);
 
     if (entity instanceof entities.ZombieOzzo || entity instanceof entities.ZombiePibi) {
         entity.takeDamage();
